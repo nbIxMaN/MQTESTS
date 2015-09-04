@@ -9,7 +9,7 @@
 //{
 //    class TestMqServiceClient : IDisposable
 //    {
-//        WebReference.
+//        WebReference.MqServiceClient
 //        private bool disposed = false;
 //        public void x()
 //        {

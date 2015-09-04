@@ -86,8 +86,6 @@ namespace MqTests
                 Global.errors3.Add("Несовпадение Comment TestDiagnosisInfo");
             if (this.diagnosisInfo.DiagnosedDate != r.diagnosisInfo.DiagnosedDate)
                 Global.errors3.Add("Несовпадение DiagnosedDate TestDiagnosisInfo");
-            if (this.diagnosisInfo.DiagnosedDateSpecified != r.diagnosisInfo.DiagnosedDateSpecified)
-                Global.errors3.Add("Несовпадение DiagnosedDateSpecified TestDiagnosisInfo"); 
             if (Global.GetLength(this.diagnosisType) != Global.GetLength(r.diagnosisType))
                 Global.errors3.Add("Несовпадение длины diagnosisInfo TestDiagnosisInfo");
             if (Global.GetLength(this.mkbCode) != Global.GetLength(r.mkbCode))
@@ -108,7 +106,6 @@ namespace MqTests
             }
             if ((this.diagnosisInfo.Comment == p.diagnosisInfo.Comment)&&
             (this.diagnosisInfo.DiagnosedDate == p.diagnosisInfo.DiagnosedDate)&&
-            (this.diagnosisInfo.DiagnosedDateSpecified == p.diagnosisInfo.DiagnosedDateSpecified)&&
             (Global.IsEqual(this.diagnosisType, p.diagnosisType)) &&
             (Global.IsEqual(this.mkbCode, p.mkbCode)))
             {

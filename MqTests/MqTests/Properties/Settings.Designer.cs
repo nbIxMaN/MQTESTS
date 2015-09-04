@@ -22,15 +22,5 @@ namespace MqTests.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://212.116.96.50:2229/MqService.svc")]
-        public string MqTests_WebReference_MqService {
-            get {
-                return ((string)(this["MqTests_WebReference_MqService"]));
-            }
-        }
     }
 }

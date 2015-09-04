@@ -87,20 +87,14 @@ namespace MqTests
                 Global.errors3.Add("Несовпадение IdCaseMis TestReferralTarget");
             if (this.target.IsReferralReviewed != r.target.IsReferralReviewed)
                 Global.errors3.Add("Несовпадение IsReferralReviewed TestReferralTarget");
-            if (this.target.IsReferralReviewedSpecified != r.target.IsReferralReviewedSpecified)
-                Global.errors3.Add("Несовпадение IsReferralReviewedSpecified TestReferralTarget");
             if (this.target.ReceptionAppointComment != r.target.ReceptionAppointComment)
                 Global.errors3.Add("Несовпадение ReceptionAppointComment TestReferralTarget");
             if (this.target.ReceptionAppointDate != r.target.ReceptionAppointDate)
                 Global.errors3.Add("Несовпадение ReceptionAppointDate TestReferralTarget");
-            if (this.target.ReceptionAppointDateSpecified != r.target.ReceptionAppointDateSpecified)
-                Global.errors3.Add("Несовпадение ReceptionAppointDateSpecified  TestReferralTarget");
             if (this.target.ReceptionAppointTime != r.target.ReceptionAppointTime)
                 Global.errors3.Add("Несовпадение ReceptionAppointTime TestReferralTarget");
             if (this.target.ReferralReviewDate != r.target.ReferralReviewDate)
                 Global.errors3.Add("Несовпадение ReferralReviewDate TestReferralTarget");
-            if (this.target.ReferralReviewDateSpecified != r.target.ReferralReviewDateSpecified)
-                Global.errors3.Add("Несовпадение ReferralReviewDateSpecified TestReferralTarget");
             if (Global.GetLength(this.doctors) != Global.GetLength(r.doctors))
                 Global.errors3.Add("Несовпадение длинны documents TestReferralTarget");
             if (Global.GetLength(this.mainDiagnosis) != Global.GetLength(r.mainDiagnosis))
@@ -123,13 +117,10 @@ namespace MqTests
             }
             if ((this.target.IdCaseMis == p.target.IdCaseMis)&&
             (this.target.IsReferralReviewed == p.target.IsReferralReviewed)&&
-            (this.target.IsReferralReviewedSpecified == p.target.IsReferralReviewedSpecified)&&
             (this.target.ReceptionAppointComment == p.target.ReceptionAppointComment)&&
             (this.target.ReceptionAppointDate == p.target.ReceptionAppointDate)&&
-            (this.target.ReceptionAppointDateSpecified == p.target.ReceptionAppointDateSpecified)&&
             (this.target.ReceptionAppointTime == p.target.ReceptionAppointTime)&&
             (this.target.ReferralReviewDate == p.target.ReferralReviewDate)&&
-            (this.target.ReferralReviewDateSpecified == p.target.ReferralReviewDateSpecified)&&
             (Global.IsEqual(this.lpu, p.lpu))&&
             (Global.IsEqual(this.mainDiagnosis, p.mainDiagnosis))&&
             (Global.IsEqual(this.doctors, p.doctors)))

@@ -62,8 +62,6 @@ namespace MqTests
             if (this.info.Comment != r.info.Comment)
                 Global.errors3.Add("Несовпадение Comment TestReferralInfo");
             if (this.info.Date != r.info.Date)
-                Global.errors3.Add("Несовпадение Date TestReferralInfo");
-            if (this.info.DateSpecified != r.info.DateSpecified)
                 Global.errors3.Add("Несовпадение DateSpecified TestReferralInfo");
             if (this.info.IdMq != r.info.IdMq)
                 Global.errors3.Add("Несовпадение IdMq TestReferralInfo");
@@ -95,7 +93,6 @@ namespace MqTests
             }
             if ((this.info.Comment == p.info.Comment)&&
             (this.info.Date == p.info.Date)&&
-            (this.info.DateSpecified == p.info.DateSpecified)&&
             (this.info.IdMq == p.info.IdMq)&&
             (this.info.Priority == p.info.Priority)&&
             (this.info.Reason == p.info.Reason)&&

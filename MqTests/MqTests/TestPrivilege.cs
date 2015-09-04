@@ -57,12 +57,8 @@ namespace MqTests
             {
                 if (this.privilege.EndDate != b.privilege.EndDate)
                     Global.errors3.Add("Несовпадение EndDate TestPrivilege");
-                if (this.privilege.EndDateSpecified != b.privilege.EndDateSpecified)
-                    Global.errors3.Add("Несовпадение EndDateSpecified TestPrivilege");
                 if (this.privilege.StartDate != b.privilege.StartDate)
                     Global.errors3.Add("Несовпадение StartDate TestPrivilege");
-                if (this.privilege.StartDateSpecified != b.privilege.StartDateSpecified)
-                    Global.errors3.Add("Несовпадение StartDateSpecified TestPrivilege");
                 if (Global.GetLength(this.privilegeType) != Global.GetLength(b.privilegeType))
                     Global.errors3.Add("Несовпадение IdPrivilageType TestPrivilege");
             }
@@ -82,9 +78,7 @@ namespace MqTests
                 return false;
             }
             if ((this.privilege.EndDate != p.privilege.EndDate) &&
-            (this.privilege.EndDateSpecified != p.privilege.EndDateSpecified)&&
             (this.privilege.StartDate != p.privilege.StartDate) &&
-            (this.privilege.StartDateSpecified != p.privilege.StartDateSpecified)&&
             Global.IsEqual(this.privilegeType, p.privilegeType))
             {
                 return true;

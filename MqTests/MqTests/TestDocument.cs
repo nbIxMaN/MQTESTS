@@ -72,12 +72,8 @@ namespace MqTests
                 Global.errors3.Add("Несовпадение DocS TestDocument");
             if (this.document.ExpiredDate != b.document.ExpiredDate)
                 Global.errors3.Add("Несовпадение ExpiredDate TestDocument");
-            if (this.document.ExpiredDateSpecified != b.document.ExpiredDateSpecified)
-                Global.errors3.Add("Несовпадение ExpiredDateSpecified TestDocument");
             if (this.document.IssuedDate != b.document.IssuedDate)
                 Global.errors3.Add("Несовпадение IssuedDate TestDocument");
-            if (this.document.IssuedDateSpecified != b.document.IssuedDateSpecified)
-                Global.errors3.Add("Несовпадение ProviderName TestDocument");
             if (this.document.ProviderName != b.document.ProviderName)
                 Global.errors3.Add("Несовпадение ProviderName TestDocument");
             if (Global.GetLength(this.documentType) != Global.GetLength(b.documentType))
@@ -104,9 +100,7 @@ namespace MqTests
             if ((this.document.DocN == p.document.DocN)&&
             (this.document.DocS == p.document.DocS)&&
             (this.document.ExpiredDate == p.document.ExpiredDate)&&
-            (this.document.ExpiredDateSpecified == p.document.ExpiredDateSpecified)&&
             (this.document.IssuedDate == p.document.IssuedDate)&&
-            (this.document.IssuedDateSpecified == p.document.IssuedDateSpecified)&&
             (this.document.ProviderName == p.document.ProviderName)&&
             (Global.IsEqual(this.documentType, p.documentType))&&
             (Global.IsEqual(this.provider, p.provider))&&

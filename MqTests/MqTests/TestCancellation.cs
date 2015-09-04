@@ -54,8 +54,6 @@ namespace MqTests
         {
             if (this.cancellation.Date != r.cancellation.Date)
                 Global.errors3.Add("Несовпадение Date TestCacellation");
-            if (this.cancellation.DateSpecified != r.cancellation.DateSpecified)
-                Global.errors3.Add("Несовпадение Date TestCacellation");
             if (this.cancellation.ReasonComment != r.cancellation.ReasonComment)
                 Global.errors3.Add("Несовпадение Date TestCacellation");
             if (Global.GetLength(this.reason) != Global.GetLength(r.reason))
@@ -77,7 +75,6 @@ namespace MqTests
                 return false;
             }
             if ((this.cancellation.Date == p.cancellation.Date)&&
-            (this.cancellation.DateSpecified == p.cancellation.DateSpecified)&&
             (this.cancellation.ReasonComment == p.cancellation.ReasonComment)&&
             (Global.Equals(this.reason, p.reason))&&
             (Global.Equals(this.source, p.source)))

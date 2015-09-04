@@ -48,24 +48,14 @@ namespace MqTests
         {
             if (this.source.IsReferralReviewed != r.source.IsReferralReviewed)
                 Global.errors3.Add("Несовпадение IsReferralReviewed TestEventSource");
-            if (this.source.IsReferralReviewedSpecified != r.source.IsReferralReviewedSpecified)
-                Global.errors3.Add("Несовпадение IsReferralReviewedSpecified TestEventSource");
             if (this.source.PlannedDate != r.source.PlannedDate)
                 Global.errors3.Add("Несовпадение PlannedDate TestEventSource");
-            if (this.source.PlannedDateSpecified != r.source.PlannedDateSpecified)
-                Global.errors3.Add("Несовпадение PlannedDateSpecified TestEventSource");
             if (this.source.ReferralCreateDate != r.source.ReferralCreateDate)
                 Global.errors3.Add("Несовпадение ReferralCreateDate TestEventSource");
-            if (this.source.ReferralCreateDateSpecified != r.source.ReferralCreateDateSpecified)
-                Global.errors3.Add("Несовпадение ReferralCreateDateSpecified TestEventSource");
             if (this.source.ReferralOutDate != r.source.ReferralOutDate)
                 Global.errors3.Add("Несовпадение ReferralOutDate TestEventSource");
-            if (this.source.ReferralOutDateSpecified != r.source.ReferralOutDateSpecified)
-                Global.errors3.Add("Несовпадение ReferralOutDateSpecified TestEventSource");
             if (this.source.ReferralReviewDate != r.source.ReferralReviewDate)
                 Global.errors3.Add("Несовпадение ReferralReviewDate TestEventSource");
-            if (this.source.ReferralReviewDateSpecified!= r.source.ReferralReviewDateSpecified)
-                Global.errors3.Add("Несовпадение ReferralReviewDateSpecified TestEventSource");
         }
         public override bool Equals(Object obj)
         {
@@ -81,15 +71,10 @@ namespace MqTests
                 return false;
             }
             if ((this.source.IsReferralReviewed == p.source.IsReferralReviewed)&&
-            (this.source.IsReferralReviewedSpecified == p.source.IsReferralReviewedSpecified)&&
             (this.source.PlannedDate == p.source.PlannedDate)&&
-            (this.source.PlannedDateSpecified == p.source.PlannedDateSpecified)&&
             (this.source.ReferralCreateDate == p.source.ReferralCreateDate)&&
-            (this.source.ReferralCreateDateSpecified == p.source.ReferralCreateDateSpecified)&&
             (this.source.ReferralOutDate == p.source.ReferralOutDate)&&
-            (this.source.ReferralOutDateSpecified == p.source.ReferralOutDateSpecified)&&
-            (this.source.ReferralReviewDate == p.source.ReferralReviewDate)&&
-            (this.source.ReferralReviewDateSpecified== p.source.ReferralReviewDateSpecified))
+            (this.source.ReferralReviewDate == p.source.ReferralReviewDate))
             {
                 return true;
             }

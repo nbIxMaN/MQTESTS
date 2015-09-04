@@ -60,32 +60,20 @@ namespace MqTests
         {
             if (this.target.CaseCloseDate != r.target.CaseCloseDate)
                 Global.errors3.Add("Несовпадение CaseCloseDate TestEventTarget");
-            if (this.target.CaseCloseDateSpecified != r.target.CaseCloseDateSpecified)
-                Global.errors3.Add("Несовпадение CaseCloseDateSpecified TestEventTarget");
             if (this.target.CaseOpenDate != r.target.CaseOpenDate)
                 Global.errors3.Add("Несовпадение CaseOpenDate TestEventTarget");
-            if (this.target.CaseOpenDateSpecified != r.target.CaseOpenDateSpecified)
-                Global.errors3.Add("Несовпадение CaseOpenDateSpecified TestEventTarget");
             if (this.target.IsReferralReviwed != r.target.IsReferralReviwed)
                 Global.errors3.Add("Несовпадение IsReferralReviwed TestEventTarget");
-            if (this.target.IsReferralReviwedSpecified != r.target.IsReferralReviwedSpecified)
-                Global.errors3.Add("Несовпадение IsReferralReviwedSpecified TestEventTarget");
             if (this.target.ReceptionAppointComment != r.target.ReceptionAppointComment)
                 Global.errors3.Add("Несовпадение ReceptionAppointComment TestEventTarget");
             if (this.target.ReceptionAppointDate != r.target.ReceptionAppointDate)
                 Global.errors3.Add("Несовпадение ReceptionAppointDate TestEventTarget");
-            if (this.target.ReceptionAppointDateSpecified != r.target.ReceptionAppointDateSpecified)
-                Global.errors3.Add("Несовпадение ReceptionAppointDateSpecified TestEventTarget");
             if (this.target.ReceptionAppointTime != r.target.ReceptionAppointTime)
                 Global.errors3.Add("Несовпадение ReceptionAppointTime TestEventTarget");
             if (this.target.ReferralReviewDate != r.target.ReferralReviewDate)
                 Global.errors3.Add("Несовпадение ReferralReviewDate TestEventTarget");
-            if (this.target.ReferralReviewDateSpecified != r.target.ReferralReviewDateSpecified)
-                Global.errors3.Add("Несовпадение ReferralReviewDateSpecified TestEventTarget");
             if (this.target.RefferalCreatedDate!= r.target.RefferalCreatedDate)
                 Global.errors3.Add("Несовпадение RefferalCreatedDate TestEventTarget");
-            if (this.target.RefferalCreatedDateSpecified != r.target.RefferalCreatedDateSpecified)
-                Global.errors3.Add("Несовпадение RefferalCreatedDateSpecified TestEventTarget");
             if (Global.GetLength(this.caseAidForm) != Global.GetLength(r.caseAidForm))
                 Global.errors3.Add("Несовпадение длинны caseAidForm TestEventTarget");
             if (Global.GetLength(this.caseAidPlace) != Global.GetLength(r.caseAidPlace))
@@ -109,19 +97,13 @@ namespace MqTests
                 return false;
             }
             if ((this.target.CaseCloseDate == p.target.CaseCloseDate)&&
-            (this.target.CaseCloseDateSpecified == p.target.CaseCloseDateSpecified)&&
             (this.target.CaseOpenDate == p.target.CaseOpenDate)&&
-            (this.target.CaseOpenDateSpecified == p.target.CaseOpenDateSpecified)&&
             (this.target.IsReferralReviwed == p.target.IsReferralReviwed)&&
-            (this.target.IsReferralReviwedSpecified == p.target.IsReferralReviwedSpecified)&&
             (this.target.ReceptionAppointComment == p.target.ReceptionAppointComment)&&
             (this.target.ReceptionAppointDate == p.target.ReceptionAppointDate)&&
-            (this.target.ReceptionAppointDateSpecified == p.target.ReceptionAppointDateSpecified)&&
             (this.target.ReceptionAppointTime == p.target.ReceptionAppointTime)&&
             (this.target.ReferralReviewDate == p.target.ReferralReviewDate)&&
-            (this.target.ReferralReviewDateSpecified == p.target.ReferralReviewDateSpecified)&&
             (this.target.RefferalCreatedDate== p.target.RefferalCreatedDate)&&
-            (this.target.RefferalCreatedDateSpecified == p.target.RefferalCreatedDateSpecified)&&
             (Global.IsEqual(this.caseAidForm, p.caseAidForm))&&
             (Global.IsEqual(this.caseAidPlace, p.caseAidPlace))&&
             (Global.IsEqual(this.caseAidType, p.caseAidType))&&
