@@ -70,18 +70,16 @@ namespace MqTests
         public Referral FullRegister()
         {
             Referral referral = ReferralData.referral;
-            referral.ReferralInfo.IdMq = null;
+            //    referral.ReferralInfo.IdMq = null;
+            referral.EventsInfo.Cancellation = null;
             return referral;
         }
 
-        public Referral MinAgreedFromSourcedMo()
+        public Referral MinAgreedFromSourcedMo(string idMq)
         {
             Referral referral = new Referral();
 
-            referral.ReferralInfo = new ReferralInfo
-            {
-                IdMq = ReferralData.referralInfo.IdMq,
-            };
+            referral.ReferralInfo = new ReferralInfo { IdMq = idMq };
 
             referral.Source = new ReferralSource
             {
@@ -126,8 +124,7 @@ namespace MqTests
             return referral;
         }
 
-
-        public Referral FullAgreedFromSourcedMo()
+        public Referral FullAgreedFromSourcedMo(string idMq)
         {
             return ReferralData.referral = new Referral
             {
@@ -137,7 +134,7 @@ namespace MqTests
                     Date = ReferralData.referralInfo.Date,
                     Reason = ReferralData.referralInfo.Reason,
                     Comment = ReferralData.referralInfo.Comment,
-                    IdMq = ReferralData.referralInfo.IdMq
+                    IdMq = idMq
                 },
                 EventsInfo = new EventsInfo
                 {
@@ -150,7 +147,84 @@ namespace MqTests
             };
         }
 
+        public Referral MinPatientDocumentIssue(string idMq)
+        {
+            return ReferralData.referral = new Referral
+            {
+                ReferralInfo = new ReferralInfo
+                {
+                    Date = ReferralData.referralInfo.Date,
+                    IdMq = idMq
+                },
+                EventsInfo = new EventsInfo
+                {
+                    Source = new EventSource
+                    {
+                        ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate,
+                        ReferralOutDate = ReferralData.eventsInfo.Source.ReferralOutDate
+                    }
+                }
+            };
+        }
 
+        public Referral FullPatientDocumentIssue(string idMq)
+        {
+            Referral referral = MinPatientDocumentIssue(idMq);
+            referral.EventsInfo.Source.PlannedDate = ReferralData.eventsInfo.Source.PlannedDate;
+            return referral;
+        }
+
+        public Referral MinCancellation(string idMq)
+        {
+            return ReferralData.referral = new Referral
+            {
+                ReferralInfo = new ReferralInfo { IdMq = idMq },
+                EventsInfo = new EventsInfo
+                {
+                    Cancellation = new CancellationData
+                    {
+                        Date = ReferralData.eventsInfo.Cancellation.Date,
+                        CancellationReason = SetCoding(ReferralData.eventsInfo.Cancellation.CancellationReason),
+                        CancellationSource = SetCoding(ReferralData.eventsInfo.Cancellation.CancellationSource)
+                    }
+                },
+            };
+        }
+
+        public Referral FullCancellation(string idMq)
+        {
+            return ReferralData.referral = new Referral
+            {
+                ReferralInfo = new ReferralInfo { IdMq = idMq },
+                EventsInfo = new EventsInfo { Cancellation = ReferralData.eventsInfo.Cancellation },
+            };
+        }
+
+        public Referral MinAgreedFromTargetMo(string idMq)
+        {
+            return ReferralData.referral = new Referral
+            {
+                ReferralInfo = new ReferralInfo { IdMq = idMq },
+                EventsInfo = new EventsInfo
+                {
+                    Target = new EventTarget
+                    {
+                        IsReferralReviwed = ReferralData.eventsInfo.Target.IsReferralReviwed,
+                        ReferralReviewDate = ReferralData.eventsInfo.Target.ReferralReviewDate
+
+                    }
+                }
+            };
+        }
+
+        public Referral FullAgreedFromTargetMo(string idMq)
+        {
+            return ReferralData.referral = new Referral
+            {
+                ReferralInfo = new ReferralInfo { IdMq = idMq },
+                EventsInfo = new EventsInfo { Target = ReferralData.eventsInfo.Target }
+            };
+        }
 
     }
 }

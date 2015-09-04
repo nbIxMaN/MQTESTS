@@ -100,6 +100,8 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Tests Method\AgreedFromSourcedMo.cs" />
+    <Compile Include="Tests Method\AgreedFromTargetMo.cs" />
+    <Compile Include="Tests Method\Cancellation.cs" />
     <Compile Include="Tests Method\PatientDocumentIssue.cs" />
     <Compile Include="Tests Method\Register.cs" />
     <Compile Include="SetData.cs" />

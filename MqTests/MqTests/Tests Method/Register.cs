@@ -15,11 +15,7 @@ namespace MqTests
             using (mq)
             {
                 Referral referral = (new SetData()).MinRegister();
-                Credentials cr = new Credentials
-                {
-                    Organization = idLpu,
-                    Token = guid
-                };
+                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var num = mq.Register(cr, referral);
                 using (var x = Global.GetSqlConnection())
                 {
@@ -45,11 +41,7 @@ namespace MqTests
             using (mq)
             {
                 Referral referral = (new SetData()).FullRegister();
-                Credentials cr = new Credentials
-                {
-                    Organization = idLpu,
-                    Token = guid
-                };
+                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 mq.Register(cr, referral);
             }
         }
