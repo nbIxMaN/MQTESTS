@@ -99,7 +99,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Register.cs" />
+    <Compile Include="Tests Method\AgreedFromSourcedMo.cs" />
+    <Compile Include="Tests Method\PatientDocumentIssue.cs" />
+    <Compile Include="Tests Method\Register.cs" />
     <Compile Include="SetData.cs" />
     <Compile Include="TestAdditional.cs" />
     <Compile Include="TestAddress.cs" />
