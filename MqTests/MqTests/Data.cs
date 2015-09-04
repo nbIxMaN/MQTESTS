@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
-using QueueTest.MqService;
+using MqTests.WebReference;
 
 namespace QueueTest
 {

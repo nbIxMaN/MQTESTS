@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto" />
-  <xs:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Result" />
-  <xs:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Legacy" />
+  <xs:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto" />
+  <xs:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Result" />
+  <xs:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Legacy" />
   <xs:element name="UpdateMedServiceProfile">
     <xs:complexType>
       <xs:sequence>

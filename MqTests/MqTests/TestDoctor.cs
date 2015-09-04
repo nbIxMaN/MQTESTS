@@ -33,8 +33,9 @@ namespace MqTests
             if (r != null)
             {
                 doctor = r;
-                foreach (ContactDto i in r.ContactDtos)
-                    cnts.Add(new TestContact(i));
+                if (r.ContactDtos != null)
+                    foreach (ContactDto i in r.ContactDtos)
+                        cnts.Add(new TestContact(i));
                 lpu = new TestCoding(r.Lpu);
                 person = new TestPerson(r.Person);
                 position = new TestCoding(r.Position);

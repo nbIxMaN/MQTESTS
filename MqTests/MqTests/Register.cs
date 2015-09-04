@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QueueTest.MqService;
+using MqTests.WebReference;
 using NUnit.Framework;
+using MqTests;
 
 namespace QueueTest
 {
@@ -11,7 +12,7 @@ namespace QueueTest
         [Test]
         public void Min()
         {
-            using ( mq )
+            using ( TestMqServiceClient mq = new TestMqServiceClient() )
             {
                 Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials
@@ -19,7 +20,11 @@ namespace QueueTest
                     Organization = idLpu,
                     Token = guid
                 };
-                mq.Register(cr, referral);
+                var x = mq.Register(cr, referral);
+                if (Global.errors != "")
+                    NUnit.Framework.Assert.Fail(Global.errors);
+                else
+                    NUnit.Framework.Assert.Pass();
             }
         }
 
