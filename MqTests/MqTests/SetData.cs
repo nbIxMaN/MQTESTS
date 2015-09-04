@@ -9,31 +9,37 @@ namespace MqTests
 {
     public class SetData
     {
+        //подумать как сделать лучше!!
+        public Coding SetCoding(Coding cod)
+        {
+            cod.Version = null;
+            return cod;
+        }
+
         public Referral MinRegister()
         {
             Referral referral = new Referral();
             referral.ReferralInfo = new ReferralInfo
             {
-                ReferralType = ReferralData.referralInfo.ReferralType,
-                ProfileMedService = ReferralData.referralInfo.ProfileMedService,
+                ReferralType = SetCoding(ReferralData.referralInfo.ReferralType),
+                ProfileMedService = SetCoding(ReferralData.referralInfo.ProfileMedService),
             };
 
             referral.Source = new ReferralSource
             {
                 IdReferralMis = ReferralData.referralSource.IdReferralMis,
-                Lpu = ReferralData.referralSource.Lpu,
+                Lpu = SetCoding(ReferralData.referralSource.Lpu),
                 Doctors = new Doctor[] 
                  {
                      new Doctor
                      {
-                           Role = PersonData.doctor.Role,
-                           Lpu =  PersonData.doctor.Lpu,
-                           Speciality = PersonData.doctor.Speciality,
-                           Position = PersonData.doctor.Position,
+                           Role = SetCoding(PersonData.doctor.Role),
+                           Lpu =  SetCoding(PersonData.doctor.Lpu),
+                           Speciality = SetCoding(PersonData.doctor.Speciality),
+                           Position = SetCoding(PersonData.doctor.Position),
                            Person = new Person
                            {
-                                BirthDate = PersonData.doctor.Person.BirthDate,
-                                Sex = PersonData.doctor.Person.Sex,
+                                Sex = SetCoding(PersonData.doctor.Person.Sex),
                                 IdPersonMis = PersonData.doctor.Person.IdPersonMis,
                                 HumanName = new HumanName
                                 {
@@ -49,8 +55,12 @@ namespace MqTests
                 Person = new Person
                 {
                     BirthDate = PersonData.patient.Person.BirthDate,
-                    Sex = PersonData.patient.Person.Sex,
-                    HumanName = PersonData.patient.Person.HumanName,
+                    Sex = SetCoding(PersonData.patient.Person.Sex),
+                    HumanName = new HumanName
+                    {
+                        FamilyName = PersonData.patient.Person.HumanName.FamilyName,
+                        GivenName = PersonData.patient.Person.HumanName.GivenName
+                    }
                 }
             };
 
@@ -64,16 +74,83 @@ namespace MqTests
             return referral;
         }
 
-     /*   public ReferralData MinAgreedFromSourcedMo()
+        public Referral MinAgreedFromSourcedMo()
         {
             Referral referral = new Referral();
-            
 
+            referral.ReferralInfo = new ReferralInfo
+            {
+                IdMq = ReferralData.referralInfo.IdMq,
+            };
 
+            referral.Source = new ReferralSource
+            {
+                Doctors = new Doctor[] 
+                 {
+                     new Doctor
+                     {
+                           Lpu =  PersonData.doctor.Lpu,
+                           Speciality = PersonData.doctor.Speciality,
+                           Position = PersonData.doctor.Position,
+                           Person = new Person
+                           {
+                                IdPersonMis = PersonData.doctor.Person.IdPersonMis,
+                                HumanName = new HumanName
+                                {
+                                     FamilyName = PersonData.doctor.Person.HumanName.FamilyName,
+                                     GivenName = PersonData.doctor.Person.HumanName.GivenName
+                                }
+                           },
+                           ContactDtos = new ContactDto[]
+                           {
+                                new  ContactDto
+                                {
+                                     ContactType = SetCoding(PersonData.contact.ContactType),
+                                     ContactValue = PersonData.contact.ContactValue
+                                }
+                           }
+                     }
+                 }
+            };
 
+            referral.EventsInfo = new EventsInfo
+            {
+                Source = new EventSource
+                {
+                    ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate,
+                    IsReferralReviewed = ReferralData.eventsInfo.Source.IsReferralReviewed,
+                    ReferralReviewDate = ReferralData.eventsInfo.Source.ReferralReviewDate
+                }
+            };
 
             return referral;
-        }*/
+        }
+
+
+        public Referral FullAgreedFromSourcedMo()
+        {
+            return ReferralData.referral = new Referral
+            {
+                ReferralInfo = new ReferralInfo
+                {
+                    Priority = ReferralData.referralInfo.Priority,
+                    Date = ReferralData.referralInfo.Date,
+                    Reason = ReferralData.referralInfo.Reason,
+                    Comment = ReferralData.referralInfo.Comment,
+                    IdMq = ReferralData.referralInfo.IdMq
+                },
+                EventsInfo = new EventsInfo
+                {
+                    Source = ReferralData.eventsInfo.Source
+                },
+                Source = new ReferralSource
+                {
+                    Doctors = new Doctor[] { PersonData.doctor }
+                }
+            };
+        }
+
+
 
     }
 }

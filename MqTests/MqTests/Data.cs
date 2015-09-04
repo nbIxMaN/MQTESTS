@@ -24,6 +24,8 @@ namespace MqTests
     {
         public static Doctor doctor { get; set; }
         public static Patient patient { get; set; }
+
+        public static ContactDto contact { get; set; }
     }
 
     public static class DocumentData
@@ -118,6 +120,14 @@ namespace MqTests
             };
         }
 
+        public static ContactDto SetContact()
+        {
+            return PersonData.contact = new ContactDto
+            {
+                ContactType = SetCoding("1", "1.2.643.2.69.1.1.1.27", "1"),
+                ContactValue = "89103456789"
+            };
+        }
 
         public static Coding SetCoding(string code, string system, string version)
         {
@@ -150,11 +160,7 @@ namespace MqTests
                 },
                 ContactDtos = new ContactDto[]
                 {
-                     new ContactDto
-                     {
-                         ContactType = SetCoding("1","1.2.643.2.69.1.1.1.27","1"),
-                          ContactValue = "89103456789"
-                     }
+                     SetContact()
                 }
             };
         }
@@ -186,11 +192,7 @@ namespace MqTests
                 },
                 ContactDtos = new ContactDto[]
                 {
-                     new ContactDto
-                     {
-                          ContactType = SetCoding("2","1.2.643.2.69.1.1.1.27","1"),
-                          ContactValue = "4567809"
-                     }
+                     SetContact()
                 },
                 Jobs = new Job[] 
                 { 
