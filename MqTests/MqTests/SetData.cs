@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QueueTest.MqService;
+using MqTests.WebReference;
 
-namespace QueueTest
+namespace MqTests
 {
     public class SetData
     {
@@ -56,6 +56,24 @@ namespace QueueTest
 
             return referral;
         }
+
+        public Referral FullRegister()
+        {
+            Referral referral = ReferralData.referral;
+            referral.ReferralInfo.IdMq = null;
+            return referral;
+        }
+
+     /*   public ReferralData MinAgreedFromSourcedMo()
+        {
+            Referral referral = new Referral();
+            
+
+
+
+
+            return referral;
+        }*/
 
     }
 }

@@ -2,14 +2,14 @@
 <wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MqService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Fault" />
-      <xsd:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto" />
-      <xsd:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Result" />
-      <xsd:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd5" namespace="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation" />
-      <xsd:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WCF" />
-      <xsd:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Legacy" />
+      <xsd:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Fault" />
+      <xsd:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto" />
+      <xsd:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Result" />
+      <xsd:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd5" namespace="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation" />
+      <xsd:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WCF" />
+      <xsd:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Legacy" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMqService_UpdateMedServiceProfile_InputMessage">
@@ -494,7 +494,7 @@
   </wsdl:binding>
   <wsdl:service name="MqService">
     <wsdl:port name="BasicHttpBinding_IMqService" binding="tns:BasicHttpBinding_IMqService">
-      <soap:address location="http://212.116.96.50:2229/MqService.svc" />
+      <soap:address location="http://192.168.8.93:4444/MqService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

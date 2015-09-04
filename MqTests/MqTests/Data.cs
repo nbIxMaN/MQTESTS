@@ -1,9 +1,8 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
-using QueueTest.MqService;
+using MqTests.WebReference;
 
-namespace QueueTest
+namespace MqTests
 {
     public static class ReferralData
     {
@@ -250,7 +249,8 @@ namespace QueueTest
                 Reason = "Основание направления, цель направления",
                 Comment = "Комментарий/дополнительные данные для направления",
                 ReferralType = SetCoding("2", "1.2.643.2.69.1.1.1.55", "1"),
-                ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1")
+                ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                IdMq = "Идентификатор направления в РЕГИЗ.УО"
             };
 
             ReferralData.survey = new Survey
@@ -295,7 +295,7 @@ namespace QueueTest
                 {
                     IsReferralReviwed = true,
                     ReferralReviewDate = Convert.ToDateTime("02.01.2012"),
-                    ReceptionAppointDate = Convert.ToDateTime("04.01.2012"), 
+                    ReceptionAppointDate = Convert.ToDateTime("04.01.2012"),
                     ReceptionAppointTime = "Сведения о времени и длительности приема в назначенную дату приема пациента по направлению",
                     ReceptionAppointComment = "Дополнительные сведения назначенном приеме пациента по направлению в целевой МО (например, кабинет или необходимость обращения в регистратуру)",
                 },

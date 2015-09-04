@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/MQ.Dto.Result" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/MQ.Dto.Result" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://212.116.96.50:2229/MqService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto" />
+  <xs:import schemaLocation="http://192.168.8.93:4444/MqService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MQ.Dto" />
   <xs:complexType name="MqResult">
     <xs:sequence>
       <xs:element minOccurs="0" name="IdMq" nillable="true" type="xs:string" />
