@@ -373,6 +373,7 @@ namespace MqTests
             return referral;
         }
 
+        //в разработке
         public Referral MinHealthCareStart(string idMq)
         {
             return ReferralData.referral = new Referral
@@ -401,9 +402,10 @@ namespace MqTests
                            }
                         }
                     },
-                    //MainDiagnosis = new MainDiagnosis[]
+                    //MainDiagnosis = new MainDiagnosis
                     //{
-                    //    ReferralData.referralTarget.MainDiagnosis
+                    //    DiagnosisInfo = DiagnosisData.diagnosisInfo,
+                    //    ComplicationDiagnosis = DiagnosisData.complicationDiagnosis
                     //}
                 }
             };

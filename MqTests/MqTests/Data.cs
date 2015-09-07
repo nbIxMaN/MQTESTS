@@ -10,7 +10,7 @@ namespace MqTests
         public static ReferralInfo referralInfo { get; set; }
         public static Survey survey { get; set; }
         public static ReferralSource referralSource { get; set; }
-        public static MainDiagnosis mainDiagnosis { get; set; }
+
         public static ReferralTarget referralTarget { get; set; }
         public static EventsInfo eventsInfo { get; set; }
         public static ProfileMedService profileMedService { get; set; }
@@ -24,6 +24,13 @@ namespace MqTests
     public static class OptionData
     {
         public static Options options { get; set; }
+    }
+
+    public static class DiagnosisData
+    {
+        public static MainDiagnosis mainDiagnosis { get; set; }
+        public static DiagnosisInfo diagnosisInfo { get; set; }
+        public static DiagnosisInfo complicationDiagnosis { get; set; }
     }
 
     public static class PersonData
@@ -222,28 +229,35 @@ namespace MqTests
                 }
             };
         }
+        public static DiagnosisInfo SetDiagnosisInfo()
+        {
+            return DiagnosisData.diagnosisInfo = new DiagnosisInfo
+            {
+                DiagnosedDate = Convert.ToDateTime("01.01.2012"),
+                Comment = "Комментарий к диагнозу",
+                DiagnosisType = SetCoding("1", "1.2.643.2.69.1.1.1.26", "1"),
+                MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
+            };
+        }
 
+        public static DiagnosisInfo SetComplicationDiagnosis()
+        {
+            return DiagnosisData.diagnosisInfo = new DiagnosisInfo
+            {
+                DiagnosedDate = Convert.ToDateTime("01.02.2012"),
+                Comment = "Комментарий к диагнозу2",
+                DiagnosisType = SetCoding("2", "1.2.643.2.69.1.1.1.26", "1"),
+                MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
+            };
+        }
         public static MainDiagnosis SetMainDiagnosis()
         {
-            return ReferralData.mainDiagnosis = new MainDiagnosis
+            SetDiagnosisInfo();
+            SetComplicationDiagnosis();
+            return DiagnosisData.mainDiagnosis = new MainDiagnosis
             {
-                DiagnosisInfo = new DiagnosisInfo
-                {
-                    DiagnosedDate = Convert.ToDateTime("01.01.2012"),
-                    Comment = "Комментарий к диагнозу",
-                    DiagnosisType = SetCoding("1", "1.2.643.2.69.1.1.1.26", "1"),
-                    MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
-                },
-                ComplicationDiagnosis = new DiagnosisInfo[]
-                {
-                    new  DiagnosisInfo
-                    {
-                        DiagnosedDate = Convert.ToDateTime("01.01.2012"),
-                        Comment = "Комментарий к диагнозу",
-                        DiagnosisType = SetCoding("2", "1.2.643.2.69.1.1.1.26", "1"),
-                        MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
-                    }
-                }
+                DiagnosisInfo = DiagnosisData.diagnosisInfo,
+                ComplicationDiagnosis = new DiagnosisInfo[] { DiagnosisData.complicationDiagnosis }
             };
         }
 
