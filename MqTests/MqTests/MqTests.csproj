@@ -194,9 +194,6 @@
     <WCFMetadataStorage Include="Service References\WebReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\WebReference\MqService.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\WebReference\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +204,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WebReference\MqService.disco" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

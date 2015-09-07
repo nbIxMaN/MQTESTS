@@ -12,7 +12,7 @@ namespace MqTests
         //подумать как сделать лучше!!
         public Coding SetCoding(Coding cod)
         {
-            cod.Version = null;
+           //cod.Version = null;
             return cod;
         }
 

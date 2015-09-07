@@ -12,13 +12,17 @@ namespace MqTests
         [Test]
         public void MinRegister()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 try
                 {
                     var num = mq.Register(cr, referral);
+                    if (Global.errors == "")
+                        Assert.Pass();
+                    else
+                        Assert.Fail(Global.errors);
                     using (var x = Global.GetSqlConnection())
                     {
                         var s = "SELECT  * " +
