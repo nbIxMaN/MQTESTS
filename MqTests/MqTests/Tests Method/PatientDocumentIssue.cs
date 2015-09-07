@@ -11,7 +11,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void MinPatientDocumentIssue()
         {
-            using (mq)
+            using (MqServiceClient mq = new MqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
@@ -24,7 +24,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void FullPatientDocumentIssue()
         {
-            using (mq)
+            using (MqServiceClient mq = new MqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();

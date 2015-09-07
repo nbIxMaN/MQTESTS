@@ -13,6 +13,7 @@ namespace MqTests
         public static MainDiagnosis mainDiagnosis { get; set; }
         public static ReferralTarget referralTarget { get; set; }
         public static EventsInfo eventsInfo { get; set; }
+        public static ProfileMedService profileMedService { get; set; }
     }
 
     public static class CodingData
@@ -20,11 +21,15 @@ namespace MqTests
         public static Coding coding { get; set; }
     }
 
+    public static class OptionData
+    {
+        public static Options options { get; set; }
+    }
+
     public static class PersonData
     {
         public static Doctor doctor { get; set; }
         public static Patient patient { get; set; }
-
         public static ContactDto contact { get; set; }
     }
 
@@ -42,7 +47,7 @@ namespace MqTests
     [TestFixture]
     public abstract class Data
     {
-        protected MqServiceClient mq { get; private set; }
+        //protected  mq MqServiceClient mq { get; private set; }
         public string idLpu = "1.2.643.5.1.13.3.25.78.6";
         public string guid = "dda0e909-93cd-4549-b7ff-d1caaa1f0bc2";
 
@@ -242,8 +247,25 @@ namespace MqTests
             };
         }
 
+        public static void SetOptions()
+        {
+            OptionData.options = new Options
+            {
+                DateReport = Convert.ToDateTime("01.04.2012"),
+                ReferralInfo = new ReferralInfo
+                {
+                    ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                },
+                Target = new ReferralTarget
+                {
+                    Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1")
+                }
+            };
+        }
+
         public static void SetRef()
         {
+
             ReferralData.referralInfo = new ReferralInfo
             {
                 Priority = "Комментарий о приоритете и состоянии пациента",
@@ -252,7 +274,7 @@ namespace MqTests
                 Comment = "Комментарий/дополнительные данные для направления",
                 ReferralType = SetCoding("2", "1.2.643.2.69.1.1.1.55", "1"),
                 ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
-           //     IdMq = "Идентификатор направления в РЕГИЗ.УО"
+                //     IdMq = "Идентификатор направления в РЕГИЗ.УО"
             };
 
             ReferralData.survey = new Survey
@@ -281,6 +303,8 @@ namespace MqTests
             {
                 IdCaseMis = "Идентификатор случая обслуживания в МИС целевой МО",
                 Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1"),
+                Doctors = new Doctor[] { SetDoctor() },
+                MainDiagnosis = new MainDiagnosis[] { SetMainDiagnosis() }
             };
 
             ReferralData.eventsInfo = new EventsInfo
@@ -300,6 +324,11 @@ namespace MqTests
                     ReceptionAppointDate = Convert.ToDateTime("04.01.2012"),
                     ReceptionAppointTime = "Сведения о времени и длительности приема в назначенную дату приема пациента по направлению",
                     ReceptionAppointComment = "Дополнительные сведения назначенном приеме пациента по направлению в целевой МО (например, кабинет или необходимость обращения в регистратуру)",
+                    CaseOpenDate = Convert.ToDateTime("03.01.2012"),
+                    CaseCloseDate = Convert.ToDateTime("03.01.2012"),
+                    CaseAidType = SetCoding("1", "1.2.643.2.69.1.1.1.52", "1"),
+                    CaseAidForm = SetCoding("1", "1.2.643.2.69.1.1.1.54", "1"),
+                    CaseAidPlace = SetCoding("2", "1.2.643.2.69.1.1.1.53", "1")
                 },
                 Cancellation = new CancellationData
                 {
@@ -309,6 +338,18 @@ namespace MqTests
                     CancellationReason = SetCoding("5", "1.2.643.2.69.1.1.1.60", "1")
                 }
             };
+
+            ReferralData.profileMedService = new ProfileMedService
+            {
+                IdProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                StartDate = Convert.ToDateTime("01.12.2011"),
+                EndDate = Convert.ToDateTime("01.06.2012"),
+                Address = "г.Санкт-Петербург ул. Кирочная д.8",
+                ContactValue = "12 345 67",
+                Comment = "Комментарий о режиме работы с направленными пациентами",
+                Site = "Сайт медицинской организации"
+            };
+
 
             ReferralData.referral = new Referral
             {
@@ -324,15 +365,19 @@ namespace MqTests
         [SetUp]
         public void SetUp()
         {
-            mq = new MqServiceClient();
+            // mq = new MqServiceClient();
             SetDocument();
+            SetOptions();
             SetRef();
         }
 
         [TearDown]
         public void TearDown()
         {
-            mq.Close();
+            //    mq.Close();
+            Global.errors1.Clear();
+            Global.errors2.Clear();
+            Global.errors3.Clear();
         }
     }
 }

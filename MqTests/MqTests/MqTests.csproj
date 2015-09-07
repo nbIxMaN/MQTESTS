@@ -102,6 +102,8 @@
     <Compile Include="Tests Method\AgreedFromSourcedMo.cs" />
     <Compile Include="Tests Method\AgreedFromTargetMo.cs" />
     <Compile Include="Tests Method\Cancellation.cs" />
+    <Compile Include="Tests Method\ChangePlannedResource.cs" />
+    <Compile Include="Tests Method\GetQueueInfo.cs" />
     <Compile Include="Tests Method\PatientDocumentIssue.cs" />
     <Compile Include="Tests Method\Register.cs" />
     <Compile Include="SetData.cs" />
@@ -128,6 +130,9 @@
     <Compile Include="TestReferralSource.cs" />
     <Compile Include="TestReferralSurvey.cs" />
     <Compile Include="TestReferralTarget.cs" />
+    <Compile Include="Tests Method\UpdateFromSourcedMo.cs" />
+    <Compile Include="Tests Method\UpdateFromTargetMo.cs" />
+    <Compile Include="Tests Method\UpdateMedServiceProfile.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -141,29 +146,29 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Service References\WebReference\MqService1.wsdl" />
-    <None Include="Service References\WebReference\MqService8.xsd">
+    <None Include="Service References\WebReference\MqService.wsdl" />
+    <None Include="Service References\WebReference\MqService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebReference\MqService81.xsd">
+    <None Include="Service References\WebReference\MqService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebReference\MqService82.xsd">
+    <None Include="Service References\WebReference\MqService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebReference\MqService83.xsd">
+    <None Include="Service References\WebReference\MqService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebReference\MqService84.xsd">
+    <None Include="Service References\WebReference\MqService4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebReference\MqService85.xsd">
+    <None Include="Service References\WebReference\MqService5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebReference\MqService86.xsd">
+    <None Include="Service References\WebReference\MqService6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebReference\MqService87.xsd">
+    <None Include="Service References\WebReference\MqService7.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\WebReference\MqTests.WebReference.MqDocResult.datasource">
@@ -189,6 +194,9 @@
     <WCFMetadataStorage Include="Service References\WebReference\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\WebReference\MqService.disco" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Service References\WebReference\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -199,9 +207,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\WebReference\MqService.disco" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

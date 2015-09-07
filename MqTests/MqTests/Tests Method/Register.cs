@@ -2,7 +2,7 @@
 using MqTests.WebReference;
 using NUnit.Framework;
 using Npgsql;
-
+using System.ServiceModel;
 
 namespace MqTests
 {
@@ -12,25 +12,32 @@ namespace MqTests
         [Test]
         public void MinRegister()
         {
-            using (mq)
+            using (MqServiceClient mq = new MqServiceClient())
             {
                 Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
-                var num = mq.Register(cr, referral);
-                using (var x = Global.GetSqlConnection())
+                try
                 {
-                    var s = "SELECT  * " +
-                        "FROM    public.referral " +
-                        "WHERE id_referral = '" + num.IdMq + "'";
-
-                    NpgsqlCommand c = new NpgsqlCommand(s, x);
-                    using (var reader = c.ExecuteReader())
+                    var num = mq.Register(cr, referral);
+                    using (var x = Global.GetSqlConnection())
                     {
-                        while (reader.Read())
+                        var s = "SELECT  * " +
+                            "FROM    public.referral " +
+                            "WHERE id_referral = '" + num.IdMq + "'";
+
+                        NpgsqlCommand c = new NpgsqlCommand(s, x);
+                        using (var reader = c.ExecuteReader())
                         {
-                            var r = reader.GetValue(0);
+                            while (reader.Read())
+                            {
+                                var r = reader.GetValue(0);
+                            }
                         }
                     }
+                }
+                catch (FaultException<MqTests.WebReference.MqFault> e)
+                {
+                    string r = e.Detail.MqFaults[0].Message;
                 }
             }
         }
@@ -38,7 +45,7 @@ namespace MqTests
         [Test]
         public void FullRegister()
         {
-            using (mq)
+            using (MqServiceClient mq = new MqServiceClient())
             {
                 Referral referral = (new SetData()).FullRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
@@ -46,6 +53,6 @@ namespace MqTests
             }
         }
 
-        
+
     }
 }

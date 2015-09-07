@@ -11,7 +11,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void MinCancellation()
         {
-            using (mq)
+            using (MqServiceClient mq = new MqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
@@ -24,7 +24,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void FullCancellation()
         {
-            using (mq)
+            using (MqServiceClient mq = new MqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
