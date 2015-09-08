@@ -12,7 +12,7 @@ namespace MqTests
         //подумать как сделать лучше!!
         public Coding SetCoding(Coding cod)
         {
-           //cod.Version = null;
+            //cod.Version = null;
             return cod;
         }
 
@@ -142,7 +142,7 @@ namespace MqTests
 
         public Referral FullAgreedFromSourcedMo(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo
                 {
@@ -165,7 +165,7 @@ namespace MqTests
 
         public Referral MinPatientDocumentIssue(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo
                 {
@@ -192,7 +192,7 @@ namespace MqTests
 
         public Referral MinCancellation(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
                 EventsInfo = new EventsInfo
@@ -209,7 +209,7 @@ namespace MqTests
 
         public Referral FullCancellation(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
                 EventsInfo = new EventsInfo { Cancellation = ReferralData.eventsInfo.Cancellation },
@@ -218,7 +218,7 @@ namespace MqTests
 
         public Referral MinAgreedFromTargetMo(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
                 EventsInfo = new EventsInfo
@@ -234,7 +234,7 @@ namespace MqTests
 
         public Referral FullAgreedFromTargetMo(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
                 EventsInfo = new EventsInfo
@@ -253,7 +253,7 @@ namespace MqTests
 
         public ProfileMedService MinUpdateMedServiceProfile()
         {
-            return ReferralData.profileMedService = new ProfileMedService
+            return new ProfileMedService
             {
                 IdProfileMedService = SetCoding(ReferralData.profileMedService.IdProfileMedService)
             };
@@ -261,15 +261,12 @@ namespace MqTests
 
         public ProfileMedService FullUpdateMedServiceProfile()
         {
-            return ReferralData.profileMedService = ReferralData.profileMedService;
+            return ReferralData.profileMedService;
         }
 
         public Referral MinUpdateFromSourcedMo(string idMq)
         {
-            return ReferralData.referral = new Referral
-            {
-                ReferralInfo = new ReferralInfo { IdMq = idMq },
-            };
+            return new Referral { ReferralInfo = new ReferralInfo { IdMq = idMq } };
         }
 
         public Referral FullUpdateFromSourcedMo(string idMq)
@@ -283,7 +280,7 @@ namespace MqTests
             {
                 Lpu = ReferralData.referralTarget.Lpu
             };
-            referral.Patient = PersonData.patient; //сработает?
+            referral.Patient = PersonData.patient;
             referral.EventsInfo = new EventsInfo
             {
                 Source = ReferralData.eventsInfo.Source
@@ -299,15 +296,12 @@ namespace MqTests
 
         public Referral MinUpdateFromTargetMO(string idMq)
         {
-            return ReferralData.referral = new Referral
-            {
-                ReferralInfo = new ReferralInfo { IdMq = idMq },
-            };
+            return new Referral { ReferralInfo = new ReferralInfo { IdMq = idMq } };
         }
 
         public Referral FullUpdateFromTargetMO(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo
                 {
@@ -352,7 +346,7 @@ namespace MqTests
 
         public Referral MinChangePlannedResource(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
                 EventsInfo = new EventsInfo
@@ -373,10 +367,9 @@ namespace MqTests
             return referral;
         }
 
-        //в разработке
         public Referral MinHealthCareStart(string idMq)
         {
-            return ReferralData.referral = new Referral
+            return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
                 Target = new ReferralTarget
@@ -402,13 +395,173 @@ namespace MqTests
                            }
                         }
                     },
-                    //MainDiagnosis = new MainDiagnosis
-                    //{
-                    //    DiagnosisInfo = DiagnosisData.diagnosisInfo,
-                    //    ComplicationDiagnosis = DiagnosisData.complicationDiagnosis
-                    //}
+                    MainDiagnosis = new MainDiagnosis[]
+                    {
+                        new   MainDiagnosis
+                        {
+                            // version задаётся
+                            ComplicationDiagnosis = new DiagnosisInfo[] { DiagnosisData.complicationDiagnosis },
+                            DiagnosisInfo = DiagnosisData.diagnosisInfo
+                        }
+                    }
+                },
+                EventsInfo = new EventsInfo
+                {
+                    Target = new EventTarget
+                    {
+                        CaseOpenDate = ReferralData.eventsInfo.Target.CaseOpenDate,
+                    }
                 }
             };
+        }
+
+        public Referral FullHealthCareStart(string idMq)
+        {
+            return new Referral
+            {
+                ReferralInfo = new ReferralInfo { IdMq = idMq },
+                Target = new ReferralTarget
+                {
+                    IdCaseMis = ReferralData.referralTarget.IdCaseMis,
+                    Lpu = ReferralData.referralTarget.Lpu,
+                    Doctors = ReferralData.referralTarget.Doctors,
+                    MainDiagnosis = ReferralData.referralTarget.MainDiagnosis
+                },
+                Patient = new Patient
+                {
+                    Addresses = ReferralData.referral.Patient.Addresses,
+                    ContactDtos = ReferralData.referral.Patient.ContactDtos,
+                    Jobs = ReferralData.referral.Patient.Jobs,
+                    Privileges = ReferralData.referral.Patient.Privileges,
+                    Documents = ReferralData.referral.Patient.Documents,
+                },
+                EventsInfo = new EventsInfo
+                {
+                    Target = new EventTarget
+                    {
+                        CaseOpenDate = ReferralData.eventsInfo.Target.CaseOpenDate,
+                        CaseAidForm = ReferralData.eventsInfo.Target.CaseAidForm,
+                        CaseAidType = ReferralData.eventsInfo.Target.CaseAidType,
+                        CaseAidPlace = ReferralData.eventsInfo.Target.CaseAidPlace
+                    }
+
+                }
+            };
+        }
+
+        public Referral MinHealthCareEnd(string idMq)
+        {
+            return new Referral
+            {
+                ReferralInfo = new ReferralInfo { IdMq = idMq },
+                Target = new ReferralTarget
+                {
+                    Lpu = SetCoding(ReferralData.referralTarget.Lpu),
+                    Doctors = new Doctor[]
+                    { 
+                        new Doctor
+                        {
+                           Role = SetCoding(PersonData.doctor.Role),
+                           Lpu =  SetCoding(PersonData.doctor.Lpu),
+                           Speciality = SetCoding(PersonData.doctor.Speciality),
+                           Position = SetCoding(PersonData.doctor.Position),
+                           Person = new Person
+                           {
+                                Sex = SetCoding(PersonData.doctor.Person.Sex),
+                                IdPersonMis = PersonData.doctor.Person.IdPersonMis,
+                                HumanName = new HumanName
+                                {
+                                     FamilyName = PersonData.doctor.Person.HumanName.FamilyName,
+                                     GivenName = PersonData.doctor.Person.HumanName.GivenName
+                                }
+                           },
+                            ContactDtos = new ContactDto[] { PersonData.contact }
+                        }
+                    },
+                    MainDiagnosis = new MainDiagnosis[]
+                    {
+                        new   MainDiagnosis
+                        {
+                            // version задаётся
+                            ComplicationDiagnosis = new DiagnosisInfo[] { DiagnosisData.complicationDiagnosis },
+                            DiagnosisInfo = DiagnosisData.diagnosisInfo
+                        }
+                    }
+                },
+                EventsInfo = new EventsInfo
+                {
+                    Target = new EventTarget
+                    {
+                        CaseOpenDate = ReferralData.eventsInfo.Target.CaseOpenDate,
+                    }
+                }
+            };
+        }
+
+        public Referral FullHealthCareEnd(string idMq)
+        {
+            return new Referral
+            {
+                ReferralInfo = new ReferralInfo { IdMq = idMq },
+                Target = new ReferralTarget
+                {
+                    IdCaseMis = ReferralData.referralTarget.IdCaseMis,
+                    Lpu = ReferralData.referralTarget.Lpu,
+                    Doctors = ReferralData.referralTarget.Doctors,
+                    MainDiagnosis = ReferralData.referralTarget.MainDiagnosis
+                },
+                Patient = new Patient
+                {
+                    Addresses = ReferralData.referral.Patient.Addresses,
+                    ContactDtos = ReferralData.referral.Patient.ContactDtos,
+                    Jobs = ReferralData.referral.Patient.Jobs,
+                    Privileges = ReferralData.referral.Patient.Privileges,
+                    Documents = ReferralData.referral.Patient.Documents,
+                },
+                EventsInfo = new EventsInfo
+                {
+                    Target = new EventTarget
+                    {
+                        CaseOpenDate = ReferralData.eventsInfo.Target.CaseOpenDate,
+                        CaseAidForm = ReferralData.eventsInfo.Target.CaseAidForm,
+                        CaseAidType = ReferralData.eventsInfo.Target.CaseAidType,
+                        CaseAidPlace = ReferralData.eventsInfo.Target.CaseAidPlace
+                    }
+
+                }
+            };
+        }
+        public Referral MinSetOrChangeTargetMO(string idMq)
+        {
+            return new Referral
+            {
+                ReferralInfo = new ReferralInfo { IdMq = idMq },
+                Target = new ReferralTarget { Lpu = SetCoding(ReferralData.referralTarget.Lpu) }
+            };
+        }
+
+        public Referral FullSetOrChangeTargetMO(string idMq)
+        {
+            return new Referral
+            {
+                ReferralInfo = new ReferralInfo
+                {
+                    IdMq = idMq,
+                    ReferralType = ReferralData.referralInfo.ReferralType,
+                    ProfileMedService = ReferralData.referralInfo.ProfileMedService
+                },
+                ReferralSurvey = new Survey
+                {
+                    SurveyOrgan = ReferralData.survey.SurveyOrgan,
+                    SurveyType = ReferralData.survey.SurveyType
+                },
+                Target = new ReferralTarget { Lpu = SetCoding(ReferralData.referralTarget.Lpu) },
+            };
+        }
+
+        public Referral GetResultDocument(string idMq)
+        {
+            return new Referral { ReferralInfo = new ReferralInfo {IdMq = idMq } };
         }
     }
 }

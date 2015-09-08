@@ -38,6 +38,7 @@ namespace MqTests
         public static Doctor doctor { get; set; }
         public static Patient patient { get; set; }
         public static ContactDto contact { get; set; }
+        public static AddressDto address { get; set; }
     }
 
     public static class DocumentData
@@ -132,6 +133,15 @@ namespace MqTests
             };
         }
 
+        public static AddressDto SetAddress()
+        {
+            return PersonData.address = new AddressDto
+            {
+                AddressType = SetCoding("H", "1.2.643.2.69.1.1.1.28", "1"),
+                StringAddress = "г.Петергоф Ботаническая 66, корп 2"
+            };
+        }
+
         public static ContactDto SetContact()
         {
             return PersonData.contact = new ContactDto
@@ -196,15 +206,11 @@ namespace MqTests
                 },
                 Addresses = new AddressDto[] 
                 { 
-                  new AddressDto
-                  {
-                      AddressType = SetCoding("H","1.2.643.2.69.1.1.1.28","1"),
-                      StringAddress = "г.Петергоф Ботаническая 66, корп 2"
-                  }
+                    SetAddress()
                 },
                 ContactDtos = new ContactDto[]
                 {
-                     SetContact()
+                    SetContact()
                 },
                 Jobs = new Job[] 
                 { 
@@ -268,7 +274,7 @@ namespace MqTests
                 DateReport = Convert.ToDateTime("01.04.2012"),
                 ReferralInfo = new ReferralInfo
                 {
-                    ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                    ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"), 
                 },
                 Target = new ReferralTarget
                 {

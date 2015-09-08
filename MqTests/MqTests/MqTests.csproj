@@ -104,6 +104,8 @@
     <Compile Include="Tests Method\Cancellation.cs" />
     <Compile Include="Tests Method\ChangePlannedResource.cs" />
     <Compile Include="Tests Method\GetQueueInfo.cs" />
+    <Compile Include="Tests Method\HealthCareEnd.cs" />
+    <Compile Include="Tests Method\HealthCareStart.cs" />
     <Compile Include="Tests Method\PatientDocumentIssue.cs" />
     <Compile Include="Tests Method\Register.cs" />
     <Compile Include="SetData.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="TestReferralSource.cs" />
     <Compile Include="TestReferralSurvey.cs" />
     <Compile Include="TestReferralTarget.cs" />
+    <Compile Include="Tests Method\SetOrChangeTargetMO.cs" />
     <Compile Include="Tests Method\UpdateFromSourcedMo.cs" />
     <Compile Include="Tests Method\UpdateFromTargetMo.cs" />
     <Compile Include="Tests Method\UpdateMedServiceProfile.cs" />
