@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using MqTests.WebReference;
+using Npgsql;
 using System;
 using System.Collections;
 using System.Collections.Generic;

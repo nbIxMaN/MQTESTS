@@ -10,7 +10,7 @@ namespace MqTests
     class TestEventsInfo
     {
         EventsInfo info;
-        TestCancellation cancellation;
+        public TestCancellation cancellation;
         TestEventSource source;
         TestEventTarget target;
         public TestEventsInfo(EventsInfo r)

@@ -53,7 +53,7 @@ namespace MqTests
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
-                string findPatient = "SELECT id_target_lpu_case_mis, is_referral_review_target_mo, reception_appoint_additional_comment, reception_appoint_time_comment, referral_review_date_target_mo, id_target_lpu FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
+                string findPatient = "SELECT id_target_lpu_case_mis, is_referral_review_target_mo, reception_appoint_additional_comment, reception_appoint_time_comment, referral_review_date_target_mo, id_target_lpu, reception_appoint_date FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
                 {
@@ -69,6 +69,8 @@ namespace MqTests
                             p.ReceptionAppointComment = Convert.ToString(personFromDataBase["reception_appoint_additional_comment"]);
                         if (personFromDataBase["reception_appoint_time_comment"].ToString() != "")
                             p.ReceptionAppointTime = Convert.ToString(personFromDataBase["reception_appoint_time_comment"]);
+                        if (personFromDataBase["reception_appoint_date"].ToString() != "")
+                            p.ReceptionAppointDate = Convert.ToDateTime(personFromDataBase["reception_appoint_date"]);
                         if (personFromDataBase["referral_review_date_target_mo"].ToString() != "")
                             p.ReferralReviewDate = Convert.ToDateTime(personFromDataBase["referral_review_date_target_mo"]);
                         TestReferralTarget pers = new TestReferralTarget(p);

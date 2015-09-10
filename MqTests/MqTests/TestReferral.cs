@@ -10,13 +10,13 @@ namespace MqTests
 {
     class TestReferral
     {
-        Referral referral;
-        TestEventsInfo evInfo;
-        TestPatient patient;
-        TestReferralInfo refInfo;
-        TestReferralSurvey refSurvey;
-        TestReferralSource refSourse;
-        TestReferralTarget refTarget;
+        public Referral referral;
+        public TestEventsInfo evInfo;
+        public TestPatient patient;
+        public TestReferralInfo refInfo;
+        public TestReferralSurvey refSurvey;
+        public TestReferralSource refSourse;
+        public TestReferralTarget refTarget;
         public TestReferral(Referral r, string idLpu = "")
         {
             if (r != null)

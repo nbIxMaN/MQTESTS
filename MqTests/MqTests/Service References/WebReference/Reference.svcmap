@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c4cfde3e-a588-409e-b737-ef255924db79" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8905f0a8-4064-4072-be2b-9c607cbe7e1f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,17 +22,16 @@
     <MetadataSource Address="http://192.168.8.93:4444/MqService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MqService1.wsdl" MetadataType="Wsdl" ID="1d91a0e1-8584-4137-9655-66ae03d990e6" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?wsdl" />
-    <MetadataFile FileName="MqService8.xsd" MetadataType="Schema" ID="c3c57212-7c58-4791-8c41-ed952eeb02a4" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd2" />
-    <MetadataFile FileName="MqService81.xsd" MetadataType="Schema" ID="68ca8cd5-542b-43d2-8519-a59cf822274c" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd4" />
-    <MetadataFile FileName="MqService82.xsd" MetadataType="Schema" ID="aac15a5e-ef32-453e-aefa-fa74d57f83d8" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd3" />
-    <MetadataFile FileName="MqService83.xsd" MetadataType="Schema" ID="24eafe3d-071c-4a6e-b801-c4fa9915582f" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd5" />
-    <MetadataFile FileName="MqService.disco" MetadataType="Disco" ID="ec04898d-e48d-4806-9e3d-8a0966802416" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?disco" />
-    <MetadataFile FileName="MqService84.xsd" MetadataType="Schema" ID="ced6969b-e901-444d-b9ce-6dff63db7a1a" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd0" />
-    <MetadataFile FileName="MqService85.xsd" MetadataType="Schema" ID="17b7a922-b476-46a4-bfbb-4ea5e78e3c5a" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd6" />
-    <MetadataFile FileName="MqService86.xsd" MetadataType="Schema" ID="de6e5081-4275-4591-b547-a85205433285" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd1" />
-    <MetadataFile FileName="MqService87.xsd" MetadataType="Schema" ID="5a2bba9b-323f-4b2a-b54c-47e47e446e34" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd7" />
->>>>>>> origin/master
+    <MetadataFile FileName="MqService.wsdl" MetadataType="Wsdl" ID="97887224-746a-46f3-92be-b17e06a60401" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?wsdl" />
+    <MetadataFile FileName="MqService.xsd" MetadataType="Schema" ID="47f73252-3370-4b49-b121-e7de2679ceca" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MqService1.xsd" MetadataType="Schema" ID="0e5efcc9-f8b2-4160-ac0f-a6e102231507" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MqService2.xsd" MetadataType="Schema" ID="50de7f4e-a31d-4891-b623-339de1e906e0" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MqService3.xsd" MetadataType="Schema" ID="1205ef38-c756-42e3-87c8-004491a340e4" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd5" />
+    <MetadataFile FileName="MqService.disco" MetadataType="Disco" ID="639d0ec6-5766-44e8-a590-8506cf47b83e" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?disco" />
+    <MetadataFile FileName="MqService4.xsd" MetadataType="Schema" ID="30f10535-807c-4178-bda7-8ba88c67bd91" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MqService5.xsd" MetadataType="Schema" ID="e4c7bb7b-f164-48ef-baa3-8ffe9a0c0753" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd6" />
+    <MetadataFile FileName="MqService6.xsd" MetadataType="Schema" ID="07c2e8fa-2405-4457-9698-50be633a9d3c" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MqService7.xsd" MetadataType="Schema" ID="646766cb-1287-4e70-91ce-761cdf9f28d9" SourceId="1" SourceUrl="http://192.168.8.93:4444/MqService.svc?xsd=xsd7" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
