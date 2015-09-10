@@ -10,9 +10,10 @@ namespace MqTests
         public static ReferralInfo referralInfo { get; set; }
         public static Survey survey { get; set; }
         public static ReferralSource referralSource { get; set; }
-        public static MainDiagnosis mainDiagnosis { get; set; }
+
         public static ReferralTarget referralTarget { get; set; }
         public static EventsInfo eventsInfo { get; set; }
+        public static ProfileMedService profileMedService { get; set; }
     }
 
     public static class CodingData
@@ -20,10 +21,24 @@ namespace MqTests
         public static Coding coding { get; set; }
     }
 
+    public static class OptionData
+    {
+        public static Options options { get; set; }
+    }
+
+    public static class DiagnosisData
+    {
+        public static MainDiagnosis mainDiagnosis { get; set; }
+        public static DiagnosisInfo diagnosisInfo { get; set; }
+        public static DiagnosisInfo complicationDiagnosis { get; set; }
+    }
+
     public static class PersonData
     {
         public static Doctor doctor { get; set; }
         public static Patient patient { get; set; }
+        public static ContactDto contact { get; set; }
+        public static AddressDto address { get; set; }
     }
 
     public static class DocumentData
@@ -40,7 +55,7 @@ namespace MqTests
     [TestFixture]
     public abstract class Data
     {
-        protected MqServiceClient mq { get; private set; }
+        //protected  mq MqServiceClient mq { get; private set; }
         public string idLpu = "1.2.643.5.1.13.3.25.78.6";
         public string guid = "dda0e909-93cd-4549-b7ff-d1caaa1f0bc2";
 
@@ -118,6 +133,23 @@ namespace MqTests
             };
         }
 
+        public static AddressDto SetAddress()
+        {
+            return PersonData.address = new AddressDto
+            {
+                AddressType = SetCoding("H", "1.2.643.2.69.1.1.1.28", "1"),
+                StringAddress = "г.Петергоф Ботаническая 66, корп 2"
+            };
+        }
+
+        public static ContactDto SetContact()
+        {
+            return PersonData.contact = new ContactDto
+            {
+                ContactType = SetCoding("1", "1.2.643.2.69.1.1.1.27", "1"),
+                ContactValue = "89103456789"
+            };
+        }
 
         public static Coding SetCoding(string code, string system, string version)
         {
@@ -150,11 +182,7 @@ namespace MqTests
                 },
                 ContactDtos = new ContactDto[]
                 {
-                     new ContactDto
-                     {
-                         ContactType = SetCoding("1","1.2.643.2.69.1.1.1.27","1"),
-                          ContactValue = "89103456789"
-                     }
+                     SetContact()
                 }
             };
         }
@@ -178,19 +206,11 @@ namespace MqTests
                 },
                 Addresses = new AddressDto[] 
                 { 
-                  new AddressDto
-                  {
-                      AddressType = SetCoding("H","1.2.643.2.69.1.1.1.28","1"),
-                      StringAddress = "г.Петергоф Ботаническая 66, корп 2"
-                  }
+                    SetAddress()
                 },
                 ContactDtos = new ContactDto[]
                 {
-                     new ContactDto
-                     {
-                          ContactType = SetCoding("2","1.2.643.2.69.1.1.1.27","1"),
-                          ContactValue = "4567809"
-                     }
+                    SetContact()
                 },
                 Jobs = new Job[] 
                 { 
@@ -215,33 +235,57 @@ namespace MqTests
                 }
             };
         }
+        public static DiagnosisInfo SetDiagnosisInfo()
+        {
+            return DiagnosisData.diagnosisInfo = new DiagnosisInfo
+            {
+                DiagnosedDate = Convert.ToDateTime("01.01.2012"),
+                Comment = "Комментарий к диагнозу",
+                DiagnosisType = SetCoding("1", "1.2.643.2.69.1.1.1.26", "1"),
+                MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
+            };
+        }
 
+        public static DiagnosisInfo SetComplicationDiagnosis()
+        {
+            return DiagnosisData.diagnosisInfo = new DiagnosisInfo
+            {
+                DiagnosedDate = Convert.ToDateTime("01.02.2012"),
+                Comment = "Комментарий к диагнозу2",
+                DiagnosisType = SetCoding("2", "1.2.643.2.69.1.1.1.26", "1"),
+                MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
+            };
+        }
         public static MainDiagnosis SetMainDiagnosis()
         {
-            return ReferralData.mainDiagnosis = new MainDiagnosis
+            SetDiagnosisInfo();
+            SetComplicationDiagnosis();
+            return DiagnosisData.mainDiagnosis = new MainDiagnosis
             {
-                DiagnosisInfo = new DiagnosisInfo
+                DiagnosisInfo = DiagnosisData.diagnosisInfo,
+                ComplicationDiagnosis = new DiagnosisInfo[] { DiagnosisData.complicationDiagnosis }
+            };
+        }
+
+        public static void SetOptions()
+        {
+            OptionData.options = new Options
+            {
+                DateReport = Convert.ToDateTime("01.04.2012"),
+                ReferralInfo = new ReferralInfo
                 {
-                    DiagnosedDate = Convert.ToDateTime("01.01.2012"),
-                    Comment = "Комментарий к диагнозу",
-                    DiagnosisType = SetCoding("1", "1.2.643.2.69.1.1.1.26", "1"),
-                    MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
+                    ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"), 
                 },
-                ComplicationDiagnosis = new DiagnosisInfo[]
+                Target = new ReferralTarget
                 {
-                    new  DiagnosisInfo
-                    {
-                        DiagnosedDate = Convert.ToDateTime("01.01.2012"),
-                        Comment = "Комментарий к диагнозу",
-                        DiagnosisType = SetCoding("2", "1.2.643.2.69.1.1.1.26", "1"),
-                        MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
-                    }
+                    Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1")
                 }
             };
         }
 
         public static void SetRef()
         {
+
             ReferralData.referralInfo = new ReferralInfo
             {
                 Priority = "Комментарий о приоритете и состоянии пациента",
@@ -250,7 +294,7 @@ namespace MqTests
                 Comment = "Комментарий/дополнительные данные для направления",
                 ReferralType = SetCoding("2", "1.2.643.2.69.1.1.1.55", "1"),
                 ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
-                IdMq = "Идентификатор направления в РЕГИЗ.УО"
+                //     IdMq = "Идентификатор направления в РЕГИЗ.УО"
             };
 
             ReferralData.survey = new Survey
@@ -279,6 +323,8 @@ namespace MqTests
             {
                 IdCaseMis = "Идентификатор случая обслуживания в МИС целевой МО",
                 Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1"),
+                Doctors = new Doctor[] { SetDoctor() },
+                MainDiagnosis = new MainDiagnosis[] { SetMainDiagnosis() }
             };
 
             ReferralData.eventsInfo = new EventsInfo
@@ -298,8 +344,32 @@ namespace MqTests
                     ReceptionAppointDate = Convert.ToDateTime("04.01.2012"),
                     ReceptionAppointTime = "Сведения о времени и длительности приема в назначенную дату приема пациента по направлению",
                     ReceptionAppointComment = "Дополнительные сведения назначенном приеме пациента по направлению в целевой МО (например, кабинет или необходимость обращения в регистратуру)",
+                    CaseOpenDate = Convert.ToDateTime("03.01.2012"),
+                    CaseCloseDate = Convert.ToDateTime("03.01.2012"),
+                    CaseAidType = SetCoding("1", "1.2.643.2.69.1.1.1.52", "1"),
+                    CaseAidForm = SetCoding("1", "1.2.643.2.69.1.1.1.54", "1"),
+                    CaseAidPlace = SetCoding("2", "1.2.643.2.69.1.1.1.53", "1")
                 },
+                Cancellation = new CancellationData
+                {
+                    Date = Convert.ToDateTime("04.01.2012"),
+                    ReasonComment = "Описание причины аннулирования",
+                    CancellationSource = SetCoding("1", "1.2.643.2.69.1.1.1.49", "1"),
+                    CancellationReason = SetCoding("5", "1.2.643.2.69.1.1.1.60", "1")
+                }
             };
+
+            ReferralData.profileMedService = new ProfileMedService
+            {
+                IdProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                StartDate = Convert.ToDateTime("01.12.2011"),
+                EndDate = Convert.ToDateTime("01.06.2012"),
+                Address = "г.Санкт-Петербург ул. Кирочная д.8",
+                ContactValue = "12 345 67",
+                Comment = "Комментарий о режиме работы с направленными пациентами",
+                Site = "Сайт медицинской организации"
+            };
+
 
             ReferralData.referral = new Referral
             {
@@ -315,15 +385,19 @@ namespace MqTests
         [SetUp]
         public void SetUp()
         {
-            mq = new MqServiceClient();
+            // mq = new MqServiceClient();
             SetDocument();
+            SetOptions();
             SetRef();
         }
 
         [TearDown]
         public void TearDown()
         {
-            mq.Close();
+            //    mq.Close();
+            Global.errors1.Clear();
+            Global.errors2.Clear();
+            Global.errors3.Clear();
         }
     }
 }

@@ -6,33 +6,32 @@ using Npgsql;
 namespace MqTests.Tests_Method
 {
     [TestFixture]
-    public class AgreedFromSourcedMo : Data
+    public class Cancellation : Data
     {
         [Test]
-        public void MinAgreedFromSourcedMo()
+        public void MinCancellation()
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
                 var id = mq.Register(cr, referral);
-                referral = (new SetData()).MinAgreedFromSourcedMo(id.IdMq);
-                mq.AgreedFromSourcedMo(cr, referral);
+                referral = (new SetData()).MinCancellation(id.IdMq);
+                mq.PatientDocumentIssue(cr, referral);
             }
         }
 
         [Test]
-        public void FullAgreedFromSourcedMo()
+        public void FullCancellation()
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
                 var id = mq.Register(cr, referral);
-                referral = (new SetData()).FullAgreedFromSourcedMo(id.IdMq);
-                mq.AgreedFromSourcedMo(cr, referral);
+                referral = (new SetData()).FullCancellation(id.IdMq);
+                mq.PatientDocumentIssue(cr, referral);
             }
         }
-
     }
 }
