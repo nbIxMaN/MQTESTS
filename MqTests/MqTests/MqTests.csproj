@@ -109,6 +109,7 @@
     <Compile Include="Tests Method\HealthCareEnd.cs" />
     <Compile Include="Tests Method\HealthCareStart.cs" />
     <Compile Include="Tests Method\PatientDocumentIssue.cs" />
+    <Compile Include="Tests Method\PutPatientMoveInfo.cs" />
     <Compile Include="Tests Method\Register.cs" />
     <Compile Include="SetData.cs" />
     <Compile Include="TestAdditional.cs" />

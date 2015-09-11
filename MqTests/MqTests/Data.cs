@@ -10,7 +10,6 @@ namespace MqTests
         public static ReferralInfo referralInfo { get; set; }
         public static Survey survey { get; set; }
         public static ReferralSource referralSource { get; set; }
-
         public static ReferralTarget referralTarget { get; set; }
         public static EventsInfo eventsInfo { get; set; }
         public static ProfileMedService profileMedService { get; set; }
@@ -24,6 +23,12 @@ namespace MqTests
     public static class OptionData
     {
         public static Options options { get; set; }
+    }
+
+    public static class InfoData
+    {
+        public static PatientMove_PlaceTypeInfoCell patientMove_PlaceTypeInfoCell { get; set; }
+        public static PatientMove_SMOInfoCell patientMove_SMOInfoCell { get; set; }
     }
 
     public static class DiagnosisData
@@ -55,7 +60,6 @@ namespace MqTests
     [TestFixture]
     public abstract class Data
     {
-        //protected  mq MqServiceClient mq { get; private set; }
         public string idLpu = "1.2.643.5.1.13.3.25.78.6";
         public string guid = "dda0e909-93cd-4549-b7ff-d1caaa1f0bc2";
 
@@ -180,10 +184,7 @@ namespace MqTests
                         MiddleName = "Сергеевич"
                     }
                 },
-                ContactDtos = new ContactDto[]
-                {
-                     SetContact()
-                }
+                ContactDtos = new ContactDto[] { SetContact() }
             };
         }
 
@@ -204,14 +205,8 @@ namespace MqTests
                         MiddleName = "Иванович"
                     }
                 },
-                Addresses = new AddressDto[] 
-                { 
-                    SetAddress()
-                },
-                ContactDtos = new ContactDto[]
-                {
-                    SetContact()
-                },
+                Addresses = new AddressDto[] { SetAddress() },
+                ContactDtos = new ContactDto[] { SetContact() },
                 Jobs = new Job[] 
                 { 
                     new  Job
@@ -224,15 +219,12 @@ namespace MqTests
                 {
                     new Privilege
                     {
-                         StartDate = Convert.ToDateTime("01.01.2012"),
-                         EndDate = Convert.ToDateTime("01.02.2012"),
-                         PrivilegeType = SetCoding("901","1.2.643.2.69.1.1.1.7","1")
+                        StartDate = Convert.ToDateTime("01.01.2012"),
+                        EndDate = Convert.ToDateTime("01.02.2012"),
+                        PrivilegeType = SetCoding("901", "1.2.643.2.69.1.1.1.7", "1")
                     }
                 },
-                Documents = new DocumentDto[] 
-                { 
-                    DocumentData.PatientPassport
-                }
+                Documents = new DocumentDto[] { DocumentData.PatientPassport }
             };
         }
         public static DiagnosisInfo SetDiagnosisInfo()
@@ -274,11 +266,47 @@ namespace MqTests
                 DateReport = Convert.ToDateTime("01.04.2012"),
                 ReferralInfo = new ReferralInfo
                 {
-                    ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"), 
+                    ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
                 },
                 Target = new ReferralTarget
                 {
                     Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1")
+                }
+            };
+        }
+
+        // контейнер info? проверить тестовые данные
+        public static PatientMove_PlaceTypeInfoCell SetPatientMove_PlaceTypeInfoCell()
+        {
+            return InfoData.patientMove_PlaceTypeInfoCell = new PatientMove_PlaceTypeInfoCell
+            {
+                PlaceTypeCatalogId = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                Info = new PatientMove_PlaceTypeInfo
+                {
+                    CurrentCount = 1,
+                    IncomingCount = 1,
+                    OutgoingCount = 0,
+                    PlaningCount = 1,
+                    ManPlaceAvailable = 2,
+                    WomanPlaceAvailable = 1,
+                    ChildrenPlaceAvailable = 1,
+                    InfoList = new PatientMove_SMOInfoCell[]
+                    {
+                         SetPatientMove_SMOInfoCell()
+                    }
+                }
+            };
+        }
+
+        private static PatientMove_SMOInfoCell SetPatientMove_SMOInfoCell()
+        {
+            return InfoData.patientMove_SMOInfoCell = new PatientMove_SMOInfoCell
+            {
+                HicCatalogId = SetCoding("22003", "1.2.643.5.1.13.2.1.1.635", "1"),
+                Info = new PatientMove_SMOInfo
+                {
+                    HospitalizationCount = 123,
+                    PlaceDayCount = 34
                 }
             };
         }
@@ -385,7 +413,6 @@ namespace MqTests
         [SetUp]
         public void SetUp()
         {
-            // mq = new MqServiceClient();
             SetDocument();
             SetOptions();
             SetRef();
@@ -394,7 +421,6 @@ namespace MqTests
         [TearDown]
         public void TearDown()
         {
-            //    mq.Close();
             Global.errors1.Clear();
             Global.errors2.Clear();
             Global.errors3.Clear();

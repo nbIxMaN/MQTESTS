@@ -16,6 +16,87 @@ namespace MqTests
             return cod;
         }
 
+        // может можно сделать лучше?
+        public Options GetRefferalReturnOptions_SearchOne(Referral referral, Privilege[] privileges, string idMq, Coding mqReferralStatus)
+        {
+            Options opt = new Options();
+            opt.IdMq = idMq;
+
+            if (referral.ReferralInfo != null)
+            {
+                opt.ReferralInfo = new ReferralInfo
+                {
+                    ProfileMedService = referral.ReferralInfo.ProfileMedService,
+                    ReferralType = referral.ReferralInfo.ReferralType,
+                    MqReferralStatus = mqReferralStatus
+                };
+            }
+            if (referral.Target != null)
+            { opt.Target = new ReferralTarget { Lpu = referral.Target.Lpu }; }
+
+            if (referral.Source != null)
+            { opt.Source = new ReferralSource { Lpu = referral.Source.Lpu }; }
+
+            if (referral.ReferralSurvey != null)
+            {
+                opt.Survey = new Survey
+                {
+                    SurveyType = referral.ReferralSurvey.SurveyType,
+                    SurveyOrgan = referral.ReferralSurvey.SurveyOrgan
+                };
+            }
+
+            if (referral.Patient != null)
+            {
+                opt.Patient.Person = new Person
+                {
+                    BirthDate = referral.Patient.Person.BirthDate,
+                    IdPatientMis = referral.Patient.Person.IdPatientMis
+                };
+
+                if (referral.Patient.Person.HumanName != null)
+                {
+                    opt.Patient.Person.HumanName = new HumanName
+                    {
+                        FamilyName = referral.Patient.Person.HumanName.FamilyName,
+                        GivenName = referral.Patient.Person.HumanName.GivenName,
+                        MiddleName = referral.Patient.Person.HumanName.MiddleName
+                    };
+                }
+            }
+
+            if (privileges != null)
+            { opt.Patient.Privileges = (Privilege[])privileges.Clone(); }
+
+            if (referral.EventsInfo != null && referral.EventsInfo.Target != null)
+            {
+                opt.EventsInfo.Target = new EventTarget
+                {
+                    IsReferralReviwed = referral.EventsInfo.Target.IsReferralReviwed,
+                    ReceptionAppointDate = referral.EventsInfo.Target.ReceptionAppointDate
+                };
+            }
+
+            OptionData.options = opt;
+            return opt;
+        }
+
+        public Options GetRefferalReturnOptions_SearchMany(Referral referral, Privilege[] privileges, Coding mqReferralStatus)
+        {
+            Options opt = GetRefferalReturnOptions_SearchOne(referral, privileges, null, mqReferralStatus);
+
+            if (referral.EventsInfo != null && referral.EventsInfo.Source != null)
+            {
+                opt.EventsInfo.Source = new EventSource
+                {
+                    PlannedDate = referral.EventsInfo.Source.PlannedDate
+                };
+            }
+
+            OptionData.options = opt;
+            return opt;
+        }
+
         public Referral MinRegister()
         {
             Referral referral = new Referral();
@@ -409,7 +490,7 @@ namespace MqTests
                 {
                     Target = new EventTarget
                     {
-                        CaseOpenDate = ReferralData.eventsInfo.Target.CaseOpenDate,
+                        CaseOpenDate = ReferralData.eventsInfo.Target.CaseOpenDate
                     }
                 }
             };
@@ -561,7 +642,7 @@ namespace MqTests
 
         public Referral GetResultDocument(string idMq)
         {
-            return new Referral { ReferralInfo = new ReferralInfo {IdMq = idMq } };
+            return new Referral { ReferralInfo = new ReferralInfo { IdMq = idMq } };
         }
     }
 }
