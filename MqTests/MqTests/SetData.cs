@@ -361,8 +361,16 @@ namespace MqTests
         public Referral FullUpdateFromSourcedMo(string idMq)
         {
             Referral referral = new Referral();
-            referral.ReferralInfo = ReferralData.referralInfo;
-            referral.ReferralInfo.IdMq = idMq;
+            referral.ReferralInfo = new ReferralInfo
+            {
+                IdMq  = idMq,
+                Priority = "UpdateSourcedMo Priority",
+                Date = Convert.ToDateTime("02.01.2012"),
+                Reason = "UpdateSourcedMo Reason",
+                Comment = "UpdateSourcedMo Comment",
+                ReferralType = ReferralData.referralInfo.ReferralType,
+                ProfileMedService = ReferralData.referralInfo.ProfileMedService
+            };
             referral.ReferralSurvey = ReferralData.survey;
             referral.Source = ReferralData.referralSource;
             referral.Target = new ReferralTarget
