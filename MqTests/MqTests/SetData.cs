@@ -16,7 +16,12 @@ namespace MqTests
             return cod;
         }
 
-        // может можно сделать лучше?
+        /// <summary>
+        /// По заданному Referral'у строит Options для SeacrhOne.
+        /// 
+        /// Может можно сделать лучше?
+        /// 
+        /// </summary>
         public Options GetRefferalReturnOptions_SearchOne(Referral referral, Privilege[] privileges, string idMq, Coding mqReferralStatus)
         {
             Options opt = new Options();
@@ -81,6 +86,9 @@ namespace MqTests
             return opt;
         }
 
+        /// <summary>
+        /// По заданному Referral'у строит Options для SeacrhMany.
+        /// </summary>
         public Options GetRefferalReturnOptions_SearchMany(Referral referral, Privilege[] privileges, Coding mqReferralStatus)
         {
             Options opt = GetRefferalReturnOptions_SearchOne(referral, privileges, null, mqReferralStatus);
@@ -369,7 +377,7 @@ namespace MqTests
             return referral;
         }
 
-        //возможно в следующих методах options ещё заполнится данными, тогда нужно будет поменять этот метод
+        //следить за изменениями в  Data.options!
         public Options FullGetQueueInfo()
         {
             return OptionData.options;

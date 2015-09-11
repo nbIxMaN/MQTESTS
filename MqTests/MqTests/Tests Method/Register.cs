@@ -15,7 +15,7 @@ namespace MqTests
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Referral referral = (new SetData()).MinRegister();
-                Credentials cr = new Credentials { Organization = idLpu, Token = guid };                
+                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 try
                 {
                     var num = mq.Register(cr, referral);
@@ -54,6 +54,10 @@ namespace MqTests
                 Referral referral = (new SetData()).FullRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 mq.Register(cr, referral);
+                if (Global.errors == "")
+                    Assert.Pass();
+                else
+                    Assert.Fail(Global.errors);
             }
         }
 

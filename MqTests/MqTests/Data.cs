@@ -43,7 +43,6 @@ namespace MqTests
         public static Doctor doctor { get; set; }
         public static Patient patient { get; set; }
         public static ContactDto contact { get; set; }
-        public static AddressDto address { get; set; }
     }
 
     public static class DocumentData
@@ -63,7 +62,7 @@ namespace MqTests
         public string idLpu = "1.2.643.5.1.13.3.25.78.6";
         public string guid = "dda0e909-93cd-4549-b7ff-d1caaa1f0bc2";
 
-        public static void SetDocument()
+        private static void SetDocument()
         {
             DocumentData.PatientPassport = new DocumentDto
             {
@@ -137,16 +136,7 @@ namespace MqTests
             };
         }
 
-        public static AddressDto SetAddress()
-        {
-            return PersonData.address = new AddressDto
-            {
-                AddressType = SetCoding("H", "1.2.643.2.69.1.1.1.28", "1"),
-                StringAddress = "г.Петергоф Ботаническая 66, корп 2"
-            };
-        }
-
-        public static ContactDto SetContact()
+        private static ContactDto SetContact()
         {
             return PersonData.contact = new ContactDto
             {
@@ -155,7 +145,7 @@ namespace MqTests
             };
         }
 
-        public static Coding SetCoding(string code, string system, string version)
+        private static Coding SetCoding(string code, string system, string version)
         {
             return CodingData.coding = new Coding
             {
@@ -165,7 +155,7 @@ namespace MqTests
             };
         }
 
-        public static Doctor SetDoctor()
+        private static Doctor SetDoctor()
         {
             return PersonData.doctor = new Doctor
             {
@@ -188,7 +178,7 @@ namespace MqTests
             };
         }
 
-        public static Patient SetPatient()
+        private static Patient SetPatient()
         {
             return PersonData.patient = new Patient
             {
@@ -205,7 +195,14 @@ namespace MqTests
                         MiddleName = "Иванович"
                     }
                 },
-                Addresses = new AddressDto[] { SetAddress() },
+                Addresses = new AddressDto[] 
+                { 
+                    new AddressDto
+                    {
+                        AddressType = SetCoding("H", "1.2.643.2.69.1.1.1.28", "1"),
+                        StringAddress = "г.Петергоф Ботаническая 66, корп 2"
+                    }
+                },
                 ContactDtos = new ContactDto[] { SetContact() },
                 Jobs = new Job[] 
                 { 
@@ -227,7 +224,7 @@ namespace MqTests
                 Documents = new DocumentDto[] { DocumentData.PatientPassport }
             };
         }
-        public static DiagnosisInfo SetDiagnosisInfo()
+        private static DiagnosisInfo SetDiagnosisInfo()
         {
             return DiagnosisData.diagnosisInfo = new DiagnosisInfo
             {
@@ -238,7 +235,7 @@ namespace MqTests
             };
         }
 
-        public static DiagnosisInfo SetComplicationDiagnosis()
+        private static DiagnosisInfo SetComplicationDiagnosis()
         {
             return DiagnosisData.diagnosisInfo = new DiagnosisInfo
             {
@@ -248,7 +245,7 @@ namespace MqTests
                 MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
             };
         }
-        public static MainDiagnosis SetMainDiagnosis()
+        private static MainDiagnosis SetMainDiagnosis()
         {
             SetDiagnosisInfo();
             SetComplicationDiagnosis();
@@ -259,7 +256,8 @@ namespace MqTests
             };
         }
 
-        public static void SetOptions()
+        //Если добавил/удалили поля в этом методе, внеси изменения в SetData().FullGetQueueInfo()
+        private static void SetOptions()
         {
             OptionData.options = new Options
             {
@@ -276,7 +274,7 @@ namespace MqTests
         }
 
         // контейнер info? проверить тестовые данные
-        public static PatientMove_PlaceTypeInfoCell SetPatientMove_PlaceTypeInfoCell()
+        private static PatientMove_PlaceTypeInfoCell SetPatientMove_PlaceTypeInfoCell()
         {
             return InfoData.patientMove_PlaceTypeInfoCell = new PatientMove_PlaceTypeInfoCell
             {
@@ -311,7 +309,7 @@ namespace MqTests
             };
         }
 
-        public static void SetRef()
+        private static void SetRef()
         {
 
             ReferralData.referralInfo = new ReferralInfo
@@ -404,7 +402,7 @@ namespace MqTests
                 ReferralInfo = ReferralData.referralInfo,
                 EventsInfo = ReferralData.eventsInfo,
                 ReferralSurvey = ReferralData.survey,
-                Patient = SetPatient(),
+                Patient = PersonData.patient,
                 Source = ReferralData.referralSource,
                 Target = ReferralData.referralTarget
             };
@@ -414,7 +412,9 @@ namespace MqTests
         public void SetUp()
         {
             SetDocument();
+            SetPatientMove_PlaceTypeInfoCell();
             SetOptions();
+            SetPatient();
             SetRef();
         }
 
