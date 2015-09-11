@@ -66,73 +66,73 @@ namespace MqTests
         {
             DocumentData.PatientPassport = new DocumentDto
             {
-                DocumentType = SetCoding("14", "1.2.643.2.69.1.1.1.59", "1"),
+                DocumentType = SetCoding("14", Dictionary.DOCUMENT_TYPE, "1"),
                 DocS = "2007",
                 DocN = "395731",
                 ProviderName = "УФМС",
                 ExpiredDate = Convert.ToDateTime("19.02.2020"),
                 IssuedDate = Convert.ToDateTime("03.09.2007"),
-                RegionCode = SetCoding("11", "1.2.643.2.69.1.1.1.51", "1"),
-                Provider = SetCoding("22003", "1.2.643.5.1.13.2.1.1.635", "1")
+                RegionCode = SetCoding("11", Dictionary.REGION_CODE, "1"),
+                Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
             };
 
             DocumentData.DoctorPassport = new DocumentDto
             {
-                DocumentType = SetCoding("14", "1.2.643.2.69.1.1.1.59", "1"),
+                DocumentType = SetCoding("14", Dictionary.DOCUMENT_TYPE, "1"),
                 DocS = "2005",
                 DocN = "395712",
                 ProviderName = "УФМС",
                 ExpiredDate = Convert.ToDateTime("19.02.2020"),
                 IssuedDate = Convert.ToDateTime("03.09.2007"),
-                RegionCode = SetCoding("11", "1.2.643.2.69.1.1.1.51", "1"),
-                Provider = SetCoding("22003", "1.2.643.5.1.13.2.1.1.635", "1")
+                RegionCode = SetCoding("11", Dictionary.REGION_CODE, "1"),
+                Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
             };
 
             DocumentData.SNILS = new DocumentDto
             {
-                DocumentType = SetCoding("223", "1.2.643.2.69.1.1.1.59", "1"),
+                DocumentType = SetCoding("223", Dictionary.DOCUMENT_TYPE, "1"),
                 DocN = "59165576238",
                 ProviderName = "ПФР",
                 ExpiredDate = Convert.ToDateTime("01.12.2010"),
                 IssuedDate = Convert.ToDateTime("03.09.2006"),
-                RegionCode = SetCoding("11", "1.2.643.2.69.1.1.1.51", "1"),
-                Provider = SetCoding("22003", "1.2.643.5.1.13.2.1.1.635", "1")
+                RegionCode = SetCoding("11", Dictionary.REGION_CODE, "1"),
+                Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
             };
 
             DocumentData.OldOMS = new DocumentDto
             {
-                DocumentType = SetCoding("226", "1.2.643.2.69.1.1.1.59", "1"),
+                DocumentType = SetCoding("226", Dictionary.DOCUMENT_TYPE, "1"),
                 DocN = "225916",
                 DocS = "AA",
                 ProviderName = "Старый полис",
                 ExpiredDate = Convert.ToDateTime("31.01.2040"),
                 IssuedDate = Convert.ToDateTime("11.11.2000"),
-                RegionCode = SetCoding("11", "1.2.643.2.69.1.1.1.51", "1"),
-                Provider = SetCoding("22003", "1.2.643.5.1.13.2.1.1.635", "1")
+                RegionCode = SetCoding("11", Dictionary.REGION_CODE, "1"),
+                Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
             };
 
             DocumentData.SingleOMS = new DocumentDto
             {
-                DocumentType = SetCoding("228", "1.2.643.2.69.1.1.1.59", "1"),
+                DocumentType = SetCoding("228", Dictionary.DOCUMENT_TYPE, "1"),
                 DocN = "1234567",
                 DocS = "1234",
                 ProviderName = "Единый полис",
                 ExpiredDate = Convert.ToDateTime("02.06.2000"),
                 IssuedDate = Convert.ToDateTime("04.02.1994"),
-                RegionCode = SetCoding("11", "1.2.643.2.69.1.1.1.51", "1"),
-                Provider = SetCoding("22003", "1.2.643.5.1.13.2.1.1.635", "1")
+                RegionCode = SetCoding("11", Dictionary.REGION_CODE,  "1"),
+                Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
             };
 
             DocumentData.OtherDoc = new DocumentDto
             {
-                DocumentType = SetCoding("18", "1.2.643.2.69.1.1.1.59", "1"),
+                DocumentType = SetCoding("18", Dictionary.DOCUMENT_TYPE, "1"),
                 DocN = "1234567",
                 DocS = "1234",
                 ProviderName = "Иной документ",
                 ExpiredDate = Convert.ToDateTime("02.06.2000"),
                 IssuedDate = Convert.ToDateTime("04.02.1994"),
-                RegionCode = SetCoding("11", "1.2.643.2.69.1.1.1.51", "1"),
-                Provider = SetCoding("22003", "1.2.643.5.1.13.2.1.1.635", "1")
+                RegionCode = SetCoding("11", Dictionary.REGION_CODE , "1"),
+                Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
             };
         }
 
@@ -140,7 +140,7 @@ namespace MqTests
         {
             return PersonData.contact = new ContactDto
             {
-                ContactType = SetCoding("1", "1.2.643.2.69.1.1.1.27", "1"),
+                ContactType = SetCoding("1", Dictionary.CONTACT_TYPES, "1"),
                 ContactValue = "89103456789"
             };
         }
@@ -159,14 +159,14 @@ namespace MqTests
         {
             return PersonData.doctor = new Doctor
             {
-                Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1"),
-                Speciality = SetCoding("0", "1.2.643.5.1.13.2.1.1.181", "1"),
-                Position = SetCoding("247", "1.2.643.5.1.13.2.1.1.607", "1"),
-                Role = SetCoding("1", "1.2.643.2.69.1.1.1.66", "1"),
+                Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "1"),
+                Speciality = SetCoding("0", Dictionary.DOCTOR_SPECIALITY , "1"),
+                Position = SetCoding("247", Dictionary.DOCTOR_POSITION, "1"),
+                Role = SetCoding("1", Dictionary.DOCTOR_ROLE, "1"),
                 Person = new Person
                 {
                     IdPersonMis = "Идентификатор медицинского работника в МИС направляющей МО",
-                    Sex = SetCoding("1", "1.2.643.5.1.13.2.1.1.156", "1"),
+                    Sex = SetCoding("1", Dictionary.SEX, "1"),
                     HumanName = new HumanName
                     {
                         FamilyName = "Иванов",
@@ -199,7 +199,7 @@ namespace MqTests
                 { 
                     new AddressDto
                     {
-                        AddressType = SetCoding("H", "1.2.643.2.69.1.1.1.28", "1"),
+                        AddressType = SetCoding("H", Dictionary.ADDRESS_TYPE, "1"),
                         StringAddress = "г.Петергоф Ботаническая 66, корп 2"
                     }
                 },
@@ -218,7 +218,7 @@ namespace MqTests
                     {
                         StartDate = Convert.ToDateTime("01.01.2012"),
                         EndDate = Convert.ToDateTime("01.02.2012"),
-                        PrivilegeType = SetCoding("901", "1.2.643.2.69.1.1.1.7", "1")
+                        PrivilegeType = SetCoding("901", Dictionary.PRIVILEGE_TYPE, "1")
                     }
                 },
                 Documents = new DocumentDto[] { DocumentData.PatientPassport }
@@ -230,8 +230,8 @@ namespace MqTests
             {
                 DiagnosedDate = Convert.ToDateTime("01.01.2012"),
                 Comment = "Комментарий к диагнозу",
-                DiagnosisType = SetCoding("1", "1.2.643.2.69.1.1.1.26", "1"),
-                MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
+                DiagnosisType = SetCoding("1", Dictionary.DIAGNOSIS_TYPE, "1"),
+                MkbCode = SetCoding("A05.2", Dictionary.MKB_CODE, "1")
             };
         }
 
@@ -241,8 +241,8 @@ namespace MqTests
             {
                 DiagnosedDate = Convert.ToDateTime("01.02.2012"),
                 Comment = "Комментарий к диагнозу2",
-                DiagnosisType = SetCoding("2", "1.2.643.2.69.1.1.1.26", "1"),
-                MkbCode = SetCoding("A05.2", "1.2.643.2.69.1.1.1.2", "1")
+                DiagnosisType = SetCoding("2", Dictionary.DIAGNOSIS_TYPE, "1"),
+                MkbCode = SetCoding("A05.2", Dictionary.MKB_CODE, "1")
             };
         }
         private static MainDiagnosis SetMainDiagnosis()
@@ -264,11 +264,11 @@ namespace MqTests
                 DateReport = Convert.ToDateTime("01.04.2012"),
                 ReferralInfo = new ReferralInfo
                 {
-                    ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                    ProfileMedService = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
                 },
                 Target = new ReferralTarget
                 {
-                    Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1")
+                    Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "1")
                 }
             };
         }
@@ -278,7 +278,7 @@ namespace MqTests
         {
             return InfoData.patientMove_PlaceTypeInfoCell = new PatientMove_PlaceTypeInfoCell
             {
-                PlaceTypeCatalogId = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                PlaceTypeCatalogId = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
                 Info = new PatientMove_PlaceTypeInfo
                 {
                     CurrentCount = 1,
@@ -300,7 +300,7 @@ namespace MqTests
         {
             return InfoData.patientMove_SMOInfoCell = new PatientMove_SMOInfoCell
             {
-                HicCatalogId = SetCoding("22003", "1.2.643.5.1.13.2.1.1.635", "1"),
+                HicCatalogId = SetCoding("22003", Dictionary.HIC_CATALOGID, "1"),
                 Info = new PatientMove_SMOInfo
                 {
                     HospitalizationCount = 123,
@@ -318,16 +318,16 @@ namespace MqTests
                 Date = Convert.ToDateTime("01.01.2012"),
                 Reason = "Основание направления, цель направления",
                 Comment = "Комментарий/дополнительные данные для направления",
-                ReferralType = SetCoding("2", "1.2.643.2.69.1.1.1.55", "1"),
-                ProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                ReferralType = SetCoding("2", Dictionary.REFERRAL_TYPE, "1"),
+                ProfileMedService = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
                 //     IdMq = "Идентификатор направления в РЕГИЗ.УО"
             };
 
             ReferralData.survey = new Survey
             {
                 Comment = "Комментарий к области исследования",
-                SurveyType = SetCoding("1", "1.2.643.2.69.1.1.1.57", "1"),
-                SurveyOrgan = SetCoding("1", "1.2.643.2.69.1.1.1.58", "1"),
+                SurveyType = SetCoding("1", Dictionary.SURVEY_TYPE, "1"),
+                SurveyOrgan = SetCoding("1", Dictionary.SURVEY_ORGAN, "1"),
                 Additional = new Additional
                 {
                     Height = "170",
@@ -340,7 +340,7 @@ namespace MqTests
             {
                 IdCaseMis = "Идентификатор случая обслуживания в МИС направляющей МО",
                 IdReferralMis = "Идентификатор направления в МИС направляющей МО",
-                Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1"),
+                Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "1"),
                 Doctors = new Doctor[] { SetDoctor() },
                 MainDiagnosis = new MainDiagnosis[] { SetMainDiagnosis() }
             };
@@ -348,7 +348,7 @@ namespace MqTests
             ReferralData.referralTarget = new ReferralTarget
             {
                 IdCaseMis = "Идентификатор случая обслуживания в МИС целевой МО",
-                Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", "1.2.643.2.69.1.1.1.64", "1"),
+                Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "1"),
                 Doctors = new Doctor[] { SetDoctor() },
                 MainDiagnosis = new MainDiagnosis[] { SetMainDiagnosis() }
             };
@@ -372,22 +372,22 @@ namespace MqTests
                     ReceptionAppointComment = "Дополнительные сведения назначенном приеме пациента по направлению в целевой МО (например, кабинет или необходимость обращения в регистратуру)",
                     CaseOpenDate = Convert.ToDateTime("03.01.2012"),
                     CaseCloseDate = Convert.ToDateTime("03.01.2012"),
-                    CaseAidType = SetCoding("1", "1.2.643.2.69.1.1.1.52", "1"),
-                    CaseAidForm = SetCoding("1", "1.2.643.2.69.1.1.1.54", "1"),
-                    CaseAidPlace = SetCoding("2", "1.2.643.2.69.1.1.1.53", "1")
+                    CaseAidType = SetCoding("1", Dictionary.CASE_AID_TYPE, "1"),
+                    CaseAidForm = SetCoding("1", Dictionary.CASE_AID_FORM, "1"),
+                    CaseAidPlace = SetCoding("2", Dictionary.CASE_AID_PLACE, "1")
                 },
                 Cancellation = new CancellationData
                 {
                     Date = Convert.ToDateTime("04.01.2012"),
                     ReasonComment = "Описание причины аннулирования",
-                    CancellationSource = SetCoding("1", "1.2.643.2.69.1.1.1.49", "1"),
-                    CancellationReason = SetCoding("5", "1.2.643.2.69.1.1.1.60", "1")
+                    CancellationSource = SetCoding("1", Dictionary.CANCELLATION_REASON, "1"),
+                    CancellationReason = SetCoding("5", Dictionary.CANCELLATION_REASON, "1")
                 }
             };
 
             ReferralData.profileMedService = new ProfileMedService
             {
-                IdProfileMedService = SetCoding("1", "1.2.643.2.69.1.1.1.56", "1"),
+                IdProfileMedService = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
                 StartDate = Convert.ToDateTime("01.12.2011"),
                 EndDate = Convert.ToDateTime("01.06.2012"),
                 Address = "г.Санкт-Петербург ул. Кирочная д.8",

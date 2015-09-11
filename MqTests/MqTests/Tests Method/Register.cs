@@ -18,7 +18,8 @@ namespace MqTests
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 try
                 {
-                    var num = mq.Register(cr, referral);
+                    var result = mq.Register(cr, referral);
+
                     //if (Global.errors == "")
                     //    Assert.Pass();
                     //else
@@ -27,7 +28,7 @@ namespace MqTests
                     {
                         var s = "SELECT  * " +
                             "FROM    public.referral " +
-                            "WHERE id_referral = '" + num.IdMq + "'";
+                            "WHERE id_referral = '" + result.IdMq + "'";
 
                         NpgsqlCommand c = new NpgsqlCommand(s, x);
                         using (var reader = c.ExecuteReader())
@@ -53,14 +54,13 @@ namespace MqTests
             {
                 Referral referral = (new SetData()).FullRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
-                mq.Register(cr, referral);
+                var result = mq.Register(cr, referral);
+
                 if (Global.errors == "")
                     Assert.Pass();
                 else
                     Assert.Fail(Global.errors);
             }
         }
-
-
     }
 }
