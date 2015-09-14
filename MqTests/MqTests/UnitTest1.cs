@@ -21,14 +21,22 @@ namespace MqTests
                 Referral r = client.SearchOne(cr, new WebReference.Options
                 {
                     IdMq = "78154000000101",
-                    //Source = new WebReference.ReferralSource
-                    //{
-                    //    Lpu = new WebReference.Coding
-                    //    {
-                    //        Code = "1.2.643.5.1.13.3.25.78.125",
-                    //        System = "urn:oid:1.2.643.2.69.1.1.1.64"
-                    //    }
-                    //}
+                    Source = new WebReference.ReferralSource
+                    {
+                        Lpu = new WebReference.Coding
+                        {
+                            Code = "1.2.643.5.1.13.3.25.78.125",
+                            System = "urn:oid:1.2.643.2.69.1.1.1.64"
+                        }
+                    },
+                    ReferralInfo = new ReferralInfo
+                    {
+                        MqReferralStatus = new Coding
+                        {
+                            Code = "1",
+                            System = "urn:oid:1.2.643.2.69.1.1.1.50"
+                        }
+                    }
                 }).Referral;
                 //List<string> a = TestOptions.GetReferralId(new WebReference.Options
                 //{

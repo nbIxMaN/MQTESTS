@@ -33,12 +33,42 @@ namespace MqTests
             else
                 throw new Exception("Не надена запись");
         }
+
+        static private List<string> GetReferralIdWithThisIqStatus(List<string> codingId, string idReferral)
+        {
+            string c = "";
+            List<string> l = new List<string>();
+            if (idReferral != null)
+                c = "SELECT id_referral FROM public.referral_status WHERE id_referral = '" + idReferral + "' AND (id_mq_referral_status = '" + codingId[0] + "'";
+            else
+                c = "SELECT id_referral FROM public.referral_status WHERE (id_mq_referral_status = '" + codingId[0] + "'";
+            for (int i = 1; i < codingId.Count; ++i)
+            {
+                c += " OR id_mq_referral_status = '" + codingId[i] + "'";
+            }
+            c += ")";
+            using (NpgsqlConnection connection = Global.GetSqlConnection())
+            {
+                NpgsqlCommand person = new NpgsqlCommand(c, connection);
+                using (NpgsqlDataReader documentReader = person.ExecuteReader())
+                {
+                    while (documentReader.Read())
+                    {
+                        l.Add(documentReader["id_referral"].ToString());
+                    }
+                }
+            }
+            if (l.Count != 0)
+                return l;
+            else
+                throw new Exception("Не надена запись");
+        } 
         static private List<string> GetPribiledgeId(Privilege p)
         {
             List<string> idCode = GetCodindId(p.PrivilegeType);
+            List<string> l = new List<string>();
             if (idCode != null)
             {
-                List<string> l = new List<string>();
                 string c = "SELECT id_person FROM public.priviledge WHERE (id_priviledge_code = '" + l[0] + "'";
                 for (int i = 1; i < l.Count; ++i)
                 {
@@ -57,8 +87,8 @@ namespace MqTests
                     }
                 }
             }
-            if (idCode.Count != 0)
-                return idCode;
+            if (l.Count != 0)
+                return l;
             else
                 throw new Exception("Не надена запись");
         }
@@ -127,14 +157,14 @@ namespace MqTests
                     command += ")";
                 }
                 if (o.ReferralInfo.MqReferralStatus != null)
-                {
-                    List<string> l = GetCodindId(o.ReferralInfo.MqReferralStatus);
+                {                    
+                    List<string> l = GetReferralIdWithThisIqStatus(GetCodindId(o.ReferralInfo.MqReferralStatus), o.IdMq);
                     if (command == "")
-                        command = "SELECT id_referral FROM public.referral WHERE (id_mq_referral_status = '" + l[0] + "'";
+                        command = "SELECT id_referral FROM public.referral WHERE (id_referral = '" + l[0] + "'";
                     else
-                        command += " AND (id_mq_referral_status = '" + l[0] + "'";
+                        command += " AND (id_referral = '" + l[0] + "'";
                     for (int i = 1; i < l.Count; ++i)
-                        command += " OR id_mq_referral_status '" + l[i] + "'";
+                        command += " OR id_referral '" + l[i] + "'";
                     command += ")";
                 }
             }
