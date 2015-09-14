@@ -2,6 +2,7 @@
 using MqTests.WebReference;
 using NUnit.Framework;
 using Npgsql;
+using System.ServiceModel;
 
 namespace MqTests.Tests_Method
 {
@@ -15,9 +16,17 @@ namespace MqTests.Tests_Method
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
-                var id = mq.Register(cr, referral);
-                referral = (new SetData()).MinCancellation(id.IdMq);
-                mq.PatientDocumentIssue(cr, referral);
+                var result = mq.Register(cr, referral);
+
+                referral = (new SetData()).MinCancellation(result.IdMq);
+                try
+                {
+                    var resultCancel = mq.Cancellation(cr, referral);
+                }
+                catch (FaultException<MqTests.WebReference.MqFault> e)
+                {
+                    string s = e.Detail.MqFaults[0].Message;
+                }
             }
         }
 
@@ -28,9 +37,10 @@ namespace MqTests.Tests_Method
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
-                var id = mq.Register(cr, referral);
-                referral = (new SetData()).FullCancellation(id.IdMq);
-                mq.PatientDocumentIssue(cr, referral);
+                
+                var result = mq.Register(cr, referral);
+                referral = (new SetData()).FullCancellation(result.IdMq);
+                var resultCancel = mq.Cancellation(cr, referral);
             }
         }
     }

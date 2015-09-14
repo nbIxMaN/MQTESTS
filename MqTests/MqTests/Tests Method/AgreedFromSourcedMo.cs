@@ -15,9 +15,10 @@ namespace MqTests.Tests_Method
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
-                var id = mq.Register(cr, referral);
-                referral = (new SetData()).MinAgreedFromSourcedMo(id.IdMq);
-                mq.AgreedFromSourcedMo(cr, referral);
+                var result = mq.Register(cr, referral);
+
+                referral = (new SetData()).MinAgreedFromSourcedMo(result.IdMq);
+                var resultAgreed = mq.AgreedFromSourcedMo(cr, referral);
             }
         }
 
@@ -28,9 +29,10 @@ namespace MqTests.Tests_Method
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
-                var id = mq.Register(cr, referral);
-                referral = (new SetData()).FullAgreedFromSourcedMo(id.IdMq);
-                mq.AgreedFromSourcedMo(cr, referral);
+                var result = mq.Register(cr, referral);
+
+                referral = (new SetData()).FullAgreedFromSourcedMo(result.IdMq);
+                var resultAgreed =   mq.AgreedFromSourcedMo(cr, referral);
             }
         }
 

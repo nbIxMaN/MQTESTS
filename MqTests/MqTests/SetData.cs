@@ -14,6 +14,7 @@ namespace MqTests
         {
             SetUp();
         }
+
         //подумать как сделать лучше!!
         public Coding SetCoding(Coding cod)
         {
@@ -24,7 +25,7 @@ namespace MqTests
         /// <summary>
         /// По заданному Referral'у строит Options для SeacrhOne.
         /// 
-        /// Может можно сделать лучше?
+        /// Может можно сделать лучше?(проверки на null)
         /// 
         /// </summary>
         public Options GetRefferalReturnOptions_SearchOne(Referral referral, Privilege[] privileges, string idMq, Coding mqReferralStatus)
