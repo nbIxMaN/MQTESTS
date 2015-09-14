@@ -45,6 +45,8 @@ namespace MqTests
                     string s = e.Detail.MqFaults[0].Message;
                 }
             }
+            if (Global.errors != "")
+                Assert.Fail(Global.errors);
         }
 
         [Test]

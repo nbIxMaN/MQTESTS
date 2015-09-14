@@ -37,13 +37,13 @@ namespace MqTests
         public TestReferralTarget(ReferralTarget r)
         {
             target = r ?? new ReferralTarget();
-            if (r.Doctors != null)
+            if (r?.Doctors != null)
                 foreach(Doctor i in r.Doctors)
                     docs.Add(new TestDoctor(i));
-            if (r.MainDiagnosis != null)
+            if (r?.MainDiagnosis != null)
                 foreach(MainDiagnosis i in r.MainDiagnosis)
                     diag.Add(new TestMainDiagnosis(i));
-            lpu = new TestCoding(r.Lpu);
+            lpu = new TestCoding(r?.Lpu);
         }
         
         static public TestReferralTarget BuildTargetFromDataBaseData(string idReferral)

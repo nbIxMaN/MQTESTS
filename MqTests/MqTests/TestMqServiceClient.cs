@@ -19,7 +19,8 @@ namespace MqTests
         public MqResult Register(Credentials cr, Referral r)
         {
             MqResult x = client.Register(cr, r);
-            if (new TestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+            r.ReferralInfo.IdMq = x.IdMq;
+            if (!new TestReferral(r, cr.Organization).Equals(TestReferral.BuildReferralFromDataBaseData(x.IdMq)))
             {
                 Global.errors1.Add("Несовпадение");
                 Global.errors1.AddRange(Global.errors2);

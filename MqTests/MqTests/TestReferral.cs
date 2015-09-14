@@ -57,17 +57,17 @@ namespace MqTests
         private void FindMismatch(TestReferral r)
         {
             if (Global.GetLength(this.evInfo) != Global.GetLength(r.evInfo))
-                Global.errors3.Add("Несовпадение длинны EventsInfo TestReferral");
+                Global.errors2.Add("Несовпадение длинны EventsInfo TestReferral");
             if (Global.GetLength(this.patient) != Global.GetLength(r.patient))
-                Global.errors3.Add("Несовпадение длинны TestPatient TestReferral");
+                Global.errors2.Add("Несовпадение длинны TestPatient TestReferral");
             if (Global.GetLength(this.refInfo) != Global.GetLength(r.refInfo))
-                Global.errors3.Add("Несовпадение длинны TestReferralInfo TestReferral");
+                Global.errors2.Add("Несовпадение длинны TestReferralInfo TestReferral");
             if (Global.GetLength(this.refSourse) != Global.GetLength(r.refSourse))
-                Global.errors3.Add("Несовпадение длинны TestReferralSourse TestReferral");
+                Global.errors2.Add("Несовпадение длинны TestReferralSourse TestReferral");
             if (Global.GetLength(this.refSurvey) != Global.GetLength(r.refSurvey))
-                Global.errors3.Add("Несовпадение длинны TestReferralSurvey TestReferral");
+                Global.errors2.Add("Несовпадение длинны TestReferralSurvey TestReferral");
             if (Global.GetLength(this.refTarget) != Global.GetLength(r.refTarget))
-                Global.errors3.Add("Несовпадение длинны TestReferralTarget TestReferral");
+                Global.errors2.Add("Несовпадение длинны TestReferralTarget TestReferral");
         }
         public override bool Equals(Object obj)
         {
@@ -84,7 +84,7 @@ namespace MqTests
             else
             {
                 this.FindMismatch(p);
-                Global.errors3.Add("несовпадение TestReferral");
+                Global.errors2.Add("несовпадение TestReferral");
                 return false;
             }
         }

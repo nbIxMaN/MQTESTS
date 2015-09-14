@@ -51,7 +51,8 @@ namespace MqTests
                 //    }
                 //});
             }
-            Assert.Fail(Global.errors);
+            if (Global.errors != "")
+                Assert.Fail(Global.errors);
         }
     }
 }

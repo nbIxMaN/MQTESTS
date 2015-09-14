@@ -18,18 +18,21 @@ namespace MqTests
         {
             info = r ?? new ReferralInfo();
             cancellation = new TestCancellation(info.Cancellation);
-            mqReferralStatus = new TestCoding(info.MqReferralStatus);
-            profileMedService = new TestCoding(info.ProfileMedService);
-            referralType = new TestCoding(info.ReferralType);
+            if (info.MqReferralStatus != null)
+                mqReferralStatus = new TestCoding(info.MqReferralStatus);
+            if (info.ProfileMedService != null)
+                profileMedService = new TestCoding(info.ProfileMedService);
+            if (info.ReferralType != null)
+                referralType = new TestCoding(info.ReferralType);
         }
         static public TestReferralInfo BuildPersonFromDataBaseData(string idReferral)
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
                 string findPatient =
-                    "SELECT comment, priority_comment, referral_paper_date, id_referral_type, id_profile_med_service, referral_reason, id_mq_referral_status FROM public.referral, public.referral_status WHERE public.referral.id_referral = '" +
+                    "SELECT comment, priority_comment, referral_paper_date, id_referral_type, id_profile_med_service, referral_reason FROM public.referral WHERE id_referral = '" +
                     idReferral +
-                    "' AND public.referral.id_referral = public.referral_status.id_referral ORDER BY public.referral.id_referral DESC LIMIT 1";
+                    "' ORDER BY public.referral.id_referral DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
                 {
@@ -56,10 +59,22 @@ namespace MqTests
                             pers.profileMedService =
                                 TestCoding.BuildCodingFromDataBaseData(
                                     Convert.ToString(personFromDataBase["id_profile_med_service"]));
-                        if (personFromDataBase["id_mq_referral_status"] != DBNull.Value)
-                            pers.mqReferralStatus =
-                                TestCoding.BuildCodingFromDataBaseData(
-                                    Convert.ToString(personFromDataBase["id_mq_referral_status"]));
+                        using (NpgsqlConnection connection2 = Global.GetSqlConnection())
+                        {
+                            string findIdMq =
+                                "SELECT id_mq_referral_status FROM public.referral, public.referral_status WHERE public.referral.id_referral = public.referral_status.id_referral ORDER BY public.referral.id_referral DESC LIMIT 1";
+                            NpgsqlCommand com = new NpgsqlCommand(findIdMq, connection2);
+                            using (NpgsqlDataReader reader = com.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    if (reader["id_mq_referral_status"] != DBNull.Value)
+                                        pers.mqReferralStatus =
+                                            TestCoding.BuildCodingFromDataBaseData(
+                                                Convert.ToString(reader["id_mq_referral_status"]));
+                                }
+                            }
+                        }
                         return pers;
                     }
                 }
