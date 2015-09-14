@@ -12,10 +12,7 @@ namespace MqTests
         Additional additional;
         public TestAdditional(Additional r)
         {
-            if (r != null)
-            {
-                additional = r;
-            }
+            additional = r ?? new Additional();
         }
         static public TestAdditional BuildAdditionalFromDataBaseData(string idReferral)
         {
@@ -29,11 +26,11 @@ namespace MqTests
                     while (personFromDataBase.Read())
                     {
                         //что делать с DateSpecified и Мисами? 
-                        if (personFromDataBase["patient_allergy_iodine"].ToString() != "")
+                        if (personFromDataBase["patient_allergy_iodine"] != DBNull.Value)
                             p.AllergyIodine = Convert.ToString(personFromDataBase["patient_allergy_iodine"]);
-                        if (personFromDataBase["patient_hight"].ToString() != "")
+                        if (personFromDataBase["patient_hight"] != DBNull.Value)
                             p.Height = Convert.ToString(personFromDataBase["patient_hight"]);
-                        if (personFromDataBase["patient_weight"].ToString() != "")
+                        if (personFromDataBase["patient_weight"] != DBNull.Value)
                             p.Weight = Convert.ToString(personFromDataBase["patient_weight"]);
                         TestAdditional pers = new TestAdditional(p);
                         return pers;

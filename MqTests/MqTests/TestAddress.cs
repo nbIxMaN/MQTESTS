@@ -13,11 +13,9 @@ namespace MqTests
         public TestCoding addressType;
         public TestAddress(AddressDto a)
         {
-            if (a != null)
-            {
-                address = a;
-                addressType = new TestCoding(a.AddressType);
-            }
+            if (a == null) return;
+            address = a;
+            addressType = new TestCoding(address.AddressType);
         }
 
         static public List<TestAddress> BuildAdressesFromDataBaseData(string idPerson)
@@ -32,19 +30,16 @@ namespace MqTests
                     while (addressesReader.Read())
                     {
                         AddressDto address = new AddressDto();
-                        if (addressesReader["address"].ToString() != "")
+                        if (addressesReader["address"] != DBNull.Value)
                             address.StringAddress = Convert.ToString(addressesReader["address"]);
                         TestAddress a = new TestAddress(address);
-                        if (addressesReader["id_address_type"].ToString() != "")
+                        if (addressesReader["id_address_type"] != DBNull.Value)
                             a.addressType = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(addressesReader["id_address_type"]));
                         addresses.Add(a);
                     }
                 }
             }
-            if (addresses.Count != 0)
-                return addresses;
-            else
-                return null;
+            return (addresses.Count != 0) ? addresses : null;
         }
 
         private void FindMismatch(TestAddress b)

@@ -36,17 +36,14 @@ namespace MqTests
         TestCoding lpu;
         public TestReferralTarget(ReferralTarget r)
         {
-            if (r != null)
-            {
-                target = r;
-                if (r.Doctors != null)
-                    foreach(Doctor i in r.Doctors)
-                        docs.Add(new TestDoctor(i));
-                if (r.MainDiagnosis != null)
-                    foreach(MainDiagnosis i in r.MainDiagnosis)
-                        diag.Add(new TestMainDiagnosis(i));
-                lpu = new TestCoding(r.Lpu);
-            }
+            target = r ?? new ReferralTarget();
+            if (r.Doctors != null)
+                foreach(Doctor i in r.Doctors)
+                    docs.Add(new TestDoctor(i));
+            if (r.MainDiagnosis != null)
+                foreach(MainDiagnosis i in r.MainDiagnosis)
+                    diag.Add(new TestMainDiagnosis(i));
+            lpu = new TestCoding(r.Lpu);
         }
         
         static public TestReferralTarget BuildTargetFromDataBaseData(string idReferral)
@@ -61,20 +58,20 @@ namespace MqTests
                     while (personFromDataBase.Read())
                     {
                         //что делать с DateSpecified и Мисами? 
-                        if (personFromDataBase["id_target_lpu_case_mis"].ToString() != "")
+                        if (personFromDataBase["id_target_lpu_case_mis"] != DBNull.Value)
                             p.IdCaseMis = Convert.ToString(personFromDataBase["id_source_lpu_case_mis"]);
-                        if (personFromDataBase["is_referral_review_target_mo"].ToString() != "")
+                        if (personFromDataBase["is_referral_review_target_mo"] != DBNull.Value)
                             p.IsReferralReviewed = Convert.ToBoolean(personFromDataBase["is_referral_review_target_mo"]);
-                        if (personFromDataBase["reception_appoint_additional_comment"].ToString() != "")
+                        if (personFromDataBase["reception_appoint_additional_comment"] != DBNull.Value)
                             p.ReceptionAppointComment = Convert.ToString(personFromDataBase["reception_appoint_additional_comment"]);
-                        if (personFromDataBase["reception_appoint_time_comment"].ToString() != "")
+                        if (personFromDataBase["reception_appoint_time_comment"] != DBNull.Value)
                             p.ReceptionAppointTime = Convert.ToString(personFromDataBase["reception_appoint_time_comment"]);
-                        if (personFromDataBase["reception_appoint_date"].ToString() != "")
+                        if (personFromDataBase["reception_appoint_date"] != DBNull.Value)
                             p.ReceptionAppointDate = Convert.ToDateTime(personFromDataBase["reception_appoint_date"]);
-                        if (personFromDataBase["referral_review_date_target_mo"].ToString() != "")
+                        if (personFromDataBase["referral_review_date_target_mo"] != DBNull.Value)
                             p.ReferralReviewDate = Convert.ToDateTime(personFromDataBase["referral_review_date_target_mo"]);
                         TestReferralTarget pers = new TestReferralTarget(p);
-                        if (personFromDataBase["id_target_lpu"].ToString() != "")
+                        if (personFromDataBase["id_target_lpu"] != DBNull.Value)
                             pers.lpu = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_target_lpu"]));
                         return pers;
                     }

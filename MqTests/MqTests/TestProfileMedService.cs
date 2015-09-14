@@ -28,20 +28,20 @@ namespace MqTests
                     while (ProfileMedServiceReader.Read())
                     {
                         ProfileMedService profileMedService = new ProfileMedService();
-                        if (ProfileMedServiceReader["address"].ToString() != "")
+                        if (ProfileMedServiceReader["address"] != DBNull.Value)
                             profileMedService.Address = Convert.ToString(ProfileMedServiceReader["address"]);
-                        if (ProfileMedServiceReader["comment"].ToString() != "")
+                        if (ProfileMedServiceReader["comment"] != DBNull.Value)
                             profileMedService.Comment = Convert.ToString(ProfileMedServiceReader["comment"]);
-                        if (ProfileMedServiceReader["contact_value"].ToString() != "")
+                        if (ProfileMedServiceReader["contact_value"] != DBNull.Value)
                             profileMedService.ContactValue = Convert.ToString(ProfileMedServiceReader["contact_value"]);
-                        if (ProfileMedServiceReader["date_end"].ToString() != "")
+                        if (ProfileMedServiceReader["date_end"] != DBNull.Value)
                             profileMedService.EndDate = Convert.ToDateTime(ProfileMedServiceReader["date_end"]);
-                        if (ProfileMedServiceReader["site"].ToString() != "")
+                        if (ProfileMedServiceReader["site"] != DBNull.Value)
                             profileMedService.Site = Convert.ToString(ProfileMedServiceReader["site"]);
-                        if (ProfileMedServiceReader["date_begin"].ToString() != "")
+                        if (ProfileMedServiceReader["date_begin"] != DBNull.Value)
                             profileMedService.StartDate = Convert.ToDateTime(ProfileMedServiceReader["date_begin"]);
                         TestProfileMedService tProfileMedService = new TestProfileMedService(profileMedService);
-                        if (ProfileMedServiceReader["id_profile_med_service"].ToString() != "")
+                        if (ProfileMedServiceReader["id_profile_med_service"] != DBNull.Value)
                             tProfileMedService.idProfileMedService = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(ProfileMedServiceReader["id_profile_med_service"]));
                        return tProfileMedService;
                     }

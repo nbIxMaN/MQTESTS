@@ -15,13 +15,10 @@ namespace MqTests
         public TestCoding regionCode;
         public TestDocument(DocumentDto d)
         {
-            if (d != null)
-            {
-                document = d;
-                documentType = new TestCoding(d.DocumentType);
-                provider = new TestCoding(d.Provider);
-                regionCode = new TestCoding(d.RegionCode);
-            }
+            document = d;
+            documentType = new TestCoding(document.DocumentType);
+            provider = new TestCoding(document.Provider);
+            regionCode = new TestCoding(document.RegionCode);
         }
 
         static public List<TestDocument> BuildDocumentsFromDataBaseData(string idPerson)
@@ -37,31 +34,28 @@ namespace MqTests
                     {
                         //Что делать с DateSpecified?
                         DocumentDto doc = new DocumentDto();
-                        if (documentReader["docn"].ToString() != "")
+                        if (documentReader["docn"] != DBNull.Value)
                             doc.DocN = Convert.ToString(documentReader["docn"]);
-                        if (documentReader["docs"].ToString() != "")
+                        if (documentReader["docs"] != DBNull.Value)
                             doc.DocS = Convert.ToString(documentReader["docs"]);
-                        if (documentReader["expired_date"].ToString() != "")
+                        if (documentReader["expired_date"]!= DBNull.Value)
                             doc.ExpiredDate = Convert.ToDateTime(documentReader["expired_date"]);
-                        if (documentReader["issued_date"].ToString() != "")
+                        if (documentReader["issued_date"] != DBNull.Value)
                             doc.IssuedDate = Convert.ToDateTime(documentReader["issued_date"]);
-                        if (documentReader["provider_name"].ToString() != "")
+                        if (documentReader["provider_name"] != DBNull.Value)
                             doc.ProviderName = Convert.ToString(documentReader["provider_name"]);
                         TestDocument document = new TestDocument(doc);
-                        if (documentReader["id_document_type"].ToString() != "")
+                        if (documentReader["id_document_type"] != DBNull.Value)
                             document.documentType = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(documentReader["id_document_type"]));
-                        if (documentReader["id_provider"].ToString() != "")
+                        if (documentReader["id_provider"] != DBNull.Value)
                             document.provider = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(documentReader["id_provider"]));                            
-                        if (documentReader["id_region_code"].ToString() != "")
+                        if (documentReader["id_region_code"] != DBNull.Value)
                             document.regionCode = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(documentReader["RegionCode"]));
                         documents.Add(document);
                     }
                 }
             }
-            if (documents.Count != 0)
-                return documents;
-            else
-                return null;
+            return (documents.Count != 0) ? documents : null;
         }
 
         private void FindMismatch(TestDocument b)

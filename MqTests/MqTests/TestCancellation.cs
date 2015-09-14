@@ -15,12 +15,14 @@ namespace MqTests
         TestCoding reason;
         public TestCancellation(CancellationData r)
         {
-            if (r != null)
-            {
-                cancellation = r;
-                source = new TestCoding(r.CancellationSource);
-                reason = new TestCoding(r.CancellationReason);
-            }
+            cancellation = r ?? new CancellationData();
+            source = new TestCoding(cancellation.CancellationSource);
+            reason = new TestCoding(cancellation.CancellationReason);
+        }
+
+        private TestCancellation()
+        {
+            
         }
         //как искать?
         static public TestCancellation BuildCancellationFromDataBaseData(string idReferral)
@@ -35,14 +37,14 @@ namespace MqTests
                     while (personFromDataBase.Read())
                     {
                         //что делать с DateSpecified и Мисами? 
-                        if (personFromDataBase["cancellation_date"].ToString() != "")
+                        if (personFromDataBase["cancellation_date"] != DBNull.Value)
                             p.Date = Convert.ToDateTime(personFromDataBase["cancellation_date"]);
-                        if (personFromDataBase["cancellation_reason_comment"].ToString() != "")
+                        if (personFromDataBase["cancellation_reason_comment"] != DBNull.Value)
                             p.ReasonComment = Convert.ToString(personFromDataBase["cancellation_reason_comment"]);
                         TestCancellation pers = new TestCancellation(p);
-                        if (personFromDataBase["id_cancellation_code"].ToString() != "")
+                        if (personFromDataBase["id_cancellation_code"] != DBNull.Value)
                             pers.source = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_cancellation_code"]));
-                        if (personFromDataBase["id_cancellation_reason"].ToString() != "")
+                        if (personFromDataBase["id_cancellation_reason"] != DBNull.Value)
                             pers.source = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_cancellation_reason"]));
                         return pers;
                     }

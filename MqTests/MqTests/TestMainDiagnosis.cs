@@ -24,13 +24,10 @@ namespace MqTests
         }
         public TestMainDiagnosis(MainDiagnosis r)
         {
-            if (r != null)
-            {
-                diagnos = r;
-                diagnosisInfo = new TestDiagnosisInfo(r.DiagnosisInfo);
-                foreach (DiagnosisInfo i in r.ComplicationDiagnosis)
-                    compDiagnosis.Add(new TestDiagnosisInfo(i));
-            }
+            diagnos = r;
+            diagnosisInfo = new TestDiagnosisInfo(diagnos.DiagnosisInfo);
+            foreach (DiagnosisInfo i in diagnos.ComplicationDiagnosis)
+                compDiagnosis.Add(new TestDiagnosisInfo(i));
         }
         static public List<TestMainDiagnosis> BuildTestMainDiagnosisInfoFromDataBaseData(string idReferral)
         {
@@ -39,10 +36,7 @@ namespace MqTests
             md.diagnosisInfo = TestDiagnosisInfo.BuildTestMainDiagnosisInfoFromDataBaseData(idReferral);
             md.compDiagnosis = TestDiagnosisInfo.BuildTestComplicationDiagnosisInfoFromDataBaseData(idReferral);
             tdi.Add(md);
-            if (tdi.Count != 0)
-                return tdi;
-            else
-                return null;
+            return (tdi.Count != 0) ? tdi : null;
         }
         private void FindMismatch(TestMainDiagnosis r)
         {

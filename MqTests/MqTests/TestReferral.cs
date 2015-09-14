@@ -10,7 +10,6 @@ namespace MqTests
 {
     class TestReferral
     {
-        public Referral referral;
         public TestEventsInfo evInfo;
         public TestPatient patient;
         public TestReferralInfo refInfo;
@@ -19,18 +18,17 @@ namespace MqTests
         public TestReferralTarget refTarget;
         public TestReferral(Referral r, string idLpu = "")
         {
-            if (r != null)
-            {
-                referral = r;
-                evInfo = new TestEventsInfo(r.EventsInfo);
-                patient = new TestPatient(r.Patient);
-                refInfo = new TestReferralInfo(r.ReferralInfo);
-                refSurvey = new TestReferralSurvey(r.ReferralSurvey);
-                refSourse = new TestReferralSource(r.Source);
-                refTarget = new TestReferralTarget(r.Target);
-            }
+            evInfo = new TestEventsInfo(r.EventsInfo);
+            patient = new TestPatient(r.Patient);
+            refInfo = new TestReferralInfo(r.ReferralInfo);
+            refSurvey = new TestReferralSurvey(r.ReferralSurvey);
+            refSourse = new TestReferralSource(r.Source);
+            refTarget = new TestReferralTarget(r.Target);
         }
 
+        private TestReferral()
+        {
+        }
         static public TestReferral BuildReferralFromDataBaseData(string idReferral)
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
@@ -42,9 +40,9 @@ namespace MqTests
                 {
                     while (RReader.Read())
                     {
-                        TestReferral r = new TestReferral(new Referral());
+                        TestReferral r = new TestReferral();
                         r.evInfo = TestEventsInfo.BuildAdditionalFromDataBaseData(idReferral);
-                        if (RReader["id_patient_person"].ToString() != "")
+                        if (RReader["id_patient_person"] != DBNull.Value)
                             r.patient = TestPatient.BuildPatientFromDataBaseData(RReader["id_patient_person"].ToString(), RReader["id_patient_source_mo_mis"].ToString());
                         r.refInfo = TestReferralInfo.BuildPersonFromDataBaseData(idReferral);
                         r.refSourse = TestReferralSource.BuildSourceFromDataBaseData(idReferral);
@@ -74,22 +72,12 @@ namespace MqTests
         public override bool Equals(Object obj)
         {
             TestReferral p = obj as TestReferral;
-            if ((object)p == null)
-            {
-                return false;
-            }
-            if (this.referral == p.referral)
-                return true;
-            if ((this.referral == null) || (p.referral == null))
-            {
-                return false;
-            }
-            if ((Global.IsEqual(this.evInfo, p.evInfo))&&
-            (Global.IsEqual(this.patient, p.patient))&&
-            (Global.IsEqual(this.refInfo, p.refInfo))&&
-            (Global.IsEqual(this.refSourse, p.refSourse))&&
-            (Global.IsEqual(this.refSurvey, p.refSurvey))&&
-            (Global.IsEqual(this.refTarget, p.refTarget)))
+            if ((Global.IsEqual(this.evInfo, p?.evInfo))&&
+            (Global.IsEqual(this.patient, p?.patient))&&
+            (Global.IsEqual(this.refInfo, p?.refInfo))&&
+            (Global.IsEqual(this.refSourse, p?.refSourse))&&
+            (Global.IsEqual(this.refSurvey, p?.refSurvey))&&
+            (Global.IsEqual(this.refTarget, p?.refTarget)))
             {
                 return true;
             }

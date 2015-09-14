@@ -30,18 +30,15 @@ namespace MqTests
 
         public TestDoctor(Doctor r)
         {
-            if (r != null)
-            {
-                doctor = r;
-                if (r.ContactDtos != null)
-                    foreach (ContactDto i in r.ContactDtos)
-                        cnts.Add(new TestContact(i));
-                lpu = new TestCoding(r.Lpu);
-                person = new TestPerson(r.Person);
-                position = new TestCoding(r.Position);
-                role = new TestCoding(r.Role);
-                speciality = new TestCoding(r.Speciality);
-            }
+            doctor = r;
+            if (doctor.ContactDtos != null)
+                foreach (ContactDto i in doctor.ContactDtos)
+                    cnts.Add(new TestContact(i));
+            lpu = new TestCoding(doctor.Lpu);
+            person = new TestPerson(doctor.Person);
+            position = new TestCoding(doctor.Position);
+            role = new TestCoding(doctor.Role);
+            speciality = new TestCoding(doctor.Speciality);
         }
         static public List<TestDoctor> BuildDoctorFromDataBaseData(string idReferral)
         {
@@ -52,7 +49,7 @@ namespace MqTests
                 NpgsqlCommand fd = new NpgsqlCommand(findDoctorsIds, c);
                 using (NpgsqlDataReader idr = fd.ExecuteReader())
                 {
-                    if (idr["id_doctor"].ToString() != "")
+                    if (idr["id_doctor"] != DBNull.Value)
                     {
                         string idDoctor = idr["id_doctor"].ToString();
                         using (NpgsqlConnection connection = Global.GetSqlConnection())
@@ -64,19 +61,18 @@ namespace MqTests
                                 Doctor p = new Doctor();
                                 while (doctorFromDataBase.Read())
                                 {
-                                    //Закончил тут. 25.08.2015
                                     TestDoctor doctor = new TestDoctor(p);
-                                    if (doctorFromDataBase["id_doctor_role"].ToString() != "")
+                                    if (doctorFromDataBase["id_doctor_role"] != DBNull.Value)
                                         doctor.role = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(doctorFromDataBase["id_doctor_role"]));
-                                    if (doctorFromDataBase["id_doctor_speciality"].ToString() != "")
+                                    if (doctorFromDataBase["id_doctor_speciality"] != DBNull.Value)
                                         doctor.speciality = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(doctorFromDataBase["id_doctor_speciality"]));
-                                    if (doctorFromDataBase["id_lpu"].ToString() != "")
+                                    if (doctorFromDataBase["id_lpu"] != DBNull.Value)
                                         doctor.lpu = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(doctorFromDataBase["id_lpu"]));
-                                    if (doctorFromDataBase["id_position"].ToString() != "")
+                                    if (doctorFromDataBase["id_position"] != DBNull.Value)
                                         doctor.position = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(doctorFromDataBase["id_position"]));
-                                    if (doctorFromDataBase["id_person"].ToString() != "")
+                                    if (doctorFromDataBase["id_person"] != DBNull.Value)
                                         doctor.person = TestPerson.BuildPersonFromDataBaseData(Convert.ToString(doctorFromDataBase["id_person"]), Convert.ToString(doctorFromDataBase["id_doctor_mis"]));
-                                    if (doctorFromDataBase["id_person"].ToString() != "")
+                                    if (doctorFromDataBase["id_person"] != DBNull.Value)
                                         doctor.cnts = TestContact.BuildContactsFromDataBaseData(Convert.ToString(doctorFromDataBase["id_person"]));
                                     docs.Add(doctor);
                                 }
@@ -85,10 +81,7 @@ namespace MqTests
                     }
                 }
             }
-            if (docs.Count != 0)
-                return docs;
-            else
-                return null;
+            return (docs.Count != 0) ? docs : null;
         }
         private void FindMismatch(TestDoctor r)
         {

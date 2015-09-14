@@ -86,9 +86,11 @@ namespace MqTests
                 if (r.QLength != 0)
                     Global.errors1.Add("Найдено больше одного совпадения, но SearchOne нашел " + r.QLength.ToString());
                 else ;
-            else
-                if (TestReferral.BuildReferralFromDataBaseData(s[0]) != new TestReferral(r.Referral))
-                    Global.errors1.Add("Несовпадение");
+            else if (!TestReferral.BuildReferralFromDataBaseData(s[0]).Equals(new TestReferral(r.Referral)))
+            {
+                Global.errors1.AddRange(Global.errors2);
+                Global.errors1.Add("Несовпадение");
+            }
             return r;
 
         }

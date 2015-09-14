@@ -15,13 +15,10 @@ namespace MqTests
         TestCoding surveyType;
         public TestReferralSurvey(Survey r)
         {
-            if (r != null)
-            {
-                survey = r;
-                additional = new TestAdditional(r.Additional);
-                surveyOrgan = new TestCoding(r.SurveyOrgan);
-                surveyType = new TestCoding(r.SurveyType);
-            }
+            survey = r ?? new Survey();
+            additional = new TestAdditional(survey.Additional);
+            surveyOrgan = new TestCoding(survey.SurveyOrgan);
+            surveyType = new TestCoding(survey.SurveyType);
         }
         static public TestReferralSurvey BuildAdditionalFromDataBaseData(string idReferral)
         {
@@ -35,14 +32,14 @@ namespace MqTests
                     while (personFromDataBase.Read())
                     {
                         //что делать с DateSpecified и Мисами? 
-                        if (personFromDataBase["survey_comment"].ToString() != "")
+                        if (personFromDataBase["survey_comment"] != DBNull.Value)
                             p.Comment = Convert.ToString(personFromDataBase["survey_comment"]);
                         TestReferralSurvey pers = new TestReferralSurvey(p);
-                        if (personFromDataBase["id_referral"].ToString() != "")
+                        if (personFromDataBase["id_referral"] != DBNull.Value)
                             pers.additional = TestAdditional.BuildAdditionalFromDataBaseData(Convert.ToString(personFromDataBase["id_referral"]));
-                        if (personFromDataBase["id_survey_organ"].ToString() != "")
+                        if (personFromDataBase["id_survey_organ"] != DBNull.Value)
                             pers.surveyOrgan = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_survey_organ"]));
-                        if (personFromDataBase["id_survey_type"].ToString() != "")
+                        if (personFromDataBase["id_survey_type"] != DBNull.Value)
                             pers.surveyType = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_survey_type"]));
                         return pers;
                     }

@@ -35,17 +35,14 @@ namespace MqTests
         TestCoding lpu;
         public TestReferralSource(ReferralSource r)
         {
-            if (r != null)
-            {
-                sourse = r;
-                if (r.Doctors != null)
-                    foreach (Doctor i in r.Doctors)
-                        docs.Add(new TestDoctor(i));
-                if (r.MainDiagnosis != null)
-                    foreach (MainDiagnosis i in r.MainDiagnosis)
-                        diag.Add(new TestMainDiagnosis(i));
-                lpu = new TestCoding(r.Lpu);
-            }
+            sourse = r ?? new ReferralSource();
+            if (sourse.Doctors != null)
+                foreach (Doctor i in sourse.Doctors)
+                    docs.Add(new TestDoctor(i));
+            if (sourse.MainDiagnosis != null)
+                foreach (MainDiagnosis i in sourse.MainDiagnosis)
+                    diag.Add(new TestMainDiagnosis(i));
+            lpu = new TestCoding(sourse.Lpu);
         }
         static public TestReferralSource BuildSourceFromDataBaseData(string idReferral)
         {
@@ -59,18 +56,18 @@ namespace MqTests
                     while (personFromDataBase.Read())
                     {
                         //referral_creation_date должен быть тут в Date! 
-                        if (personFromDataBase["id_source_lpu_case_mis"].ToString() != "")
+                        if (personFromDataBase["id_source_lpu_case_mis"] != DBNull.Value)
                             p.IdCaseMis = Convert.ToString(personFromDataBase["id_source_lpu_case_mis"]);
-                        if (personFromDataBase["id_referral_source_mo_mis"].ToString() != "")
+                        if (personFromDataBase["id_referral_source_mo_mis"] != DBNull.Value)
                             p.IdReferralMis = Convert.ToString(personFromDataBase["id_referral_source_mo_mis"]);
                         TestReferralSource pers = new TestReferralSource(p);
-                        if (personFromDataBase["id_source_lpu"].ToString() != "")
+                        if (personFromDataBase["id_source_lpu"] != DBNull.Value)
                             pers.lpu = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_source_lpu"]));
                         return pers;
                     }
                 }
             }
-            return null;
+            return new TestReferralSource(null);
         }
         private void FindMismatch(TestReferralSource r)
         {

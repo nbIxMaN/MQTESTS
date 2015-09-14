@@ -27,19 +27,16 @@ namespace MqTests
                     while (jobReader.Read())
                     {
                         Job job = new Job();
-                        if (jobReader["company_name"].ToString() != "")
+                        if (jobReader["company_name"]!= DBNull.Value)
                             job.CompanyName = Convert.ToString(jobReader["company_name"]);
-                        if (jobReader["position"].ToString() != "")
+                        if (jobReader["position"] != DBNull.Value)
                             job.Position = Convert.ToString(jobReader["position"]);
                         TestJob tJob = new TestJob(job);
                         jobs.Add(tJob);
                     }
                 }
             }
-            if (jobs.Count != 0)
-                return jobs;
-            else
-                return null;
+            return (jobs.Count != 0) ? jobs : null;
         }
 
         private void FindMismatch(TestJob b)

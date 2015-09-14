@@ -13,10 +13,7 @@ namespace MqTests
         Coding coding;
         public TestCoding(Coding r)
         {
-            if (r != null)
-            {
-                coding = r;
-            }
+            coding = r;
         }
         public static TestCoding BuildCodingFromDataBaseData(string p)
         {
@@ -29,11 +26,11 @@ namespace MqTests
                     while (documentReader.Read())
                     {
                         Coding x = new Coding();
-                        if (documentReader["code"].ToString() != "")
+                        if (documentReader["code"] != DBNull.Value)
                             x.Code = documentReader["code"].ToString();
-                        if (documentReader["uri"].ToString() != "")
+                        if (documentReader["uri"] != DBNull.Value)
                             x.System = documentReader["uri"].ToString();
-                        if (documentReader["version"].ToString() != "")
+                        if (documentReader["version"] != DBNull.Value)
                             x.Version = documentReader["version"].ToString();
                         return new TestCoding(x);
                     }

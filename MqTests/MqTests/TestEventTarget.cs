@@ -16,14 +16,16 @@ namespace MqTests
         TestCoding lpu;
         public TestEventTarget(EventTarget r)
         {
-            if (r != null)
-            {
-                target = r;
-                caseAidForm = new TestCoding(r.CaseAidForm);
-                caseAidPlace = new TestCoding(r.CaseAidPlace);
-                caseAidType = new TestCoding(r.CaseAidType);
-                lpu = new TestCoding(r.Lpu);
-            }
+            target = r ?? new EventTarget();
+            caseAidForm = new TestCoding(target.CaseAidForm);
+            caseAidPlace = new TestCoding(target.CaseAidPlace);
+            caseAidType = new TestCoding(target.CaseAidType);
+            lpu = new TestCoding(target.Lpu);
+        }
+
+        private TestEventTarget()
+        {
+            
         }
         static public TestEventTarget BuildTargetFromDataBaseData(string idReferral)
         {
@@ -37,18 +39,18 @@ namespace MqTests
                     while (personFromDataBase.Read())
                     {
                         //что делать с IsReferralReviwedSpecified, Lpu, ReceptionAppointComment, ReceptionAppointTime, ReferralReviewDate и RefferalCreatedDate? 
-                        if (personFromDataBase["case_close_date"].ToString() != "")
+                        if (personFromDataBase["case_close_date"] != DBNull.Value)
                             p.CaseCloseDate = Convert.ToDateTime(personFromDataBase["case_close_date"]);
-                        if (personFromDataBase["case_open_date"].ToString() != "")
+                        if (personFromDataBase["case_open_date"] != DBNull.Value)
                             p.CaseOpenDate = Convert.ToDateTime(personFromDataBase["case_open_date"]);
-                        if (personFromDataBase["reception_appoint_date"].ToString() != "")
+                        if (personFromDataBase["reception_appoint_date"] != DBNull.Value)
                             p.ReceptionAppointDate = Convert.ToDateTime(personFromDataBase["reception_appoint_date"]);
                         TestEventTarget pers = new TestEventTarget(p);
-                        if (personFromDataBase["id_case_aid_form"].ToString() != "")
+                        if (personFromDataBase["id_case_aid_form"] != DBNull.Value)
                             pers.caseAidForm = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_case_aid_form"]));
-                        if (personFromDataBase["id_case_aid_place"].ToString() != "")
+                        if (personFromDataBase["id_case_aid_place"] != DBNull.Value)
                             pers.caseAidPlace = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_case_aid_place"]));
-                        if (personFromDataBase["id_case_aid_type"].ToString() != "")
+                        if (personFromDataBase["id_case_aid_type"] != DBNull.Value)
                             pers.caseAidType = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_case_aid_type"]));
                         return pers;
                     }

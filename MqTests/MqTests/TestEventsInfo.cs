@@ -15,17 +15,19 @@ namespace MqTests
         TestEventTarget target;
         public TestEventsInfo(EventsInfo r)
         {
-            if (r != null)
-            {
-                info = r;
-                cancellation = new TestCancellation(r.Cancellation);
-                source = new TestEventSource(r.Source);
-                target = new TestEventTarget(r.Target);
-            }
+            info = r ?? new EventsInfo();
+            cancellation = new TestCancellation(info.Cancellation);
+            source = new TestEventSource(info.Source);
+            target = new TestEventTarget(info.Target);
         }
+
+        private TestEventsInfo()
+        {
+        }
+
         static public TestEventsInfo BuildAdditionalFromDataBaseData(string idReferral)
         {
-            TestEventsInfo p = new TestEventsInfo(new EventsInfo());
+            TestEventsInfo p = new TestEventsInfo();
             p.cancellation = TestCancellation.BuildCancellationFromDataBaseData(idReferral);
             p.source = TestEventSource.BuildSourceFromDataBaseData(idReferral);
             p.target = TestEventTarget.BuildTargetFromDataBaseData(idReferral);
@@ -43,19 +45,9 @@ namespace MqTests
         public override bool Equals(Object obj)
         {
             TestEventsInfo p = obj as TestEventsInfo;
-            if ((object)p == null)
-            {
-                return false;
-            }
-            if (this.info == p.info)
-                return true;
-            if ((this.info == null) || (p.info == null))
-            {
-                return false;
-            }
-            if ((Global.IsEqual(this.cancellation, p.cancellation)) &&
-            (Global.IsEqual(this.source, p.source)) &&
-            (Global.IsEqual(this.target, p.target)))
+            if ((Global.IsEqual(this.cancellation, p?.cancellation)) &&
+            (Global.IsEqual(this.source, p?.source)) &&
+            (Global.IsEqual(this.target, p?.target)))
             {
                 return true;
             }

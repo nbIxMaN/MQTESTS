@@ -14,11 +14,8 @@ namespace MqTests
 
         public TestPrivilege(Privilege p)
         {
-            if (p != null)
-            {
-                privilege = p;
-                privilegeType = new TestCoding(p.PrivilegeType);
-            }
+            privilege = p;
+            privilegeType = new TestCoding(privilege.PrivilegeType);
         }
 
         static public List<TestPrivilege> BuildPrivilegeFromDataBaseData(string idPerson)
@@ -34,21 +31,18 @@ namespace MqTests
                     {
                         //что делать с DateSpecified?
                         Privilege priv = new Privilege();
-                        if (contactReader["date_start"].ToString() != "")
+                        if (contactReader["date_start"] != DBNull.Value)
                             priv.StartDate = Convert.ToDateTime(contactReader["date_start"]);
-                        if (contactReader["date_end"].ToString() != "")
+                        if (contactReader["date_end"] != DBNull.Value)
                             priv.EndDate = Convert.ToDateTime(contactReader["date_end"]);
                         TestPrivilege privilege = new TestPrivilege(priv);
-                        if (contactReader["id_priviledge_code"].ToString() != "")
+                        if (contactReader["id_priviledge_code"] != DBNull.Value)
                             privilege.privilegeType = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(contactReader["id_priviledge_code"]));
                         priveleges.Add(privilege);
                     }
                 }
             }
-            if (priveleges.Count != 0)
-                return priveleges;
-            else
-                return null;
+            return (priveleges.Count != 0) ? priveleges : null;
         }
 
         public void FindMismatch(TestPrivilege b)

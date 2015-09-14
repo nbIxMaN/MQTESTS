@@ -43,7 +43,7 @@ namespace MqTests
                 //    }
                 //});
             }
-            //Assert.Fail(a.Count.ToString());
+            Assert.Fail(Global.errors);
         }
     }
 }

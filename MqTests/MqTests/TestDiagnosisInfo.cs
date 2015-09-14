@@ -16,13 +16,10 @@ namespace MqTests
         const string main = "1";
 
         public TestDiagnosisInfo(DiagnosisInfo r)
-        {
-            if (r != null)
-            {
-                diagnosisInfo = r;
-                diagnosisType = new TestCoding(r.DiagnosisType);
-                mkbCode = new TestCoding(r.MkbCode);
-            }
+        { 
+            diagnosisInfo = r;
+            diagnosisType = new TestCoding(diagnosisInfo.DiagnosisType);
+            mkbCode = new TestCoding(diagnosisInfo.MkbCode);
         }
         static public TestDiagnosisInfo BuildTestMainDiagnosisInfoFromDataBaseData(string idReferral)
         {
@@ -37,12 +34,12 @@ namespace MqTests
                     while (diagnosisReader.Read())
                     {
                         DiagnosisInfo diag = new DiagnosisInfo();
-                        if (diagnosisReader["comment"].ToString() != "")
+                        if (diagnosisReader["comment"] != DBNull.Value)
                             diag.Comment = Convert.ToString(diagnosisReader["comment"]);
-                        if (diagnosisReader["diagnosis_date"].ToString() != "")
+                        if (diagnosisReader["diagnosis_date"] != DBNull.Value)
                             diag.DiagnosedDate = Convert.ToDateTime(diagnosisReader["diagnosis_date"]);
                         TestDiagnosisInfo tDiag = new TestDiagnosisInfo(diag);
-                        if (diagnosisReader["id_mkb_code"].ToString() != "")
+                        if (diagnosisReader["id_mkb_code"] != DBNull.Value)
                             tDiag.mkbCode = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(diagnosisReader["id_mkb_code"]));
                         return tDiag;
                     }

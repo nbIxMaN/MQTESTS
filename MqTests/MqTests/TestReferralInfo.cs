@@ -16,41 +16,50 @@ namespace MqTests
         TestCoding referralType;
         public TestReferralInfo(ReferralInfo r)
         {
-            if (r != null)
-            {
-                info = r;
-                cancellation = new TestCancellation(r.Cancellation);
-                mqReferralStatus = new TestCoding(r.MqReferralStatus);
-                profileMedService = new TestCoding(r.ProfileMedService);
-                referralType = new TestCoding(r.ReferralType);
-            }
+            info = r ?? new ReferralInfo();
+            cancellation = new TestCancellation(info.Cancellation);
+            mqReferralStatus = new TestCoding(info.MqReferralStatus);
+            profileMedService = new TestCoding(info.ProfileMedService);
+            referralType = new TestCoding(info.ReferralType);
         }
         static public TestReferralInfo BuildPersonFromDataBaseData(string idReferral)
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
-                string findPatient = "SELECT comment, priority_comment, referral_paper_date, id_referral_type, id_profile_med_service, referral_reason FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
+                string findPatient =
+                    "SELECT comment, priority_comment, referral_paper_date, id_referral_type, id_profile_med_service, referral_reason, id_mq_referral_status FROM public.referral, public.referral_status WHERE public.referral.id_referral = '" +
+                    idReferral +
+                    "' AND public.referral.id_referral = public.referral_status.id_referral ORDER BY public.referral.id_referral DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
                 {
                     ReferralInfo p = new ReferralInfo();
                     while (personFromDataBase.Read())
                     {
+                        p.IdMq = idReferral;
                         //что делать с mqReferralStatus? 
-                        if (personFromDataBase["comment"].ToString() != "")
+                        if (personFromDataBase["comment"] != DBNull.Value)
                             p.Comment = Convert.ToString(personFromDataBase["comment"]);
-                        if (personFromDataBase["referral_paper_date"].ToString() != "")
+                        if (personFromDataBase["referral_paper_date"] != DBNull.Value)
                             p.Date = Convert.ToDateTime(personFromDataBase["referral_paper_date"]);
-                        if (personFromDataBase["priority_comment"].ToString() != "")
+                        if (personFromDataBase["priority_comment"] != DBNull.Value)
                             p.Priority = Convert.ToString(personFromDataBase["priority_comment"]);
-                        if (personFromDataBase["referral_reason"].ToString() != "")
+                        if (personFromDataBase["referral_reason"] != DBNull.Value)
                             p.Reason = Convert.ToString(personFromDataBase["referral_reason"]);
                         TestReferralInfo pers = new TestReferralInfo(p);
                         pers.cancellation = TestCancellation.BuildCancellationFromDataBaseData(idReferral);
-                        if (personFromDataBase["id_referral_type"].ToString() != "")
-                            pers.referralType = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_referral_type"]));
-                        if (personFromDataBase["id_profile_med_service"].ToString() != "")
-                            pers.profileMedService = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_profile_med_service"]));
+                        if (personFromDataBase["id_referral_type"] != DBNull.Value)
+                            pers.referralType =
+                                TestCoding.BuildCodingFromDataBaseData(
+                                    Convert.ToString(personFromDataBase["id_referral_type"]));
+                        if (personFromDataBase["id_profile_med_service"] != DBNull.Value)
+                            pers.profileMedService =
+                                TestCoding.BuildCodingFromDataBaseData(
+                                    Convert.ToString(personFromDataBase["id_profile_med_service"]));
+                        if (personFromDataBase["id_mq_referral_status"] != DBNull.Value)
+                            pers.mqReferralStatus =
+                                TestCoding.BuildCodingFromDataBaseData(
+                                    Convert.ToString(personFromDataBase["id_mq_referral_status"]));
                         return pers;
                     }
                 }

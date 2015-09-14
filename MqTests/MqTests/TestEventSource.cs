@@ -12,30 +12,34 @@ namespace MqTests
         EventSource source;
         public TestEventSource(EventSource r)
         {
-            if (r != null)
-            {
-                source = r;
-            }
+             source = r ?? new EventSource();
+        }
+
+        private TestEventSource()
+        {
+            
         }
         static public TestEventSource BuildSourceFromDataBaseData(string idReferral)
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
                 //ReferralCreateDate что с этим делать???
-                string findPatient = "SELECT is_referral_review_source_mo, planned_date, referral_out_date, referral_review_date_source_mo FROM public.referral WHERE id_referral = '" + idReferral + "'ORDER BY id_referral DESC LIMIT 1";
+                string findPatient = "SELECT is_referral_review_source_mo, referral_creation_date, planned_date, referral_out_date, referral_review_date_source_mo FROM public.referral WHERE id_referral = '" + idReferral + "'ORDER BY id_referral DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
                 {
                     EventSource p = new EventSource();
                     while (personFromDataBase.Read())
                     {
-                        if (personFromDataBase["is_referral_review_source_mo"].ToString() != "")
+                        if (personFromDataBase["is_referral_review_source_mo"] != DBNull.Value)
                             p.IsReferralReviewed = Convert.ToBoolean(personFromDataBase["is_referral_review_source_mo"]);
-                        if (personFromDataBase["planned_date"].ToString() != "")
+                        if (personFromDataBase["referral_creation_date"] != DBNull.Value)
+                            p.ReferralCreateDate = Convert.ToDateTime(personFromDataBase["referral_creation_date"]);
+                        if (personFromDataBase["planned_date"] != DBNull.Value)
                             p.PlannedDate = Convert.ToDateTime(personFromDataBase["planned_date"]);
-                        if (personFromDataBase["referral_out_date"].ToString() != "")
+                        if (personFromDataBase["referral_out_date"] != DBNull.Value)
                             p.ReferralOutDate = Convert.ToDateTime(personFromDataBase["referral_out_date"]);
-                        if (personFromDataBase["referral_review_date_source_mo"].ToString() != "")
+                        if (personFromDataBase["referral_review_date_source_mo"] != DBNull.Value)
                             p.ReferralReviewDate = Convert.ToDateTime(personFromDataBase["referral_review_date_source_mo"]);
                         TestEventSource pers = new TestEventSource(p);
                         return pers;

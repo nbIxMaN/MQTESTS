@@ -14,11 +14,8 @@ namespace MqTests
 
         public TestContact(ContactDto c)
         {
-            if (c != null)
-            {
-                contact = c;
-                contactType = new TestCoding(c.ContactType);
-            }
+            contact = c;
+            contactType = new TestCoding(contact.ContactType);
         }
 
         static public List<TestContact> BuildContactsFromDataBaseData(string idPerson)
@@ -33,19 +30,16 @@ namespace MqTests
                     while (contactReader.Read())
                     {
                         ContactDto cont = new ContactDto();
-                        if (contactReader["contact_value"].ToString() != "")
+                        if (contactReader["contact_value"] != DBNull.Value)
                             cont.ContactValue = Convert.ToString(contactReader["contact_value"]);
                         TestContact contact = new TestContact(cont);
-                        if (contactReader["id_contact_type"].ToString() != "")
+                        if (contactReader["id_contact_type"] != DBNull.Value)
                             contact.contactType = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(contactReader["id_contact_type"]));
                         contacts.Add(contact);
                     }
                 }
             }
-            if (contacts.Count != 0)
-                return contacts;
-            else
-                return null;
+            return (contacts.Count != 0) ? contacts : null;
         }
 
         private void FindMismatch(TestContact b)
