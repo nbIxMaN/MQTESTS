@@ -256,11 +256,26 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="PutPatientMoveInfo">
+  <xs:element name="ListAll">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/MQ.Dto" minOccurs="0" name="credentials" nillable="true" type="q49:Credentials" />
-        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/MQ.Dto.Legacy" minOccurs="0" name="info" nillable="true" type="q50:PatientMoveInfo_6_1_1" />
+        <xs:element minOccurs="0" name="page" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListAllResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/MQ.Dto" minOccurs="0" name="ListAllResult" nillable="true" type="q50:ArrayOfReferralListInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PutPatientMoveInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/MQ.Dto" minOccurs="0" name="credentials" nillable="true" type="q51:Credentials" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/MQ.Dto.Legacy" minOccurs="0" name="info" nillable="true" type="q52:PatientMoveInfo_6_1_1" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

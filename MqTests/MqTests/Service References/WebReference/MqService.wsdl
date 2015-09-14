@@ -168,6 +168,15 @@
   <wsdl:message name="IMqService_GetResultDocument_MqFaultFault_FaultMessage">
     <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/MQ.Dto.Fault" name="detail" element="q18:MqFault" />
   </wsdl:message>
+  <wsdl:message name="IMqService_ListAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListAll" />
+  </wsdl:message>
+  <wsdl:message name="IMqService_ListAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMqService_ListAll_MqFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/MQ.Dto.Fault" name="detail" element="q19:MqFault" />
+  </wsdl:message>
   <wsdl:message name="IMqService_PutPatientMoveInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:PutPatientMoveInfo" />
   </wsdl:message>
@@ -175,7 +184,7 @@
     <wsdl:part name="parameters" element="tns:PutPatientMoveInfoResponse" />
   </wsdl:message>
   <wsdl:message name="IMqService_PutPatientMoveInfo_MqFaultFault_FaultMessage">
-    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/MQ.Dto.Fault" name="detail" element="q19:MqFault" />
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/MQ.Dto.Fault" name="detail" element="q20:MqFault" />
   </wsdl:message>
   <wsdl:portType name="IMqService">
     <wsdl:operation name="UpdateMedServiceProfile">
@@ -263,6 +272,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMqService/GetResultDocument" message="tns:IMqService_GetResultDocument_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMqService/GetResultDocumentResponse" message="tns:IMqService_GetResultDocument_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IMqService/GetResultDocumentMqFaultFault" name="MqFaultFault" message="tns:IMqService_GetResultDocument_MqFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListAll">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMqService/ListAll" message="tns:IMqService_ListAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMqService/ListAllResponse" message="tns:IMqService_ListAll_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMqService/ListAllMqFaultFault" name="MqFaultFault" message="tns:IMqService_ListAll_MqFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="PutPatientMoveInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/IMqService/PutPatientMoveInfo" message="tns:IMqService_PutPatientMoveInfo_InputMessage" />
@@ -469,6 +483,18 @@
     </wsdl:operation>
     <wsdl:operation name="GetResultDocument">
       <soap:operation soapAction="http://tempuri.org/IMqService/GetResultDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MqFaultFault">
+        <soap:fault use="literal" name="MqFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListAll">
+      <soap:operation soapAction="http://tempuri.org/IMqService/ListAll" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

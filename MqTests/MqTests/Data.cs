@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using MqTests.WebReference;
+using System.Linq;
 
 namespace MqTests
 {
@@ -62,25 +63,60 @@ namespace MqTests
         public string idLpu = "1.2.643.5.1.13.3.25.78.6";
         public string guid = "dda0e909-93cd-4549-b7ff-d1caaa1f0bc2";
 
+        private static string[] FamilyNames = { "Максимов", "Андреев", "Сергеев", "Сидоров", "Иванов", "Петров", "Абрамов", "Евгеньев", "Архипов", "Антонов", "Дмитриев", "Леонидов", "Денисов", "Тарасов", "Владимиров", "Константинов", "Николаев", "Романов", "Константинов", "Артемьев", "Филиппов", "Викторов", "Васильев", "Прохоров", "Алексеев", "Михайлов", "Афанасьев", "Харитонов" };
+        private static string[] GivenNames = { "Максим", "Андрей", "Сергей", "Сидор", "Иван", "Пётр", "Абрам", "Евгений", "Архип", "Антон", "Дмитрий", "Леонид", "Денис", "Тарас", "Владимир", "Константин", "Николай", "Роман", "Константин", "Артём", "Филипп", "Виктор", "Василий", "Прохор", "Алексей", "Михаил", "Афанасий", "Харитон" };
+        private static string[] MiddleNames = { "Максимович", "Андреевич", "Сергеевич", "Сидорович", "Иванович", "Петрович", "Абрамович", "Евгеньевич", "Архипович", "Антонович", "Дмитриевич", "Леонидович", "Денисович", "Тарасович", "Владимирович", "Константинович", "Николаевич", "Романович", "Константинович", "Артёмович", "Филиппович", "Викторович", "Васильевич", "Прохорович", "Алексеевич", "Михайлович", "Афанасьевич", "Харитонович" };
+        private static string[] Streets = { "Невский пр.", "ул.Оптиков", "ул.Фрунзе", "ул.Дыбенко", "Пискарёвский пр.", "ул. Таллинская", "ул. Казанская", "наб. канала Грибоедова", "пл. Труда" };
+        private static string[] CompanyNames = { "ОАО Солнышко", "ЧП Петров", "ЗАО Чайники", "ООО Пряники", "ОАО Лакомка", "ЧП Иванов", "ЗАО Газпром", "ОАО BestOfTheBest", "ОАО Программисты", "ЧП Тарасов", "ЗАО AllSafe", "Салон красоты Медея", "ЧП Булочная", "ЧП Зайки", "МедКлиника Доктор Хаус" };
+        private static string[] Positions = { "Менеджер", "Директор", "Уборщица", "Старший разработчик", "Продавец", "Тестировщик", "Разнорабочий", "Парикмахер", "Повар", "Врач", "Аналитик", "Бухгалтер", "Просто хороший человек" };
+
+        static Random R = new Random((int)DateTime.Now.Ticks);
+
+        // Задание случайных номера(4 цифры) и серии документа(6 цифр)
+        private static DocumentDto RandomDocument()
+        {
+            return new DocumentDto { DocS = R.Next(1000).ToString("D4"), DocN = R.Next(1000000).ToString("D6") };
+        }
+
+        //Задание случайного номера СНИЛС(11 цифр)
+        private static DocumentDto RandomSnils()
+        {
+            return new DocumentDto { DocN = R.Next(1000000).ToString("D11") };
+        }
+
+        private static string[] RandomFIO()
+        {
+            int len = new[] { FamilyNames, GivenNames, MiddleNames }.Min(x => x.Length);
+            return new string[] { FamilyNames[R.Next(len)], GivenNames[R.Next(len)], MiddleNames[R.Next(len)] };
+        }
+
+        private static string RandomBirthDate()
+        {
+            return new DateTime(1950, 1, 1).AddDays(R.Next((DateTime.Today.AddYears(-30) - new DateTime(1950, 1, 1)).Days)).ToString("dd.MM.yyyy");
+        }
+
+        private static string RandomAddress()
+        {
+            return Streets[R.Next(Streets.Length)] + ", д." + R.Next(30).ToString() + ", кв." + R.Next(150).ToString();
+        }
+
+        private static string RandomMobilePhone()
+        {
+            return "+7 9" + R.Next(35).ToString("D2") + R.Next(1000).ToString("D3") + R.Next(10000).ToString("D4");
+        }
+
+        private static string[] RandomJob()
+        {
+            return new string[] {CompanyNames[R.Next(CompanyNames.Length)], Positions[R.Next(Positions.Length)]};
+        }
+
         private static void SetDocument()
         {
             DocumentData.PatientPassport = new DocumentDto
             {
                 DocumentType = SetCoding("14", Dictionary.DOCUMENT_TYPE, "1"),
-                DocS = "2007",
-                DocN = "395731",
-                ProviderName = "УФМС",
-                ExpiredDate = Convert.ToDateTime("19.02.2020"),
-                IssuedDate = Convert.ToDateTime("03.09.2007"),
-                RegionCode = SetCoding("11", Dictionary.REGION_CODE, "1"),
-                Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
-            };
-
-            DocumentData.DoctorPassport = new DocumentDto
-            {
-                DocumentType = SetCoding("14", Dictionary.DOCUMENT_TYPE, "1"),
-                DocS = "2005",
-                DocN = "395712",
+                DocS = RandomDocument().DocS,
+                DocN = RandomDocument().DocN,
                 ProviderName = "УФМС",
                 ExpiredDate = Convert.ToDateTime("19.02.2020"),
                 IssuedDate = Convert.ToDateTime("03.09.2007"),
@@ -91,7 +127,7 @@ namespace MqTests
             DocumentData.SNILS = new DocumentDto
             {
                 DocumentType = SetCoding("223", Dictionary.DOCUMENT_TYPE, "1"),
-                DocN = "59165576238",
+                DocN = RandomSnils().DocN,
                 ProviderName = "ПФР",
                 ExpiredDate = Convert.ToDateTime("01.12.2010"),
                 IssuedDate = Convert.ToDateTime("03.09.2006"),
@@ -102,7 +138,7 @@ namespace MqTests
             DocumentData.OldOMS = new DocumentDto
             {
                 DocumentType = SetCoding("226", Dictionary.DOCUMENT_TYPE, "1"),
-                DocN = "225916",
+                DocN = RandomDocument().DocN,
                 DocS = "AA",
                 ProviderName = "Старый полис",
                 ExpiredDate = Convert.ToDateTime("31.01.2040"),
@@ -114,24 +150,24 @@ namespace MqTests
             DocumentData.SingleOMS = new DocumentDto
             {
                 DocumentType = SetCoding("228", Dictionary.DOCUMENT_TYPE, "1"),
-                DocN = "1234567",
-                DocS = "1234",
+                DocN = RandomDocument().DocN,
+                DocS = RandomDocument().DocS,
                 ProviderName = "Единый полис",
                 ExpiredDate = Convert.ToDateTime("02.06.2000"),
                 IssuedDate = Convert.ToDateTime("04.02.1994"),
-                RegionCode = SetCoding("11", Dictionary.REGION_CODE,  "1"),
+                RegionCode = SetCoding("11", Dictionary.REGION_CODE, "1"),
                 Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
             };
 
             DocumentData.OtherDoc = new DocumentDto
             {
                 DocumentType = SetCoding("18", Dictionary.DOCUMENT_TYPE, "1"),
-                DocN = "1234567",
-                DocS = "1234",
+                DocN = RandomDocument().DocN,
+                DocS = RandomDocument().DocS,
                 ProviderName = "Иной документ",
                 ExpiredDate = Convert.ToDateTime("02.06.2000"),
                 IssuedDate = Convert.ToDateTime("04.02.1994"),
-                RegionCode = SetCoding("11", Dictionary.REGION_CODE , "1"),
+                RegionCode = SetCoding("11", Dictionary.REGION_CODE, "1"),
                 Provider = SetCoding("22003", Dictionary.PROVIDER, "1")
             };
         }
@@ -141,7 +177,7 @@ namespace MqTests
             return PersonData.contact = new ContactDto
             {
                 ContactType = SetCoding("1", Dictionary.CONTACT_TYPES, "1"),
-                ContactValue = "89103456789"
+                ContactValue = RandomMobilePhone()
             };
         }
 
@@ -160,19 +196,14 @@ namespace MqTests
             return PersonData.doctor = new Doctor
             {
                 Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "1"),
-                Speciality = SetCoding("0", Dictionary.DOCTOR_SPECIALITY , "1"),
+                Speciality = SetCoding("0", Dictionary.DOCTOR_SPECIALITY, "1"),
                 Position = SetCoding("247", Dictionary.DOCTOR_POSITION, "1"),
                 Role = SetCoding("1", Dictionary.DOCTOR_ROLE, "1"),
                 Person = new Person
                 {
-                    IdPersonMis = "Идентификатор медицинского работника в МИС направляющей МО",
+                    IdPersonMis = "IdPersonMis SourcedMO" + new Random().Next(1000),
                     Sex = SetCoding("1", Dictionary.SEX, "1"),
-                    HumanName = new HumanName
-                    {
-                        FamilyName = "Иванов",
-                        GivenName = "Пётр",
-                        MiddleName = "Сергеевич"
-                    }
+                    HumanName = new HumanName { FamilyName = RandomFIO()[0], GivenName = RandomFIO()[1], MiddleName = RandomFIO()[2] }
                 },
                 ContactDtos = new ContactDto[] { SetContact() }
             };
@@ -184,33 +215,23 @@ namespace MqTests
             {
                 Person = new Person
                 {
-                    BirthDate = Convert.ToDateTime("01.01.1990"),
-                    IdPatientMis = "Идентификатор пациента в МИС направляющей МО",
-                    //IdPersonMis = "Идентификатор медицинского работника в МИС направляющей МО",
-                    Sex = SetCoding("female", "1.2.643.5.1.13.2.1.1.156", "1"),
-                    HumanName = new HumanName
-                    {
-                        FamilyName = "Петров",
-                        GivenName = "Иван",
-                        MiddleName = "Иванович"
-                    }
+                    BirthDate = Convert.ToDateTime(RandomBirthDate()),
+                    IdPatientMis = "IdPatientMis SoucedMO" + new Random().Next(1000),
+                    Sex = SetCoding("1", Dictionary.SEX, "1"),
+                    HumanName = new HumanName { FamilyName = RandomFIO()[0], GivenName = RandomFIO()[1], MiddleName = RandomFIO()[2] }
                 },
                 Addresses = new AddressDto[] 
                 { 
                     new AddressDto
                     {
                         AddressType = SetCoding("H", Dictionary.ADDRESS_TYPE, "1"),
-                        StringAddress = "г.Петергоф Ботаническая 66, корп 2"
+                        StringAddress = RandomAddress()
                     }
                 },
                 ContactDtos = new ContactDto[] { SetContact() },
                 Jobs = new Job[] 
                 { 
-                    new  Job
-                    {
-                        CompanyName = "ОАО Солнышко",
-                        Position = "Менеджер"
-                    }
+                    new  Job { CompanyName = RandomJob()[0], Position = RandomJob()[1] }
                 },
                 Privileges = new Privilege[]
                 {
@@ -229,7 +250,7 @@ namespace MqTests
             return DiagnosisData.diagnosisInfo = new DiagnosisInfo
             {
                 DiagnosedDate = Convert.ToDateTime("01.01.2012"),
-                Comment = "Комментарий к диагнозу",
+                Comment = "Комментарий к диагнозу" + new Random().Next(1000),
                 DiagnosisType = SetCoding("1", Dictionary.DIAGNOSIS_TYPE, "1"),
                 MkbCode = SetCoding("A05.2", Dictionary.MKB_CODE, "1")
             };
@@ -240,9 +261,9 @@ namespace MqTests
             return DiagnosisData.diagnosisInfo = new DiagnosisInfo
             {
                 DiagnosedDate = Convert.ToDateTime("01.02.2012"),
-                Comment = "Комментарий к диагнозу2",
+                Comment = "Комментарий к диагнозу" + new Random().Next(1000),
                 DiagnosisType = SetCoding("2", Dictionary.DIAGNOSIS_TYPE, "1"),
-                MkbCode = SetCoding("A05.2", Dictionary.MKB_CODE, "1")
+                MkbCode = SetCoding("B15", Dictionary.MKB_CODE, "1")
             };
         }
         private static MainDiagnosis SetMainDiagnosis()
@@ -273,7 +294,7 @@ namespace MqTests
             };
         }
 
-        // контейнер info? проверить тестовые данные
+        // контейнер info?
         private static PatientMove_PlaceTypeInfoCell SetPatientMove_PlaceTypeInfoCell()
         {
             return InfoData.patientMove_PlaceTypeInfoCell = new PatientMove_PlaceTypeInfoCell
@@ -281,17 +302,14 @@ namespace MqTests
                 PlaceTypeCatalogId = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
                 Info = new PatientMove_PlaceTypeInfo
                 {
-                    CurrentCount = 1,
-                    IncomingCount = 1,
-                    OutgoingCount = 0,
-                    PlaningCount = 1,
-                    ManPlaceAvailable = 2,
-                    WomanPlaceAvailable = 1,
-                    ChildrenPlaceAvailable = 1,
-                    InfoList = new PatientMove_SMOInfoCell[]
-                    {
-                         SetPatientMove_SMOInfoCell()
-                    }
+                    CurrentCount = new Random().Next(100),
+                    IncomingCount = new Random().Next(100),
+                    OutgoingCount = new Random().Next(100),
+                    PlaningCount = new Random().Next(100),
+                    ManPlaceAvailable = new Random().Next(100),
+                    WomanPlaceAvailable = new Random().Next(100),
+                    ChildrenPlaceAvailable = new Random().Next(100),
+                    InfoList = new PatientMove_SMOInfoCell[] { SetPatientMove_SMOInfoCell() }
                 }
             };
         }
@@ -303,8 +321,8 @@ namespace MqTests
                 HicCatalogId = SetCoding("22003", Dictionary.HIC_CATALOGID, "1"),
                 Info = new PatientMove_SMOInfo
                 {
-                    HospitalizationCount = 123,
-                    PlaceDayCount = 34
+                    HospitalizationCount = new Random().Next(100),
+                    PlaceDayCount = new Random().Next(365)
                 }
             };
         }
@@ -314,10 +332,10 @@ namespace MqTests
 
             ReferralData.referralInfo = new ReferralInfo
             {
-                Priority = "Комментарий о приоритете и состоянии пациента",
+                Priority = "Comment Priority" + new Random().Next(100),
                 Date = Convert.ToDateTime("01.01.2012"),
-                Reason = "Основание направления, цель направления",
-                Comment = "Комментарий/дополнительные данные для направления",
+                Reason = "Reason referral" + new Random().Next(100),
+                Comment = "Additional Comment" + new Random().Next(100),
                 ReferralType = SetCoding("2", Dictionary.REFERRAL_TYPE, "1"),
                 ProfileMedService = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
                 //     IdMq = "Идентификатор направления в РЕГИЗ.УО"
@@ -325,21 +343,21 @@ namespace MqTests
 
             ReferralData.survey = new Survey
             {
-                Comment = "Комментарий к области исследования",
+                Comment = "Comment Survey" + new Random().Next(1000),
                 SurveyType = SetCoding("1", Dictionary.SURVEY_TYPE, "1"),
                 SurveyOrgan = SetCoding("1", Dictionary.SURVEY_ORGAN, "1"),
                 Additional = new Additional
                 {
-                    Height = "170",
-                    Weight = "56",
-                    AllergyIodine = "Сведения о непереносимости пациентом йодосодержащих рентгенконтрастных препаратов",
+                    Height = "140" + new Random().Next(50),
+                    Weight = "40" + new Random().Next(40),
+                    AllergyIodine = "AllergyIodine" + new Random().Next(100),
                 }
             };
 
             ReferralData.referralSource = new ReferralSource
             {
-                IdCaseMis = "Идентификатор случая обслуживания в МИС направляющей МО",
-                IdReferralMis = "Идентификатор направления в МИС направляющей МО",
+                IdCaseMis = "IdCaseMis SourcedMO" + new Random().Next(1000),
+                IdReferralMis = " IdReferralMis SourcedMO" + new Random().Next(1000),
                 Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "1"),
                 Doctors = new Doctor[] { SetDoctor() },
                 MainDiagnosis = new MainDiagnosis[] { SetMainDiagnosis() }
@@ -347,7 +365,7 @@ namespace MqTests
 
             ReferralData.referralTarget = new ReferralTarget
             {
-                IdCaseMis = "Идентификатор случая обслуживания в МИС целевой МО",
+                IdCaseMis = "IdCaseMis TargetMO" + new Random().Next(1000),
                 Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "1"),
                 Doctors = new Doctor[] { SetDoctor() },
                 MainDiagnosis = new MainDiagnosis[] { SetMainDiagnosis() }
@@ -368,8 +386,8 @@ namespace MqTests
                     IsReferralReviwed = true,
                     ReferralReviewDate = Convert.ToDateTime("02.01.2012"),
                     ReceptionAppointDate = Convert.ToDateTime("04.01.2012"),
-                    ReceptionAppointTime = "Сведения о времени и длительности приема в назначенную дату приема пациента по направлению",
-                    ReceptionAppointComment = "Дополнительные сведения назначенном приеме пациента по направлению в целевой МО (например, кабинет или необходимость обращения в регистратуру)",
+                    ReceptionAppointTime = "ReceptionAppointTime" + new Random().Next(100),
+                    ReceptionAppointComment = "ReceptionAppointComment" + new Random().Next(100),
                     CaseOpenDate = Convert.ToDateTime("03.01.2012"),
                     CaseCloseDate = Convert.ToDateTime("03.01.2012"),
                     CaseAidType = SetCoding("1", Dictionary.CASE_AID_TYPE, "1"),
@@ -379,7 +397,7 @@ namespace MqTests
                 Cancellation = new CancellationData
                 {
                     Date = Convert.ToDateTime("04.01.2012"),
-                    ReasonComment = "Описание причины аннулирования",
+                    ReasonComment = "ReasonComment Cancellation" + new Random().Next(100),
                     CancellationSource = SetCoding("1", Dictionary.CANCELLATION_REASON, "1"),
                     CancellationReason = SetCoding("5", Dictionary.CANCELLATION_REASON, "1")
                 }
@@ -390,10 +408,10 @@ namespace MqTests
                 IdProfileMedService = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
                 StartDate = Convert.ToDateTime("01.12.2011"),
                 EndDate = Convert.ToDateTime("01.06.2012"),
-                Address = "г.Санкт-Петербург ул. Кирочная д.8",
-                ContactValue = "12 345 67",
-                Comment = "Комментарий о режиме работы с направленными пациентами",
-                Site = "Сайт медицинской организации"
+                Address = RandomAddress(),
+                ContactValue = RandomMobilePhone(),
+                Comment = "Comment ProfileMedService" + new Random().Next(100),
+                Site = "Сайт медицинской организации" + new Random().Next(100)
             };
 
 
@@ -408,7 +426,7 @@ namespace MqTests
             };
         }
 
-        [SetUp]
+        
         public void SetUp()
         {
             SetDocument();

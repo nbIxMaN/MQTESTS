@@ -7,8 +7,13 @@ using MqTests.WebReference;
 
 namespace MqTests
 {
-    public class SetData
+    public class SetData : Data
     {
+        //конструктор
+        public SetData()
+        {
+            SetUp();
+        }
         //подумать как сделать лучше!!
         public Coding SetCoding(Coding cod)
         {
@@ -361,16 +366,14 @@ namespace MqTests
         public Referral FullUpdateFromSourcedMo(string idMq)
         {
             Referral referral = new Referral();
-            referral.ReferralInfo = new ReferralInfo
+            referral.ReferralInfo = ReferralData.referralInfo;
+            referral.ReferralInfo.ReferralType = new Coding
             {
-                IdMq  = idMq,
-                Priority = "UpdateSourcedMo Priority",
-                Date = Convert.ToDateTime("02.01.2012"),
-                Reason = "UpdateSourcedMo Reason",
-                Comment = "UpdateSourcedMo Comment",
-                ReferralType = ReferralData.referralInfo.ReferralType,
-                ProfileMedService = ReferralData.referralInfo.ProfileMedService
+                Code = "4", // ??
+                System = Dictionary.REFERRAL_TYPE,
+                Version = "1"
             };
+            referral.ReferralInfo.IdMq = idMq;
             referral.ReferralSurvey = ReferralData.survey;
             referral.Source = ReferralData.referralSource;
             referral.Target = new ReferralTarget

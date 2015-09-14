@@ -2,6 +2,7 @@
 using MqTests.WebReference;
 using NUnit.Framework;
 using Npgsql;
+using System.ServiceModel;
 
 namespace MqTests.Tests_Method
 {
@@ -11,13 +12,15 @@ namespace MqTests.Tests_Method
         [Test]
         public void MinUpdateFromSourcedMo()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
-
-
+                
+                //обновляем данные
+                referral = (new SetData()).MinUpdateFromSourcedMo(result.IdMq);
+                var updateResult = mq.UpdateFromSourcedMo(cr, referral);
 
                 if (Global.errors == "")
                     Assert.Pass();
@@ -29,7 +32,27 @@ namespace MqTests.Tests_Method
         [Test]
         public void FullUpdateFromSourcedMo()
         {
+            using (MqServiceClient mq = new MqServiceClient())
+            {
+                Referral referral = (new SetData()).MinRegister();
+                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
+                var result = mq.Register(cr, referral);
 
+                //обновляем данные
+                referral = (new SetData()).FullUpdateFromSourcedMo(result.IdMq);
+                try
+                {
+                    var updateResult = mq.UpdateFromSourcedMo(cr, referral);
+                }
+                catch (FaultException<MqTests.WebReference.MqFault> e)
+                {
+                    string s = e.Detail.MqFaults[0].Message;
+                }
+                if (Global.errors == "")
+                    Assert.Pass();
+                else
+                    Assert.Fail(Global.errors);
+            }
         }
     }
 }

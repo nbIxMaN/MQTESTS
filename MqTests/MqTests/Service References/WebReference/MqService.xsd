@@ -311,4 +311,31 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ReferralResultDocument" nillable="true" type="tns:ReferralResultDocument" />
+  <xs:complexType name="ArrayOfReferralListInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ReferralListInfo" nillable="true" type="tns:ReferralListInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfReferralListInfo" nillable="true" type="tns:ArrayOfReferralListInfo" />
+  <xs:complexType name="ReferralListInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllocatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AreaComment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExpectedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdMq" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssueDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Kind" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaperDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PatientName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Reason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceMo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StatusId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SurveyArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SurveyType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TargetMo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReferralListInfo" nillable="true" type="tns:ReferralListInfo" />
 </xs:schema>

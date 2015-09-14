@@ -190,6 +190,9 @@
     <None Include="Service References\WebReference\MqTests.WebReference.QueueInfoResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WebReference\MqTests.WebReference.ReferralListInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WebReference\MqTests.WebReference.SearchManyDirectionResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
