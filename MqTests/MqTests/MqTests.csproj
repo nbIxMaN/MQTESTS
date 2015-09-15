@@ -87,6 +87,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Test Status\ChangeStatus.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Dictionary.cs" />
     <Compile Include="Global.cs" />

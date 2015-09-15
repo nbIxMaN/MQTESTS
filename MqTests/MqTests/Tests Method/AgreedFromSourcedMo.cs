@@ -20,6 +20,10 @@ namespace MqTests.Tests_Method
                 referral = (new SetData()).MinAgreedFromSourcedMo(result.IdMq);
                 var resultAgreed = mq.AgreedFromSourcedMo(cr, referral);
             }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
 
         [Test]
@@ -34,6 +38,10 @@ namespace MqTests.Tests_Method
                 referral = (new SetData()).FullAgreedFromSourcedMo(result.IdMq);
                 var resultAgreed =   mq.AgreedFromSourcedMo(cr, referral);
             }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
 
     }

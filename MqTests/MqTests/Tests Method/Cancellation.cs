@@ -28,6 +28,10 @@ namespace MqTests.Tests_Method
                     string s = e.Detail.MqFaults[0].Message;
                 }
             }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
 
         [Test]
@@ -42,6 +46,10 @@ namespace MqTests.Tests_Method
                 referral = (new SetData()).FullCancellation(result.IdMq);
                 var resultCancel = mq.Cancellation(cr, referral);
             }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
     }
 }

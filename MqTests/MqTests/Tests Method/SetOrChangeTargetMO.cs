@@ -6,7 +6,7 @@ using Npgsql;
 namespace MqTests.Tests_Method
 {
     [TestFixture]
-    class SetOrChangeTargetMO:Data
+    class SetOrChangeTargetMO : Data
     {
 
     }

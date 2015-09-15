@@ -21,12 +21,11 @@ namespace MqTests.Tests_Method
                 //обновляем данные
                 referral = (new SetData()).MinUpdateFromSourcedMo(result.IdMq);
                 var updateResult = mq.UpdateFromSourcedMo(cr, referral);
-
-                if (Global.errors == "")
-                    Assert.Pass();
-                else
-                    Assert.Fail(Global.errors);
             }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
 
         [Test]

@@ -20,6 +20,10 @@ namespace MqTests.Tests_Method
                 referral = (new SetData()).MinPatientDocumentIssue(result.IdMq);
                 var result2 = mq.PatientDocumentIssue(cr, referral);
             }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
 
         [Test]
@@ -34,6 +38,10 @@ namespace MqTests.Tests_Method
                 referral = (new SetData()).FullPatientDocumentIssue(result.IdMq);
                 mq.PatientDocumentIssue(cr, referral);
             }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
     }
 }

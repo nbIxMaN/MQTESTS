@@ -19,34 +19,16 @@ namespace MqTests
                 try
                 {
                     var result = mq.Register(cr, referral);
-
-                    //if (Global.errors == "")
-                    //    Assert.Pass();
-                    //else
-                    //    Assert.Fail(Global.errors);
-                    using (var x = Global.GetSqlConnection())
-                    {
-                        var s = "SELECT  * " +
-                            "FROM    public.referral " +
-                            "WHERE id_referral = '" + result.IdMq + "'";
-
-                        NpgsqlCommand c = new NpgsqlCommand(s, x);
-                        using (var reader = c.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var r = reader.GetValue(0);
-                            }
-                        }
-                    }
                 }
                 catch (FaultException<MqTests.WebReference.MqFault> e)
                 {
                     string s = e.Detail.MqFaults[0].Message;
                 }
+                //if (Global.errors == "")
+                //    Assert.Pass();
+                //else
+                //    Assert.Fail(Global.errors);
             }
-            if (Global.errors != "")
-                Assert.Fail(Global.errors);
         }
 
         [Test]

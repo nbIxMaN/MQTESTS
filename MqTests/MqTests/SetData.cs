@@ -111,6 +111,23 @@ namespace MqTests
             return opt;
         }
 
+        //Минимальные обязательные данные для задания статуса "Зарегистрировано в РЕГИЗ.УО"
+        //С использованием метода Register()
+        public Referral SetStatusRegisterMin()
+        {
+            Referral referral = MinRegister();
+            referral.Source.Doctors[0].Role = new Coding { Code = "1", System = Dictionary.DOCTOR_ROLE, Version = "1" };
+
+            referral.EventsInfo = new EventsInfo
+            {
+                Source = new EventSource
+                {
+                    ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate,
+                }
+            };
+            return referral;
+        }
+
         public Referral MinRegister()
         {
             Referral referral = new Referral();
@@ -358,6 +375,44 @@ namespace MqTests
         {
             return ReferralData.profileMedService;
         }
+
+        //Задаём статус "Согласовано в направляющей МО"
+        //с использованием минимального метода UpdateFromSourcedMo
+        public Referral SetStatusAgreedInSourcedMO_UpdateFromSourcedMo(string idMq)
+        {
+            Referral referral = MinUpdateFromSourcedMo(idMq);
+            referral.Patient = new Patient
+            {
+                Documents = new DocumentDto[] 
+                { 
+                    new DocumentDto 
+                    {
+                        ProviderName = DocumentData.SingleOMS.ProviderName,
+                        DocumentType = DocumentData.SingleOMS.DocumentType
+                    }
+                }
+            };
+            referral.Source = new ReferralSource
+            {
+                Doctors = new Doctor[]
+                { 
+                    new Doctor
+                    {
+                        Role = new Coding { Code = "2", System = Dictionary.DOCTOR_ROLE, Version = "1" },
+                    }
+                }
+            };
+            referral.EventsInfo = new EventsInfo
+            {
+                Source = new EventSource
+                {
+                    ReferralReviewDate = ReferralData.eventsInfo.Source.ReferralReviewDate,
+                    IsReferralReviewed = true
+                }
+            };
+            return referral;
+        }
+
 
         public Referral MinUpdateFromSourcedMo(string idMq)
         {
