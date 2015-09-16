@@ -16,18 +16,11 @@ namespace MqTests
             {
                 Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
-                try
-                {
-                    var result = mq.Register(cr, referral);
-                }
-                catch (FaultException<MqTests.WebReference.MqFault> e)
-                {
-                    string s = e.Detail.MqFaults[0].Message;
-                }
-                //if (Global.errors == "")
-                //    Assert.Pass();
-                //else
-                //    Assert.Fail(Global.errors);
+                var result = mq.Register(cr, referral);
+                if (Global.errors == "")
+                    Assert.Pass();
+                else
+                    Assert.Fail(Global.errors);
             }
         }
 
