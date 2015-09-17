@@ -120,10 +120,7 @@ namespace MqTests
 
             referral.EventsInfo = new EventsInfo
             {
-                Source = new EventSource
-                {
-                    ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate,
-                }
+                Source = new EventSource { ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate, }
             };
             return referral;
         }
@@ -183,7 +180,6 @@ namespace MqTests
         public Referral FullRegister()
         {
             Referral referral = ReferralData.referral;
-            //    referral.ReferralInfo.IdMq = null;
             referral.Target = new ReferralTarget
             {
                 IdCaseMis = ReferralData.referralTarget.IdCaseMis,
@@ -399,10 +395,7 @@ namespace MqTests
             {
                 Doctors = new Doctor[]
                 { 
-                    new Doctor
-                    {
-                        Role = new Coding { Code = "2", System = Dictionary.DOCTOR_ROLE, Version = "1" },
-                    }
+                    new Doctor { Role = new Coding { Code = "2", System = Dictionary.DOCTOR_ROLE, Version = "1" } }
                 }
             };
             referral.EventsInfo = new EventsInfo
@@ -533,6 +526,38 @@ namespace MqTests
                     CaseAidForm = ReferralData.eventsInfo.Target.CaseAidForm,
                     CaseAidPlace = ReferralData.eventsInfo.Target.CaseAidPlace,
                     CaseAidType = ReferralData.eventsInfo.Target.CaseAidType
+                }
+            };
+
+            return referral;
+        }
+
+        public Referral SetStatus_HealthCareEnd(string idMq)
+        {
+            Referral referral = MinUpdateFromTargetMO(idMq);
+            referral.EventsInfo = new EventsInfo
+            {
+                Target = new EventTarget
+                {
+                    CaseCloseDate = ReferralData.eventsInfo.Target.CaseCloseDate,
+                    CaseAidForm = ReferralData.eventsInfo.Target.CaseAidForm,
+                    CaseAidPlace = ReferralData.eventsInfo.Target.CaseAidPlace,
+                    CaseAidType = ReferralData.eventsInfo.Target.CaseAidType
+                }
+            };
+
+            return referral;
+        }
+
+        public Referral SetStatus_NotAgreedInTargedMO(string idMq)
+        {
+            Referral referral = MinUpdateFromTargetMO(idMq);
+            referral.EventsInfo = new EventsInfo
+            {
+                Target = new EventTarget
+                {
+                    ReferralReviewDate = ReferralData.eventsInfo.Target.ReferralReviewDate,
+                    IsReferralReviwed = false
                 }
             };
 
