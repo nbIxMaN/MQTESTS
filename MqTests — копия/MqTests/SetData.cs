@@ -113,7 +113,7 @@ namespace MqTests
 
         //Минимальные обязательные данные для задания статуса "Зарегистрировано в РЕГИЗ.УО"
         //С использованием метода Register()
-        public Referral SetStatusRegisterMin()
+        public Referral SetStatus_RegisterMin()
         {
             Referral referral = MinRegister();
             referral.Source.Doctors[0].Role = new Coding { Code = "1", System = Dictionary.DOCTOR_ROLE, Version = "1" };
@@ -276,6 +276,8 @@ namespace MqTests
             };
         }
 
+
+
         public Referral MinPatientDocumentIssue(string idMq)
         {
             return new Referral
@@ -379,7 +381,7 @@ namespace MqTests
 
         //Задаём статус "Согласовано в направляющей МО"
         //с использованием минимального метода UpdateFromSourcedMo
-        public Referral SetStatusAgreedInSourcedMO_UpdateFromSourcedMo(string idMq)
+        public Referral SetStatus_AgreedInSourcedMO(string idMq)
         {
             Referral referral = MinUpdateFromSourcedMo(idMq);
             referral.Patient = new Patient
@@ -411,6 +413,50 @@ namespace MqTests
                     IsReferralReviewed = true
                 }
             };
+            return referral;
+        }
+
+        //Задаём статус "Выдано пациенту"
+        //с использованием минимального метода UpdateFromSourcedMo
+        public Referral SetStatus_PatientDocumentIssue(string idMq)
+        {
+            Referral referral = MinUpdateFromSourcedMo(idMq);
+
+            referral.ReferralInfo.Date = ReferralData.referralInfo.Date;
+            referral.ReferralInfo.ReferralType = ReferralData.referralInfo.ReferralType;
+            referral.ReferralInfo.Reason = ReferralData.referralInfo.Reason;
+
+            referral.Patient = new Patient
+            {
+                Documents = new DocumentDto[] 
+                { 
+                    new DocumentDto 
+                    {
+                        ProviderName = DocumentData.PatientPassport.ProviderName,
+                        DocumentType = DocumentData.PatientPassport.DocumentType
+                    }
+                },
+                //тут типы необязательны (но сейчас они задаются)
+                ContactDtos = new ContactDto[] { PersonData.contact },
+                Addresses = new AddressDto[] { PersonData.patient.Addresses[0] }
+            };
+
+            referral.ReferralSurvey = new Survey
+            {
+                SurveyOrgan = new Coding { Code = "3", System = Dictionary.SURVEY_ORGAN, Version = "1" },
+                SurveyType = new Coding { Code = "3", System = Dictionary.SURVEY_TYPE, Version = "1" }
+            };
+
+            referral.Target = new ReferralTarget { Lpu = ReferralData.referralTarget.Lpu };
+
+            referral.EventsInfo = new EventsInfo
+            {
+                Source = new EventSource
+                {
+                    ReferralOutDate = ReferralData.eventsInfo.Source.ReferralOutDate,
+                }
+            };
+
             return referral;
         }
 
@@ -449,6 +495,48 @@ namespace MqTests
         public Options FullGetQueueInfo()
         {
             return OptionData.options;
+        }
+
+        public Referral SetStatus_AgreedInTargedMO(string idMq)
+        {
+            Referral referral = MinUpdateFromTargetMO(idMq);
+            referral.EventsInfo = new EventsInfo
+            {
+                Target = new EventTarget
+                {
+                    ReferralReviewDate = ReferralData.eventsInfo.Target.ReferralReviewDate,
+                    IsReferralReviwed = true
+                }
+            };
+            return referral;
+        }
+
+        public Referral SetStatus_HealthCareStart(string idMq)
+        {
+            Referral referral = MinUpdateFromTargetMO(idMq);
+            referral.Patient = new Patient
+            {
+                Documents = new DocumentDto[] 
+                { 
+                    new DocumentDto 
+                    {
+                        ProviderName = DocumentData.SingleOMS.ProviderName,
+                        DocumentType = DocumentData.SingleOMS.DocumentType
+                    }
+                }
+            };
+            referral.EventsInfo = new EventsInfo
+            {
+                Target = new EventTarget
+                {
+                    CaseOpenDate = ReferralData.eventsInfo.Target.CaseOpenDate,
+                    CaseAidForm = ReferralData.eventsInfo.Target.CaseAidForm,
+                    CaseAidPlace = ReferralData.eventsInfo.Target.CaseAidPlace,
+                    CaseAidType = ReferralData.eventsInfo.Target.CaseAidType
+                }
+            };
+
+            return referral;
         }
 
         public Referral MinUpdateFromTargetMO(string idMq)
@@ -720,5 +808,7 @@ namespace MqTests
         {
             return new Referral { ReferralInfo = new ReferralInfo { IdMq = idMq } };
         }
+
+
     }
 }
