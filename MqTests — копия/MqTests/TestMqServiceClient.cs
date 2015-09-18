@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MqTests.Tests_Method;
 using MqTests.WebReference;
 
 namespace MqTests
@@ -92,7 +93,49 @@ namespace MqTests
                 Global.errors1.Add("ЭКСЕПШН");
                 return null;
             }
-        } 
+        }
+        public MqResult SetOrChangeTargetMo(Credentials cr, Referral r)
+        {
+            try
+            {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
+                MqResult x = client.SetOrChangeTargetMo(cr, r);
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                {
+                    Global.errors1.Add("Несовпадение");
+                    Global.errors1.AddRange(Global.errors2);
+                }
+                return x;
+            }
+            catch (System.ServiceModel.FaultException<MqTests.WebReference.MqFault> e)
+            {
+                getErrors(e.Detail);
+                Global.errors1.Add("ЭКСЕПШН");
+                return null;
+            }
+        }
+
+        public MqResult PatientDocumentIssue(Credentials cr, Referral r)
+        {
+            try
+            {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
+                MqResult x = client.SetOrChangeTargetMo(cr, r);
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                {
+                    Global.errors1.Add("Несовпадение");
+                    Global.errors1.AddRange(Global.errors2);
+                }
+                return x;
+            }
+            catch (System.ServiceModel.FaultException<MqTests.WebReference.MqFault> e)
+            {
+                getErrors(e.Detail);
+                Global.errors1.Add("ЭКСЕПШН");
+                return null;
+            }
+        }
+
         public MqResult Cancellation(Credentials cr, Referral r)
         {
             try
