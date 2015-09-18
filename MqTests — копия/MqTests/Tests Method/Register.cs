@@ -17,12 +17,11 @@ namespace MqTests
                 Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
-
-                if (Global.errors == "")
-                    Assert.Pass();
-                else
-                    Assert.Fail(Global.errors);
             }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
 
         [Test]
@@ -33,12 +32,12 @@ namespace MqTests
                 Referral referral = (new SetData()).FullRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
-
-                if (Global.errors == "")
-                    Assert.Pass();
-                else
-                    Assert.Fail(Global.errors);
             }
+
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
         }
     }
 }

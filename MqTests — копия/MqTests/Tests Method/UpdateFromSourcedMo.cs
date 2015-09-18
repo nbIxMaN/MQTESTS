@@ -31,7 +31,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void FullUpdateFromSourcedMo()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };

@@ -197,7 +197,7 @@ namespace MqTests.Tests_Method
         }
 
         [Test]
-        public void SearchMany_EventsInfoTarget()
+        public void SearchMany_IsReferralReviwed()
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
@@ -206,9 +206,31 @@ namespace MqTests.Tests_Method
                 {
                     EventsInfo = new EventsInfo
                     {
-                        Target = new EventTarget
+                        Target = new EventTarget { IsReferralReviwed = true }
+                    }
+                };
+                var res2 = mq.SearchOne(cr, opt);
+            }
+
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
+        }
+
+        [Test]
+        public void SearchMany_Privilege()
+        {
+            using (MqServiceClient mq = new MqServiceClient())
+            {
+                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
+                Options opt = new Options
+                {
+                    Patient = new Patient
+                    {
+                        Privileges = new Privilege[] 
                         {
-                            IsReferralReviwed = true
+                            new Privilege { PrivilegeType = PersonData.patient.Privileges[0].PrivilegeType }
                         }
                     }
                 };

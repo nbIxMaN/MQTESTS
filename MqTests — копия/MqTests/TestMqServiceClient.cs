@@ -19,13 +19,16 @@ namespace MqTests
         public void getErrors(object obj)
         {
             MqFault error = obj as MqFault;
-            Array errors = error.MqFaults as Array;
-            if (errors != null)
+            if (error != null)
             {
-                foreach (MqFault i in errors)
+                Array errors = error.MqFaults as Array;
+                if (errors != null)
                 {
-                    Global.errors1.Add(i.PropertyName + " - " + i.Message);
-                    getErrors(i.MqFaults);
+                    foreach (MqFault i in errors)
+                    {
+                        Global.errors1.Add(i.PropertyName + " - " + i.Message);
+                        getErrors(i.MqFaults);
+                    }
                 }
             }
         }
