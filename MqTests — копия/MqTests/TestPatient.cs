@@ -132,12 +132,14 @@ namespace MqTests
         public override bool Equals(Object obj)
         {
             TestPatient p = obj as TestPatient;
-            if ((Global.IsEqual(this.adds, p?.adds)) &&
-                (Global.IsEqual(this.conts, p?.conts)) &&
-                (Global.IsEqual(this.docs, p?.docs)) &&
-                (Global.IsEqual(this.jobs, p?.jobs)) &&
-                (Global.IsEqual(this.privileges, p?.privileges)) &&
-                (Global.IsEqual(this.person, p?.person)))
+            if (p == null)
+                return false;
+            if ((Global.IsEqual(this.adds, p.adds)) &&
+                (Global.IsEqual(this.conts, p.conts)) &&
+                (Global.IsEqual(this.docs, p.docs)) &&
+                (Global.IsEqual(this.jobs, p.jobs)) &&
+                (Global.IsEqual(this.privileges, p.privileges)) &&
+                (Global.IsEqual(this.person, p.person)))
             {
                 return true;
             }
