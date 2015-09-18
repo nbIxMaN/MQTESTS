@@ -15,7 +15,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void SearchOne_Empty()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Options opt = new Options();
@@ -31,7 +31,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void SearchOne_Test()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 //Регистрируем один случай. Статус направления "Зарегистрировано в РЕГИЗ.УО"
@@ -52,7 +52,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void SearchOne_IdMq()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 //Регистрируем один случай. Статус направления "Зарегистрировано в РЕГИЗ.УО"
@@ -74,7 +74,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void SearchOne_Person()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 //Регистрируем один случай. Статус направления "Зарегистрировано в РЕГИЗ.УО"
@@ -106,7 +106,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void SearchOne_Full()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 //Регистрируем один случай. Статус направления "Зарегистрировано в РЕГИЗ.УО"
@@ -130,7 +130,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void SearchOne_CheckRelevance()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 //Регистрируем один случай. Статус направления "Зарегистрировано в РЕГИЗ.УО"

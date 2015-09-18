@@ -86,7 +86,7 @@ namespace MqTests
         [Test]
         public void StatusPatientDocumentIssue_curStat1()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
                 Referral referral = (new SetData()).SetStatus_RegisterMin();
@@ -112,7 +112,7 @@ namespace MqTests
         [Test]
         public void StatusPatientDocumentIssue_curStat2()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
                 Referral referral = (new SetData()).SetStatus_RegisterMin();
@@ -142,7 +142,7 @@ namespace MqTests
         [Test]
         public void StatusAgreedInTargedMO()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
                 Referral referral = (new SetData()).SetStatus_RegisterMin();

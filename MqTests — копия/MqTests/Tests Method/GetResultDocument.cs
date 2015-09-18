@@ -23,6 +23,7 @@ namespace MqTests.Tests_Method
                 if (res2.IsDocProvided || res2.ResultDocument != null)
                     Global.errors1.Add("Документ не пуст");
             }
+
             if (Global.errors == "")
                 Assert.Pass();
             else
@@ -59,6 +60,7 @@ namespace MqTests.Tests_Method
                 referral = (new SetData()).GetResultDocument(result.IdMq);
                 var res6 = mq.GetResultDocument(cr, referral);
             }
+
             if (Global.errors == "")
                 Assert.Pass();
             else
