@@ -35,6 +35,7 @@ namespace MqTests.Tests_Method
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
+                SetUp();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Options options = new Options { DateReport = OptionData.options.DateReport };
 
@@ -52,6 +53,7 @@ namespace MqTests.Tests_Method
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
+                SetUp();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Options options = new Options
                 {
@@ -75,6 +77,7 @@ namespace MqTests.Tests_Method
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
+                SetUp();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Options options = new Options
                 {
@@ -95,6 +98,7 @@ namespace MqTests.Tests_Method
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
+                SetUp();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Options options = new Options
                 {

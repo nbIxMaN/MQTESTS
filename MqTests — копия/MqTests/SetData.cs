@@ -28,6 +28,7 @@ namespace MqTests
         /// Может можно сделать лучше?(проверки на null)
         /// 
         /// </summary>
+        /// неправильно написано!!
         public Options GetRefferalReturnOptions_SearchOne(Referral referral, Privilege[] privileges, string idMq, Coding mqReferralStatus)
         {
             Options opt = new Options();
@@ -59,11 +60,15 @@ namespace MqTests
 
             if (referral.Patient != null)
             {
-                opt.Patient.Person = new Person
+                opt.Patient = new Patient
                 {
-                    BirthDate = referral.Patient.Person.BirthDate,
-                    IdPatientMis = referral.Patient.Person.IdPatientMis
+                    Person = new Person
+                    {
+                        BirthDate = referral.Patient.Person.BirthDate,
+                        IdPatientMis = referral.Patient.Person.IdPatientMis
+                    }
                 };
+
 
                 if (referral.Patient.Person.HumanName != null)
                 {
@@ -76,15 +81,19 @@ namespace MqTests
                 }
             }
 
+            //!!!
             if (privileges != null)
             { opt.Patient.Privileges = (Privilege[])privileges.Clone(); }
 
             if (referral.EventsInfo != null && referral.EventsInfo.Target != null)
             {
-                opt.EventsInfo.Target = new EventTarget
+                opt.EventsInfo = new EventsInfo
                 {
-                    IsReferralReviwed = referral.EventsInfo.Target.IsReferralReviwed,
-                    ReceptionAppointDate = referral.EventsInfo.Target.ReceptionAppointDate
+                    Target = new EventTarget
+                    {
+                        IsReferralReviwed = referral.EventsInfo.Target.IsReferralReviwed,
+                        ReceptionAppointDate = referral.EventsInfo.Target.ReceptionAppointDate
+                    }
                 };
             }
 
@@ -101,9 +110,12 @@ namespace MqTests
 
             if (referral.EventsInfo != null && referral.EventsInfo.Source != null)
             {
-                opt.EventsInfo.Source = new EventSource
+                opt.EventsInfo = new EventsInfo
                 {
-                    PlannedDate = referral.EventsInfo.Source.PlannedDate
+                    Source = new EventSource
+                    {
+                        PlannedDate = referral.EventsInfo.Source.PlannedDate
+                    }
                 };
             }
 
@@ -462,7 +474,7 @@ namespace MqTests
             referral.ReferralInfo = ReferralData.referralInfo;
             referral.ReferralInfo.ReferralType = new Coding
             {
-                Code = "4", // ??
+                Code = "3", // ??
                 System = Dictionary.REFERRAL_TYPE,
                 Version = "1"
             };
