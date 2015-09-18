@@ -29,13 +29,11 @@ namespace MqTests
                 Assert.Fail(Global.errors);
         }
 
-
-        //тест с омс старого образца!!
-
         //Задаём статус "Согласовано в направляющей МО".
         //Текущий статус направления "Зарегистрировано в РЕГИЗ.УО".
+        //Пациент задаётся с полисом единого образца
         [Test]
-        public void StatusAgreedInSourcedMO()
+        public void StatusAgreedInSourcedMO_SingleOMS()
         {
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
@@ -45,7 +43,33 @@ namespace MqTests
                 var result = mq.Register(cr, referral);
 
                 //Задаём статус "Согласовано в направляющей МО"
-                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq);
+                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq, DocumentData.SingleOMS);
+                var res2 = mq.UpdateFromSourcedMo(cr, referral);
+
+                if (res2.MqReferralStatus.Code != "Согласовано в направляющей МО")
+                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+            }
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
+        }
+
+        //Задаём статус "Согласовано в направляющей МО".
+        //Текущий статус направления "Зарегистрировано в РЕГИЗ.УО".
+        //Пациент задаётся с полисом старого образца
+        [Test]
+        public void StatusAgreedInSourcedMO_OldOMS()
+        {
+            using (TestMqServiceClient mq = new TestMqServiceClient())
+            {
+                //Задаём статус "Зарегистрировано в РЕГИЗ.УО"
+                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
+                var result = mq.Register(cr, referral);
+
+                //Задаём статус "Согласовано в направляющей МО"
+                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq, DocumentData.OldOMS);
                 var res2 = mq.UpdateFromSourcedMo(cr, referral);
 
                 if (res2.MqReferralStatus.Code != "Согласовано в направляющей МО")
@@ -96,7 +120,7 @@ namespace MqTests
                 var result = mq.Register(cr, referral);
 
                 //Задаём статус "Согласовано в направляющей МО"
-                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq);
+                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq, DocumentData.SingleOMS);
                 var res2 = mq.UpdateFromSourcedMo(cr, referral);
 
                 //Задаём статус "Выдано пациенту"
@@ -209,8 +233,9 @@ namespace MqTests
 
         //Задаём статус "Начато оказание медицинской помощи в целевой МО".
         //Текущий статус направления "Выделена единица ресурса, целевой МО назначена дата приема".
+        //Пациент задаётся с полисом единого образца
         [Test]
-        public void StatusHealthCareStart()
+        public void StatusHealthCareStart_SingleOMS()
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
@@ -228,7 +253,42 @@ namespace MqTests
                 var res3 = mq.ChangePlannedResource(cr, referral);
 
                 //Задаём статус "Начато оказание медицинской помощи в целевой МО"
-                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq);
+                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq, DocumentData.SingleOMS);
+                var res4 = mq.UpdateFromTargetMo(cr, referral);
+
+                if (res4.MqReferralStatus.Code != "Начато оказание медицинской помощи в целевой МО")
+                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+            }
+
+            if (Global.errors == "")
+                Assert.Pass();
+            else
+                Assert.Fail(Global.errors);
+        }
+
+        //Задаём статус "Начато оказание медицинской помощи в целевой МО".
+        //Текущий статус направления "Выделена единица ресурса, целевой МО назначена дата приема".
+        //Пациент задаётся с полисом старого образца
+        [Test]
+        public void StatusHealthCareStart_OldOMS()
+        {
+            using (MqServiceClient mq = new MqServiceClient())
+            {
+                //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
+                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
+                var result = mq.Register(cr, referral);
+
+                //Задаём статус "Выдано пациенту"
+                referral = (new SetData()).SetStatus_PatientDocumentIssue(result.IdMq);
+                var res2 = mq.UpdateFromSourcedMo(cr, referral);
+
+                //Задаём статус "Выделена единица ресурса, целевой МО назначена дата приема"
+                referral = (new SetData()).MinChangePlannedResource(result.IdMq);
+                var res3 = mq.ChangePlannedResource(cr, referral);
+
+                //Задаём статус "Начато оказание медицинской помощи в целевой МО"
+                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq, DocumentData.OldOMS);
                 var res4 = mq.UpdateFromTargetMo(cr, referral);
 
                 if (res4.MqReferralStatus.Code != "Начато оказание медицинской помощи в целевой МО")
@@ -262,7 +322,7 @@ namespace MqTests
                 var res3 = mq.ChangePlannedResource(cr, referral);
 
                 //Задаём статус "Начато оказание медицинской помощи в целевой МО"
-                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq);
+                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq, DocumentData.SingleOMS);
                 var res4 = mq.UpdateFromTargetMo(cr, referral);
 
                 //Задаём статус "Завершено оказание медицинской помощи в целевой МО"
@@ -348,7 +408,7 @@ namespace MqTests
                 var result = mq.Register(cr, referral);
 
                 //Задаём статус "Согласовано в направляющей МО"
-                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq);
+                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq, DocumentData.SingleOMS);
                 var res2 = mq.UpdateFromSourcedMo(cr, referral);
 
                 //Задаём статус "Аннулировано"

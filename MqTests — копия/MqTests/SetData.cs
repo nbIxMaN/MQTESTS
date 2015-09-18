@@ -377,7 +377,7 @@ namespace MqTests
 
         //Задаём статус "Согласовано в направляющей МО"
         //с использованием минимального метода UpdateFromSourcedMo
-        public Referral SetStatus_AgreedInSourcedMO(string idMq)
+        public Referral SetStatus_AgreedInSourcedMO(string idMq, DocumentDto document)
         {
             Referral referral = MinUpdateFromSourcedMo(idMq);
             referral.Patient = new Patient
@@ -386,8 +386,8 @@ namespace MqTests
                 { 
                     new DocumentDto 
                     {
-                        ProviderName = DocumentData.SingleOMS.ProviderName,
-                        DocumentType = DocumentData.SingleOMS.DocumentType
+                        ProviderName = document.ProviderName,
+                        DocumentType = document.DocumentType
                     }
                 }
             };
@@ -504,7 +504,7 @@ namespace MqTests
             return referral;
         }
 
-        public Referral SetStatus_HealthCareStart(string idMq)
+        public Referral SetStatus_HealthCareStart(string idMq, DocumentDto document)
         {
             Referral referral = MinUpdateFromTargetMO(idMq);
             referral.Patient = new Patient
@@ -513,8 +513,8 @@ namespace MqTests
                 { 
                     new DocumentDto 
                     {
-                        ProviderName = DocumentData.SingleOMS.ProviderName,
-                        DocumentType = DocumentData.SingleOMS.DocumentType
+                        ProviderName = document.ProviderName,
+                        DocumentType = document.DocumentType
                     }
                 }
             };

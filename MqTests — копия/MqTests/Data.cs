@@ -282,7 +282,7 @@ namespace MqTests
         {
             OptionData.options = new Options
             {
-                DateReport = Convert.ToDateTime("01.04.2012"),
+                DateReport = Convert.ToDateTime("01.01.2012"),
                 ReferralInfo = new ReferralInfo
                 {
                     ProfileMedService = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
