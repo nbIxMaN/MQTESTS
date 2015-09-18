@@ -130,7 +130,6 @@ namespace MqTests
             Referral referral = new Referral();
             referral.ReferralInfo = new ReferralInfo
             {
-                // MqReferalStatus заполняеться сам?
                 ReferralType = SetCoding(ReferralData.referralInfo.ReferralType),
                 ProfileMedService = SetCoding(ReferralData.referralInfo.ProfileMedService),
             };
@@ -272,8 +271,6 @@ namespace MqTests
             };
         }
 
-
-
         public Referral MinPatientDocumentIssue(string idMq)
         {
             return new Referral
@@ -377,6 +374,7 @@ namespace MqTests
 
         //Задаём статус "Согласовано в направляющей МО"
         //с использованием минимального метода UpdateFromSourcedMo
+        //document = либо DocumentData.SingleOMS, либо DocumentData.OldOMS
         public Referral SetStatus_AgreedInSourcedMO(string idMq, DocumentDto document)
         {
             Referral referral = MinUpdateFromSourcedMo(idMq);
@@ -429,7 +427,7 @@ namespace MqTests
                         DocumentType = DocumentData.PatientPassport.DocumentType
                     }
                 },
-                //тут типы необязательны (но сейчас они задаются)
+                //тут типы (адреса, контакта) необязательны (но сейчас они задаются)
                 ContactDtos = new ContactDto[] { PersonData.contact },
                 Addresses = new AddressDto[] { PersonData.patient.Addresses[0] }
             };
@@ -452,7 +450,6 @@ namespace MqTests
 
             return referral;
         }
-
 
         public Referral MinUpdateFromSourcedMo(string idMq)
         {
@@ -504,6 +501,7 @@ namespace MqTests
             return referral;
         }
 
+        //document = либо DocumentData.SingleOMS, либо DocumentData.OldOMS
         public Referral SetStatus_HealthCareStart(string idMq, DocumentDto document)
         {
             Referral referral = MinUpdateFromTargetMO(idMq);
