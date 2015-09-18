@@ -11,12 +11,12 @@ namespace MqTests
     {
         // доктор тут не нужен
         public Doctor doctor;
-        public List<TestContact> cnts = new List<TestContact>();
+        public List<TestContact> cnts;
         public Array contacts
         {
             get
             {
-                if (cnts.Count != 0)
+                if (cnts != null)
                     return cnts.ToArray();
                 else
                     return null;
@@ -31,9 +31,12 @@ namespace MqTests
         public TestDoctor(Doctor r)
         {
             doctor = r;
-            if (doctor.ContactDtos != null)
+            if ((doctor.ContactDtos != null) && (doctor.ContactDtos.Length != 0))
+            {
+                cnts = new List<TestContact>();
                 foreach (ContactDto i in doctor.ContactDtos)
                     cnts.Add(new TestContact(i));
+            }
             if (doctor.Lpu != null)
                 lpu = new TestCoding(doctor.Lpu);
             if (doctor.Person != null)
@@ -45,6 +48,8 @@ namespace MqTests
             if (doctor.Speciality != null)
                 speciality = new TestCoding(doctor.Speciality);
         }
+
+        private TestDoctor() { }
         static public List<TestDoctor> BuildDoctorFromDataBaseData(string idReferral)
         {
             List<TestDoctor> docs = new List<TestDoctor>();
@@ -66,10 +71,9 @@ namespace MqTests
                                 NpgsqlCommand doc = new NpgsqlCommand(findDoctor, connection);
                                 using (NpgsqlDataReader doctorFromDataBase = doc.ExecuteReader())
                                 {
-                                    Doctor p = new Doctor();
                                     while (doctorFromDataBase.Read())
                                     {
-                                        TestDoctor doctor = new TestDoctor(p);
+                                        TestDoctor doctor = new TestDoctor();
                                         if (doctorFromDataBase["id_doctor_role"] != DBNull.Value)
                                             doctor.role =
                                                 TestCoding.BuildCodingFromDataBaseData(

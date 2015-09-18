@@ -10,56 +10,56 @@ namespace MqTests
     {
         public Patient patient;
         public TestPerson person;
-        public List<TestDocument> documents = new List<TestDocument>();
-        public Array docs
+        public List<TestDocument> documents;
+        public List<TestDocument> docs
         {
             get
             {
-                if (documents.Count != 0)
-                    return documents.ToArray();
+                if (documents != null)
+                    return documents;
                 else
                     return null;
             }
         }
-        public List<TestAddress> addreses = new List<TestAddress>();
+        public List<TestAddress> addreses;
         public Array adds
         {
             get
             {
-                if (addreses.Count != 0)
+                if (addreses != null)
                     return addreses.ToArray();
                 else
                     return null;
             }
         }
-        public List<TestContact> contacts = new List<TestContact>();
+        public List<TestContact> contacts;
         public Array conts
         {
             get
             {
-                if (contacts.Count != 0)
+                if (contacts != null)
                     return contacts.ToArray();
                 else
                     return null;
             }
         }
-        public List<TestJob> jobs = new List<TestJob>();
+        public List<TestJob> jobs;
         public Array js
         {
             get
             {
-                if (jobs.Count != 0)
+                if (jobs != null)
                     return jobs.ToArray();
                 else
                     return null;
             }
         }
-        public List<TestPrivilege> privileges = new List<TestPrivilege>();
+        public List<TestPrivilege> privileges;
         public Array ps
         {
             get
             {
-                if (privileges.Count != 0)
+                if (privileges != null)
                     return privileges.ToArray();
                 else
                     return null;
@@ -70,26 +70,31 @@ namespace MqTests
         {
             if ((p.Documents != null) && (p.Documents.Length != 0))
             {
+                documents = new List<TestDocument>();
                 foreach (DocumentDto i in p.Documents)
                     documents.Add(new TestDocument(i));
             }
             if ((p.Addresses != null) && (p.Addresses.Length != 0))
             {
+                addreses = new List<TestAddress>();
                 foreach (AddressDto i in p.Addresses)
                     addreses.Add(new TestAddress(i));
             }
             if ((p.ContactDtos != null) && (p.ContactDtos.Length != 0))
             {
+                contacts = new List<TestContact>();
                 foreach (ContactDto i in p.ContactDtos)
                     contacts.Add(new TestContact(i));
             }
             if ((p.Jobs != null) && (p.Jobs.Length != 0))
             {
+                jobs = new List<TestJob>();
                 foreach (Job i in p.Jobs)
                     jobs.Add(new TestJob(i));
             }
             if ((p.Privileges != null) && (p.Privileges.Length != 0))
             {
+                privileges = new List<TestPrivilege>();
                 foreach (Privilege i in p.Privileges)
                     privileges.Add(new TestPrivilege(i));
             }
@@ -137,8 +142,8 @@ namespace MqTests
             if ((Global.IsEqual(this.adds, p.adds)) &&
                 (Global.IsEqual(this.conts, p.conts)) &&
                 (Global.IsEqual(this.docs, p.docs)) &&
-                (Global.IsEqual(this.jobs, p.jobs)) &&
-                (Global.IsEqual(this.privileges, p.privileges)) &&
+                (Global.IsEqual(this.js, p.js)) &&
+                (Global.IsEqual(this.ps, p.ps)) &&
                 (Global.IsEqual(this.person, p.person)))
             {
                 return true;

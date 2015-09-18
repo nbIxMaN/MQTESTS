@@ -11,23 +11,23 @@ namespace MqTests
     class TestReferralTarget
     {
         ReferralTarget target;
-        List<TestDoctor> docs = new List<TestDoctor>();
+        List<TestDoctor> docs;
         public Array doctors
         {
             get
             {
-                if (docs.Count != 0)
+                if (docs!= null)
                     return docs.ToArray();
                 else
                     return null;
             }
         }
-        List<TestMainDiagnosis> diag = new List<TestMainDiagnosis>();
+        List<TestMainDiagnosis> diag;
         public Array mainDiagnosis
         {
             get
             {
-                if (diag.Count != 0)
+                if (diag != null)
                     return diag.ToArray();
                 else
                     return null;
@@ -40,12 +40,18 @@ namespace MqTests
                 target = r;
             else
                 target = new ReferralTarget();
-            if (target.Doctors != null)
-                foreach(Doctor i in target.Doctors)
+            if ((target.Doctors != null) && (target.Doctors.Length != 0))
+            {
+                docs = new List<TestDoctor>();
+                foreach (Doctor i in target.Doctors)
                     docs.Add(new TestDoctor(i));
-            if (target.MainDiagnosis != null)
-                foreach(MainDiagnosis i in target.MainDiagnosis)
+            }
+            if ((target.MainDiagnosis != null) && (target.MainDiagnosis.Length != 0))
+            {
+                diag = new List<TestMainDiagnosis>();
+                foreach (MainDiagnosis i in target.MainDiagnosis)
                     diag.Add(new TestMainDiagnosis(i));
+            }
             if (target.Lpu != null)
                 lpu = new TestCoding(target.Lpu);
         }
@@ -61,7 +67,7 @@ namespace MqTests
                     ReferralTarget p = new ReferralTarget();
                     while (personFromDataBase.Read())
                     {
-                        //что делать с DateSpecified и Мисами? 
+                        //зачем тут диагнозы и доктора? 
                         if (personFromDataBase["id_target_lpu_case_mis"] != DBNull.Value)
                             p.IdCaseMis = Convert.ToString(personFromDataBase["id_source_lpu_case_mis"]);
                         if (personFromDataBase["is_referral_review_target_mo"] != DBNull.Value)
@@ -133,11 +139,11 @@ namespace MqTests
         }
         public static bool operator ==(TestReferralTarget a, TestReferralTarget b)
         {
-            return a.Equals(b);
+            return Equals(a, b);
         }
         public static bool operator !=(TestReferralTarget a, TestReferralTarget b)
         {
-            return !(a.Equals(b));
+            return !Equals(a, b);
         }
     }
 }

@@ -10,23 +10,23 @@ namespace MqTests
     class TestReferralSource
     {
         ReferralSource sourse;
-        List<TestDoctor> docs = new List<TestDoctor>();
+        List<TestDoctor> docs;
         public Array doctors
         {
             get
             {
-                if (docs.Count != 0)
+                if (docs != null)
                     return docs.ToArray();
                 else
                     return null;
             }
         }
-        List<TestMainDiagnosis> diag = new List<TestMainDiagnosis>();
+        List<TestMainDiagnosis> diag;
         public Array mainDiagnosis
         {
             get
             {
-                if (diag.Count != 0)
+                if (diag != null)
                     return diag.ToArray();
                 else
                     return null;
@@ -39,12 +39,18 @@ namespace MqTests
                 sourse = r;
             else
                 sourse = new ReferralSource();
-            if (sourse.Doctors != null)
+            if ((sourse.Doctors != null) && (sourse.Doctors.Length != 0))
+            {
+                docs = new List<TestDoctor>();
                 foreach (Doctor i in sourse.Doctors)
                     docs.Add(new TestDoctor(i));
-            if (sourse.MainDiagnosis != null)
+            }
+            if ((sourse.MainDiagnosis != null) && (sourse.MainDiagnosis.Length != 0))
+            {
+                diag = new List<TestMainDiagnosis>();
                 foreach (MainDiagnosis i in sourse.MainDiagnosis)
                     diag.Add(new TestMainDiagnosis(i));
+            }
             if (sourse.Lpu != null)
                 lpu = new TestCoding(sourse.Lpu);
         }

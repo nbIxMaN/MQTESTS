@@ -11,7 +11,7 @@ namespace MqTests
         //Сам диагноз нам не нужен
         public MainDiagnosis diagnos;
         public TestDiagnosisInfo diagnosisInfo;
-        public List<TestDiagnosisInfo> compDiagnosis = new List<TestDiagnosisInfo>();
+        public List<TestDiagnosisInfo> compDiagnosis;
         public Array ComplicationDiagnosis
         {
             get
@@ -26,15 +26,19 @@ namespace MqTests
         {
             diagnos = r;
             diagnosisInfo = new TestDiagnosisInfo(diagnos.DiagnosisInfo);
-            foreach (DiagnosisInfo i in diagnos.ComplicationDiagnosis)
-                compDiagnosis.Add(new TestDiagnosisInfo(i));
+            if ((diagnos.ComplicationDiagnosis != null) && (diagnos.ComplicationDiagnosis.Length != 0))
+            {
+                compDiagnosis = new List<TestDiagnosisInfo>();
+                foreach (DiagnosisInfo i in diagnos.ComplicationDiagnosis)
+                    compDiagnosis.Add(new TestDiagnosisInfo(i));
+            }
         }
         static public List<TestMainDiagnosis> BuildTestMainDiagnosisInfoFromDataBaseData(string idReferral)
         {
             List<TestMainDiagnosis> tdi = new List<TestMainDiagnosis>();
             TestMainDiagnosis md = new TestMainDiagnosis(new MainDiagnosis());
             md.diagnosisInfo = TestDiagnosisInfo.BuildTestMainDiagnosisInfoFromDataBaseData(idReferral);
-            md.compDiagnosis = TestDiagnosisInfo.BuildTestComplicationDiagnosisInfoFromDataBaseData(idReferral);
+            md.compDiagnosis= TestDiagnosisInfo.BuildTestComplicationDiagnosisInfoFromDataBaseData(idReferral);
             tdi.Add(md);
             return (tdi.Count != 0) ? tdi : null;
         }
