@@ -51,6 +51,21 @@ namespace MqTests
             }
             return null;
         }
+
+        internal void UpdateTestEventSource(EventSource s)
+        {
+            if (s.IsReferralReviewed != null)
+                this.source.IsReferralReviewed = s.IsReferralReviewed;
+            if (s.PlannedDate != null)
+                this.source.PlannedDate= s.PlannedDate;
+            if (s.ReferralCreateDate != null)
+                this.source.ReferralCreateDate = s.ReferralCreateDate;
+            if (s.ReferralOutDate != null)
+                this.source.ReferralOutDate= s.ReferralOutDate;
+            if (s.ReferralReviewDate!= null)
+                this.source.ReferralReviewDate = s.ReferralReviewDate;
+        }
+
         private void FindMismatch(TestEventSource r)
         {
             if (this.source.IsReferralReviewed != r.source.IsReferralReviewed)

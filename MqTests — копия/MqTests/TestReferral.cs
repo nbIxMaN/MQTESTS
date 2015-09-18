@@ -31,21 +31,20 @@ namespace MqTests
         {
         }
 
-        public TestReferral UpdateTestReferral(Referral r, string idLpu = "")
+        public void UpdateTestReferral(Referral r, string idLpu = "")
         {
             if (r.EventsInfo != null)
-                this.evInfo = new TestEventsInfo(r.EventsInfo);
+                this.evInfo.UpdateTestEventsInfo(r.EventsInfo);
             if (r.Patient != null)
-                this.patient = new TestPatient(r.Patient);
+                this.patient.UpdateTestPatient(r.Patient);
             if (r.ReferralInfo != null)
                 this.refInfo.UpdateTestReferralInfo(r.ReferralInfo);
             if (r.ReferralSurvey != null)
-                this.refSurvey = new TestReferralSurvey(r.ReferralSurvey);
+                this.refSurvey.UpdateTestReferralSurvey(r.ReferralSurvey);
             if (r.Source != null)
-                this.refSourse = new TestReferralSource(r.Source);
+                this.refSourse.UpdateTestReferralSource(r.Source);
             if (r.Target != null)
-                this.refTarget = new TestReferralTarget(r.Target);
-            return this;
+                this.refTarget.UpdateTestReferralTarget(r.Target);
         }
         static public TestReferral BuildReferralFromDataBaseData(string idReferral)
         {

@@ -60,7 +60,8 @@ namespace MqTests
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.UpdateFromSourcedMo(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -80,7 +81,8 @@ namespace MqTests
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.UpdateFromTargetMo(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -100,7 +102,8 @@ namespace MqTests
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.SetOrChangeTargetMo(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -120,7 +123,8 @@ namespace MqTests
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.SetOrChangeTargetMo(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -141,7 +145,8 @@ namespace MqTests
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.AgreedFromSourcedMo(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -161,7 +166,8 @@ namespace MqTests
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.AgreedFromTargetMo(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -175,13 +181,35 @@ namespace MqTests
                 return null;
             }
         }
+        public MqResult ChangePlannedResource(Credentials cr, Referral r)
+        {
+            try
+            {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
+                MqResult x = client.ChangePlannedResource(cr, r);
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                {
+                    Global.errors1.Add("Несовпадение");
+                    Global.errors1.AddRange(Global.errors2);
+                }
+                return x;
+            }
+            catch (System.ServiceModel.FaultException<MqTests.WebReference.MqFault> e)
+            {
+                getErrors(e.Detail);
+                Global.errors1.Add("ЭКСЕПШН");
+                return null;
+            }
+        }        
         public MqResult Cancellation(Credentials cr, Referral r)
         {
             try
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.Cancellation(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -201,7 +229,8 @@ namespace MqTests
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.HealthCareEnd(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -221,7 +250,8 @@ namespace MqTests
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.HealthCareStart(cr, r);
-                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                br.UpdateTestReferral(r, cr.Organization);
+                if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);

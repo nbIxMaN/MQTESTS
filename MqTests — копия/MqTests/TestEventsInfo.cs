@@ -36,6 +36,17 @@ namespace MqTests
             p.target = TestEventTarget.BuildTargetFromDataBaseData(idReferral);
             return p;
         }
+
+        internal void UpdateTestEventsInfo(EventsInfo eventsInfo)
+        {
+            if (eventsInfo.Cancellation != null)
+                cancellation = new TestCancellation(info.Cancellation);
+            if (eventsInfo.Source != null)
+                source.UpdateTestEventSource(eventsInfo.Source);
+            if (eventsInfo.Target != null)
+                target.UpdateTestEventTarget(eventsInfo.Target);
+        }
+
         private void FindMismatch(TestEventsInfo r)
         {
             if (Global.GetLength(this.cancellation) != Global.GetLength(r.cancellation))

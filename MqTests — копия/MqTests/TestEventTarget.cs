@@ -3,6 +3,7 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace MqTests
@@ -33,6 +34,34 @@ namespace MqTests
         private TestEventTarget()
         {
             
+        }
+
+        public void UpdateTestEventTarget(EventTarget e)
+        {
+            if (e.CaseCloseDate != null)
+                this.target.CaseCloseDate = e.CaseCloseDate;
+            if (e.CaseOpenDate != null)
+                this.target.CaseOpenDate = e.CaseOpenDate;
+            if (e.IsReferralReviwed != null)
+                this.target.IsReferralReviwed = e.IsReferralReviwed;
+            if (e.ReceptionAppointComment != null)
+                this.target.ReceptionAppointComment = e.ReceptionAppointComment;
+            if (e.ReceptionAppointDate != null)
+                this.target.ReceptionAppointDate = e.ReceptionAppointDate;
+            if (e.ReceptionAppointTime != null)
+                this.target.ReceptionAppointTime = e.ReceptionAppointTime;
+            if (e.ReferralReviewDate != null)
+                this.target.ReferralReviewDate = e.ReferralReviewDate;
+            if (e.RefferalCreatedDate != null)
+                this.target.RefferalCreatedDate = e.RefferalCreatedDate;
+            if (e.CaseAidForm != null)
+                this.caseAidForm = new TestCoding(e.CaseAidForm);
+            if (e.CaseAidPlace != null)
+                this.caseAidPlace = new TestCoding(e.CaseAidPlace);
+            if (e.CaseAidType != null)
+                this.caseAidType = new TestCoding(e.CaseAidType);
+            if (e.Lpu != null)
+                this.lpu = new TestCoding(e.Lpu);
         }
         static public TestEventTarget BuildTargetFromDataBaseData(string idReferral)
         {

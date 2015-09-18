@@ -52,6 +52,19 @@ namespace MqTests
             }
             return null;
         }
+
+        internal void UpdateTestReferralSurvey(Survey r)
+        {
+            if (r.Comment != null)
+                this.survey.Comment = r.Comment;
+            if (r.Additional != null)
+                this.additional.UpdateTestAdditional(r.Additional);
+            if (r.SurveyOrgan != null)
+                this.surveyOrgan = new TestCoding(r.SurveyOrgan);
+            if (r.SurveyType != null)
+                this.surveyType = new TestCoding(r.SurveyType);
+        }
+
         private void FindMismatch(TestReferralSurvey r)
         {
             if (this.survey.Comment != r.survey.Comment)

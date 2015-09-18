@@ -3,6 +3,7 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -101,6 +102,25 @@ namespace MqTests
         public static bool operator !=(TestPerson a, TestPerson b)
         {
             return !Equals(a, b);
+        }
+
+        internal void UpdateTestPerson(Person p)
+        {
+            if (p.BirthDate != null)
+                this.person.BirthDate = p.BirthDate;
+            if (p.IdPatientMis != null)
+                this.person.IdPatientMis = p.IdPatientMis;
+            if (p.HumanName != null)
+            {
+                if (p.HumanName.FamilyName != null)
+                    this.person.HumanName.FamilyName = p.HumanName.FamilyName;
+                if (p.HumanName.GivenName != null)
+                    this.person.HumanName.GivenName = p.HumanName.GivenName;
+                if (p.HumanName.MiddleName != null)
+                    this.person.HumanName.MiddleName = p.HumanName.MiddleName;
+            }
+            if (p.Sex != null)
+                this.sex = new TestCoding(p.Sex);
         }
     }
 }

@@ -54,6 +54,7 @@ namespace MqTests
                     return null;
             }
         }
+
         public List<TestPrivilege> privileges;
         public Array ps
         {
@@ -105,6 +106,47 @@ namespace MqTests
         private TestPatient()
         {
 
+        }
+
+        internal void UpdateTestPatient(Patient p)
+        {
+            if ((p.Documents != null) && (p.Documents.Length != 0))
+            {
+                if (docs != null)
+                    documents = new List<TestDocument>();
+                foreach (DocumentDto i in p.Documents)
+                    documents.Add(new TestDocument(i));
+            }
+            if ((p.Addresses != null) && (p.Addresses.Length != 0))
+            {
+                if (adds != null)
+                    addreses = new List<TestAddress>();
+                foreach (AddressDto i in p.Addresses)
+                    addreses.Add(new TestAddress(i));
+            }
+            if ((p.ContactDtos != null) && (p.ContactDtos.Length != 0))
+            {
+                if (conts != null)
+                    contacts = new List<TestContact>();
+                foreach (ContactDto i in p.ContactDtos)
+                    contacts.Add(new TestContact(i));
+            }
+            if ((p.Jobs != null) && (p.Jobs.Length != 0))
+            {
+                if (js != null)
+                    jobs = new List<TestJob>();
+                foreach (Job i in p.Jobs)
+                    jobs.Add(new TestJob(i));
+            }
+            if ((p.Privileges != null) && (p.Privileges.Length != 0))
+            {
+                if (ps != null)
+                    privileges = new List<TestPrivilege>();
+                foreach (Privilege i in p.Privileges)
+                    privileges.Add(new TestPrivilege(i));
+            }
+            if (p.Person != null)
+                person.UpdateTestPerson(p.Person);
         }
 
         static public TestPatient BuildPatientFromDataBaseData(string idPerson, string MIS)

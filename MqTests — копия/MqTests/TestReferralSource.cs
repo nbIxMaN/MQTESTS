@@ -54,6 +54,27 @@ namespace MqTests
             if (sourse.Lpu != null)
                 lpu = new TestCoding(sourse.Lpu);
         }
+
+        internal void UpdateTestReferralSource(ReferralSource s)
+        {
+            if ((s.Doctors != null) && (s.Doctors.Length != 0))
+            {
+                if (this.doctors == null)
+                    docs = new List<TestDoctor>();
+                foreach (Doctor i in s.Doctors)
+                    docs.Add(new TestDoctor(i));
+            }
+            if ((s.MainDiagnosis != null) && (s.MainDiagnosis.Length != 0))
+            {
+                if (this.mainDiagnosis == null)
+                    diag = new List<TestMainDiagnosis>();
+                foreach (MainDiagnosis i in s.MainDiagnosis)
+                    diag.Add(new TestMainDiagnosis(i));
+            }
+            if (s.Lpu != null)
+                lpu = new TestCoding(s.Lpu);
+        }
+
         static public TestReferralSource BuildSourceFromDataBaseData(string idReferral)
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())

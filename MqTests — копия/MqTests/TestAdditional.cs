@@ -71,6 +71,17 @@ namespace MqTests
                 return false;
             }
         }
+
+        internal void UpdateTestAdditional(Additional a)
+        {
+            if (a.AllergyIodine != null)
+                this.additional.AllergyIodine = a.AllergyIodine;
+            if (a.Height != null)
+                this.additional.Height = a.Height;
+            if (a.Weight != null)
+                this.additional.Weight = a.Weight;
+        }
+
         public static bool operator ==(TestAdditional a, TestAdditional b)
         {
             return Equals(a, b);

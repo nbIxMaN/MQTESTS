@@ -29,7 +29,7 @@ namespace MqTests
                 referralType = new TestCoding(info.ReferralType);
         }
 
-        public TestReferralInfo UpdateTestReferralInfo(ReferralInfo r)
+        public void UpdateTestReferralInfo(ReferralInfo r)
         {
             if (r != null)
             {
@@ -52,7 +52,6 @@ namespace MqTests
                 if (r.ReferralType != null)
                     this.referralType = new TestCoding(r.ReferralType);
             }
-            return this;
         }
         static public TestReferralInfo BuildPersonFromDataBaseData(string idReferral)
         {

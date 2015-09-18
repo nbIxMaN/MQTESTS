@@ -142,6 +142,7 @@ namespace MqTests
             Referral referral = new Referral();
             referral.ReferralInfo = new ReferralInfo
             {
+                // MqReferalStatus заполняеться сам?
                 ReferralType = SetCoding(ReferralData.referralInfo.ReferralType),
                 ProfileMedService = SetCoding(ReferralData.referralInfo.ProfileMedService),
             };
@@ -283,6 +284,8 @@ namespace MqTests
             };
         }
 
+
+
         public Referral MinPatientDocumentIssue(string idMq)
         {
             return new Referral
@@ -386,7 +389,6 @@ namespace MqTests
 
         //Задаём статус "Согласовано в направляющей МО"
         //с использованием минимального метода UpdateFromSourcedMo
-        //document = либо DocumentData.SingleOMS, либо DocumentData.OldOMS
         public Referral SetStatus_AgreedInSourcedMO(string idMq, DocumentDto document)
         {
             Referral referral = MinUpdateFromSourcedMo(idMq);
@@ -439,7 +441,7 @@ namespace MqTests
                         DocumentType = DocumentData.PatientPassport.DocumentType
                     }
                 },
-                //тут типы (адреса, контакта) необязательны (но сейчас они задаются)
+                //тут типы необязательны (но сейчас они задаются)
                 ContactDtos = new ContactDto[] { PersonData.contact },
                 Addresses = new AddressDto[] { PersonData.patient.Addresses[0] }
             };
@@ -462,6 +464,7 @@ namespace MqTests
 
             return referral;
         }
+
 
         public Referral MinUpdateFromSourcedMo(string idMq)
         {
@@ -513,7 +516,6 @@ namespace MqTests
             return referral;
         }
 
-        //document = либо DocumentData.SingleOMS, либо DocumentData.OldOMS
         public Referral SetStatus_HealthCareStart(string idMq, DocumentDto document)
         {
             Referral referral = MinUpdateFromTargetMO(idMq);
@@ -816,14 +818,10 @@ namespace MqTests
             return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
-                Target = new ReferralTarget
-                {
-                    Lpu = new Coding { Code = otheridLpu, System = Dictionary.MO, Version = "1" }
-                }
+                Target = new ReferralTarget { Lpu = SetCoding(ReferralData.referralTarget.Lpu) }
             };
         }
 
-        //тут заданы другие данные
         public Referral FullSetOrChangeTargetMO(string idMq)
         {
             return new Referral
@@ -831,18 +829,15 @@ namespace MqTests
                 ReferralInfo = new ReferralInfo
                 {
                     IdMq = idMq,
-                    ReferralType = new Coding { Code = "3", System = Dictionary.REFERRAL_TYPE, Version = "1" },
-                    ProfileMedService = new Coding { Code = "2", System = Dictionary.PROFILE_MED_SERVICE, Version = "1" }
+                    ReferralType = ReferralData.referralInfo.ReferralType,
+                    ProfileMedService = ReferralData.referralInfo.ProfileMedService
                 },
                 ReferralSurvey = new Survey
                 {
-                    SurveyOrgan = new Coding { Code = "1", System = Dictionary.SURVEY_TYPE, Version = "1" },
-                    SurveyType = new Coding { Code = "1", System = Dictionary.SURVEY_ORGAN, Version = "1" }
+                    SurveyOrgan = ReferralData.survey.SurveyOrgan,
+                    SurveyType = ReferralData.survey.SurveyType
                 },
-                Target = new ReferralTarget
-                {
-                    Lpu = new Coding { Code = otheridLpu, System = Dictionary.MO, Version = "1" }
-                },
+                Target = new ReferralTarget { Lpu = SetCoding(ReferralData.referralTarget.Lpu) },
             };
         }
 

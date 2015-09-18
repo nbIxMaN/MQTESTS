@@ -90,6 +90,26 @@ namespace MqTests
             return null;
         }
 
+        internal void UpdateTestReferralTarget(ReferralTarget t)
+        {
+            if ((t.Doctors != null) && (t.Doctors.Length != 0))
+            {
+                if (this.doctors == null)
+                    docs = new List<TestDoctor>();
+                foreach (Doctor i in t.Doctors)
+                    docs.Add(new TestDoctor(i));
+            }
+            if ((t.MainDiagnosis != null) && (t.MainDiagnosis.Length != 0))
+            {
+                if (this.mainDiagnosis == null)
+                    diag = new List<TestMainDiagnosis>();
+                foreach (MainDiagnosis i in t.MainDiagnosis)
+                    diag.Add(new TestMainDiagnosis(i));
+            }
+            if (t.Lpu != null)
+                lpu = new TestCoding(t.Lpu);
+        }
+
         private void FindMismatch(TestReferralTarget r)
         {
             if (this.target.IdCaseMis != r.target.IdCaseMis)
