@@ -18,7 +18,7 @@ namespace MqTests
                     Organization = "1.2.643.5.1.13.3.25.78.6",
                     Token = "dda0e909-93cd-4549-b7ff-d1caaa1f0bc2"
                 };
-                Referral r = client.SearchOne(cr, new WebReference.Options
+                Referral[] r = client.SearchMany(cr, new WebReference.Options
                 {
                     IdMq = "78154000000101",
                     Source = new WebReference.ReferralSource
@@ -37,7 +37,7 @@ namespace MqTests
                             System = "urn:oid:1.2.643.2.69.1.1.1.50"
                         }
                     }
-                }).Referral;
+                }).Referrals;
                 //List<string> a = TestOptions.GetReferralId(new WebReference.Options
                 //{
                 //    IdMq = "78154000000101",

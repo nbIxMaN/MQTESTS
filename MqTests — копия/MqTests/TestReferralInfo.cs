@@ -28,6 +28,32 @@ namespace MqTests
             if (info.ReferralType != null)
                 referralType = new TestCoding(info.ReferralType);
         }
+
+        public TestReferralInfo UpdateTestReferralInfo(ReferralInfo r)
+        {
+            if (r != null)
+            {
+                if (r.Comment != null)
+                    this.info.Comment = r.Comment;
+                if (r.Date != null)
+                    this.info.Date = r.Date;
+                if (r.IdMq != null)
+                    this.info.IdMq = r.IdMq;
+                if (r.Priority != null)
+                    this.info.Priority = r.Priority;
+                if (r.Reason != null)
+                    this.info.Reason = r.Reason;
+                if (r.Cancellation != null)
+                    this.cancellation = new TestCancellation(r.Cancellation);
+                if (r.MqReferralStatus != null)
+                    this.mqReferralStatus = new TestCoding(r.MqReferralStatus);
+                if (r.ProfileMedService != null)
+                    this.mqReferralStatus = new TestCoding(r.ProfileMedService);
+                if (r.ReferralType != null)
+                    this.referralType = new TestCoding(r.ReferralType);
+            }
+            return this;
+        }
         static public TestReferralInfo BuildPersonFromDataBaseData(string idReferral)
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())

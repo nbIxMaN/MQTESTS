@@ -30,6 +30,23 @@ namespace MqTests
         private TestReferral()
         {
         }
+
+        public TestReferral UpdateTestReferral(Referral r, string idLpu = "")
+        {
+            if (r.EventsInfo != null)
+                this.evInfo = new TestEventsInfo(r.EventsInfo);
+            if (r.Patient != null)
+                this.patient = new TestPatient(r.Patient);
+            if (r.ReferralInfo != null)
+                this.refInfo.UpdateTestReferralInfo(r.ReferralInfo);
+            if (r.ReferralSurvey != null)
+                this.refSurvey = new TestReferralSurvey(r.ReferralSurvey);
+            if (r.Source != null)
+                this.refSourse = new TestReferralSource(r.Source);
+            if (r.Target != null)
+                this.refTarget = new TestReferralTarget(r.Target);
+            return this;
+        }
         static public TestReferral BuildReferralFromDataBaseData(string idReferral)
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())

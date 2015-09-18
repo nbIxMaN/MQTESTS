@@ -57,8 +57,9 @@ namespace MqTests
         {
             try
             {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.UpdateFromSourcedMo(cr, r);
-                if (new TestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -76,8 +77,9 @@ namespace MqTests
         {
             try
             {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.UpdateFromTargetMo(cr, r);
-                if (new TestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -175,6 +177,44 @@ namespace MqTests
                 return null;
             }
         }
+
+        public SearchManyDirectionResult SearchMany(Credentials cr, Options o)
+        {
+            try
+            {
+                List<string> s = TestOptions.GetReferralId(o);
+                var r = client.SearchMany(cr, o);
+                if ((s.Count != r.QLength) && (s.Count < 1000))
+                    Global.errors1.Add("Найдено " + s.Count.ToString() + " совпадений, но SearchMany нашел " +
+                                       r.QLength.ToString());
+                else
+                {
+                    List<TestReferral> lr = new List<TestReferral>();
+                    List<TestReferral> rlr = new List<TestReferral>();
+                    foreach (var i in s)
+                    {
+                        lr.Add(TestReferral.BuildReferralFromDataBaseData(i));
+                    }
+                    foreach (var i in r.Referrals)
+                    {
+                        rlr.Add(new TestReferral(i));
+                    }
+                    if (!Global.IsEqual(lr.ToArray(), rlr.ToArray()))
+                    {
+                        Global.errors1.AddRange(Global.errors2);
+                        Global.errors1.Add("Несовпадение");
+                    }
+                }
+                return r;
+            }
+            catch (System.ServiceModel.FaultException<MqTests.WebReference.MqFault> e)
+            {
+                getErrors(e.Detail);
+                Global.errors1.Add("ЭКСЕПШН");
+                return null;
+            }
+        }
+
         ~TestMqServiceClient()
         {
             client.Close();
