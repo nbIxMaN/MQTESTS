@@ -10,63 +10,88 @@ namespace MqTests
     {
         public Patient patient;
         public TestPerson person;
-        public List<TestDocument> documents;
+        public List<TestDocument> documents = new List<TestDocument>();
         public Array docs
         {
-            get { return documents?.ToArray(); }
+            get
+            {
+                if (documents.Count != 0)
+                    return documents.ToArray();
+                else
+                    return null;
+            }
         }
-        public List<TestAddress> addreses;
+        public List<TestAddress> addreses = new List<TestAddress>();
         public Array adds
         {
-            get { return addreses?.ToArray(); }
+            get
+            {
+                if (addreses.Count != 0)
+                    return addreses.ToArray();
+                else
+                    return null;
+            }
         }
-        public List<TestContact> contacts;
+        public List<TestContact> contacts = new List<TestContact>();
         public Array conts
         {
-            get { return contacts?.ToArray(); }
+            get
+            {
+                if (contacts.Count != 0)
+                    return contacts.ToArray();
+                else
+                    return null;
+            }
         }
-        public List<TestJob> js;
-        public Array jobs
+        public List<TestJob> jobs = new List<TestJob>();
+        public Array js
         {
-            get { return js?.ToArray(); }
+            get
+            {
+                if (jobs.Count != 0)
+                    return jobs.ToArray();
+                else
+                    return null;
+            }
         }
-        public List<TestPrivilege> ps;
-        public Array privileges
+        public List<TestPrivilege> privileges = new List<TestPrivilege>();
+        public Array ps
         {
-            get { return ps?.ToArray(); }
+            get
+            {
+                if (privileges.Count != 0)
+                    return privileges.ToArray();
+                else
+                    return null;
+            }
         }
 
         public TestPatient(Patient p)
         {
             if ((p.Documents != null) && (p.Documents.Length != 0))
             {
-                documents = new List<TestDocument>();
                 foreach (DocumentDto i in p.Documents)
                     documents.Add(new TestDocument(i));
             }
             if ((p.Addresses != null) && (p.Addresses.Length != 0))
             {
-                addreses = new List<TestAddress>();
                 foreach (AddressDto i in p.Addresses)
                     addreses.Add(new TestAddress(i));
             }
             if ((p.ContactDtos != null) && (p.ContactDtos.Length != 0))
             {
-                contacts = new List<TestContact>();
                 foreach (ContactDto i in p.ContactDtos)
                     contacts.Add(new TestContact(i));
             }
             if ((p.Jobs != null) && (p.Jobs.Length != 0))
             {
-                js = new List<TestJob>();
                 foreach (Job i in p.Jobs)
-                    js.Add(new TestJob(i));
+                    jobs.Add(new TestJob(i));
             }
             if ((p.Privileges != null) && (p.Privileges.Length != 0))
             {
-                ps = new List<TestPrivilege>();
                 foreach (Privilege i in p.Privileges)
-                    ps.Add(new TestPrivilege(i));
+                    privileges.Add(new TestPrivilege(i));
             }
             if (p.Person != null)
                 person = new TestPerson(p.Person);
@@ -74,7 +99,7 @@ namespace MqTests
 
         private TestPatient()
         {
-            
+
         }
 
         static public TestPatient BuildPatientFromDataBaseData(string idPerson, string MIS)
@@ -83,8 +108,8 @@ namespace MqTests
             patient.addreses = TestAddress.BuildAdressesFromDataBaseData(idPerson);
             patient.contacts = TestContact.BuildContactsFromDataBaseData(idPerson);
             patient.documents = TestDocument.BuildDocumentsFromDataBaseData(idPerson);
-            patient.js = TestJob.BuildJobFromDataBaseData(idPerson);
-            patient.ps = TestPrivilege.BuildPrivilegeFromDataBaseData(idPerson);
+            patient.jobs = TestJob.BuildJobFromDataBaseData(idPerson);
+            patient.privileges = TestPrivilege.BuildPrivilegeFromDataBaseData(idPerson);
             patient.person = TestPerson.BuildPersonFromDataBaseData(idPerson, MIS);
             return patient;
         }
@@ -107,14 +132,12 @@ namespace MqTests
         public override bool Equals(Object obj)
         {
             TestPatient p = obj as TestPatient;
-            if (p == null)
-                return false;
-            if ((Global.IsEqual(this.adds, p.adds)) &&
-                (Global.IsEqual(this.conts, p.conts)) &&
-                (Global.IsEqual(this.docs, p.docs)) &&
-                (Global.IsEqual(this.jobs, p.jobs)) &&
-                (Global.IsEqual(this.privileges, p.privileges)) &&
-                (Global.IsEqual(this.person, p.person)))
+            if ((Global.IsEqual(this.adds, p?.adds)) &&
+                (Global.IsEqual(this.conts, p?.conts)) &&
+                (Global.IsEqual(this.docs, p?.docs)) &&
+                (Global.IsEqual(this.jobs, p?.jobs)) &&
+                (Global.IsEqual(this.privileges, p?.privileges)) &&
+                (Global.IsEqual(this.person, p?.person)))
             {
                 return true;
             }
@@ -127,11 +150,11 @@ namespace MqTests
         }
         public static bool operator ==(TestPatient a, TestPatient b)
         {
-            return Equals(a, b);
+            return a.Equals(b);
         }
         public static bool operator !=(TestPatient a, TestPatient b)
         {
-            return !Equals(a, b);
+            return !(a.Equals(b));
         }
 
     }
