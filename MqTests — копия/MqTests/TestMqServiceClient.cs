@@ -114,7 +114,6 @@ namespace MqTests
                 return null;
             }
         }
-
         public MqResult PatientDocumentIssue(Credentials cr, Referral r)
         {
             try
@@ -136,14 +135,53 @@ namespace MqTests
             }
         }
 
+        public MqResult AgreedFromSourcedMo(Credentials cr, Referral r)
+        {
+            try
+            {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
+                MqResult x = client.AgreedFromSourcedMo(cr, r);
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                {
+                    Global.errors1.Add("Несовпадение");
+                    Global.errors1.AddRange(Global.errors2);
+                }
+                return x;
+            }
+            catch (System.ServiceModel.FaultException<MqTests.WebReference.MqFault> e)
+            {
+                getErrors(e.Detail);
+                Global.errors1.Add("ЭКСЕПШН");
+                return null;
+            }
+        }
+        public MqResult AgreedFromTargetMo(Credentials cr, Referral r)
+        {
+            try
+            {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
+                MqResult x = client.AgreedFromTargetMo(cr, r);
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                {
+                    Global.errors1.Add("Несовпадение");
+                    Global.errors1.AddRange(Global.errors2);
+                }
+                return x;
+            }
+            catch (System.ServiceModel.FaultException<MqTests.WebReference.MqFault> e)
+            {
+                getErrors(e.Detail);
+                Global.errors1.Add("ЭКСЕПШН");
+                return null;
+            }
+        }
         public MqResult Cancellation(Credentials cr, Referral r)
         {
             try
             {
-                TestReferral tr = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
-                tr.evInfo.cancellation = new TestCancellation(r.EventsInfo.Cancellation);
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.Cancellation(cr, r);
-                if (tr != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -161,8 +199,9 @@ namespace MqTests
         {
             try
             {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
                 MqResult x = client.HealthCareEnd(cr, r);
-                if (new TestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
                     Global.errors1.Add("Несовпадение");
                     Global.errors1.AddRange(Global.errors2);
@@ -176,7 +215,26 @@ namespace MqTests
                 return null;
             }
         }
-        
+        public MqResult HealthCareStart(Credentials cr, Referral r)
+        {
+            try
+            {
+                TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
+                MqResult x = client.HealthCareStart(cr, r);
+                if (br.UpdateTestReferral(r, cr.Organization) != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
+                {
+                    Global.errors1.Add("Несовпадение");
+                    Global.errors1.AddRange(Global.errors2);
+                }
+                return x;
+            }
+            catch (System.ServiceModel.FaultException<MqTests.WebReference.MqFault> e)
+            {
+                getErrors(e.Detail);
+                Global.errors1.Add("ЭКСЕПШН");
+                return null;
+            }
+        }
         public void UpdateMedServiceProfile(Credentials cr, ProfileMedService p)
         {
             try
@@ -220,6 +278,32 @@ namespace MqTests
                 return null;
             }
         }
+        //QueueInfo как работает?
+        //public QueueInfo SearchOne(Credentials cr, Options o)
+        //{
+        //    try
+        //    {
+        //        List<string> s = TestOptions.GetReferralId(o);
+        //        var r = client.GetQueueInfo(cr, o);
+        //        if (s.Count != 1)
+        //            if (r. != 0)
+        //                Global.errors1.Add("Найдено больше одного совпадения, но SearchOne нашел " +
+        //                                   r.QLength.ToString());
+        //            else;
+        //        else if (!TestReferral.BuildReferralFromDataBaseData(s[0]).Equals(new TestReferral(r.Referral)))
+        //        {
+        //            Global.errors1.AddRange(Global.errors2);
+        //            Global.errors1.Add("Несовпадение");
+        //        }
+        //        return r;
+        //    }
+        //    catch (System.ServiceModel.FaultException<MqTests.WebReference.MqFault> e)
+        //    {
+        //        getErrors(e.Detail);
+        //        Global.errors1.Add("ЭКСЕПШН");
+        //        return null;
+        //    }
+        //}
 
         public SearchManyDirectionResult SearchMany(Credentials cr, Options o)
         {
