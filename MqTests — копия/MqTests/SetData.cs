@@ -811,6 +811,7 @@ namespace MqTests
             };
         }
 
+        //тут заданы другие данные
         public Referral FullSetOrChangeTargetMO(string idMq)
         {
             return new Referral
@@ -818,15 +819,18 @@ namespace MqTests
                 ReferralInfo = new ReferralInfo
                 {
                     IdMq = idMq,
-                    ReferralType = ReferralData.referralInfo.ReferralType,
-                    ProfileMedService = ReferralData.referralInfo.ProfileMedService
+                    ReferralType = new Coding { Code = "3", System = Dictionary.REFERRAL_TYPE, Version = "1" },
+                    ProfileMedService = new Coding { Code = "2", System = Dictionary.PROFILE_MED_SERVICE, Version = "1" }
                 },
                 ReferralSurvey = new Survey
                 {
-                    SurveyOrgan = ReferralData.survey.SurveyOrgan,
-                    SurveyType = ReferralData.survey.SurveyType
+                    SurveyOrgan = new Coding { Code = "1", System = Dictionary.SURVEY_TYPE, Version = "1" },
+                    SurveyType = new Coding { Code = "1", System = Dictionary.SURVEY_ORGAN, Version = "1" }
                 },
-                Target = new ReferralTarget { Lpu = SetCoding(ReferralData.referralTarget.Lpu) },
+                Target = new ReferralTarget
+                {
+                    Lpu = new Coding { Code = otheridLpu, System = Dictionary.MO, Version = "1" }
+                },
             };
         }
 

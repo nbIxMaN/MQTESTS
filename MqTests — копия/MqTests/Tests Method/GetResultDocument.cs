@@ -5,7 +5,7 @@ using Npgsql;
 
 namespace MqTests.Tests_Method
 {
-    class GetResultDocument: Data
+    class GetResultDocument : Data
     {
 
     }
