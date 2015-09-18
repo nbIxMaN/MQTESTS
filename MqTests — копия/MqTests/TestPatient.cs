@@ -152,11 +152,11 @@ namespace MqTests
         }
         public static bool operator ==(TestPatient a, TestPatient b)
         {
-            return a.Equals(b);
+            return Equals(a, b);
         }
         public static bool operator !=(TestPatient a, TestPatient b)
         {
-            return !(a.Equals(b));
+            return !Equals(a, b);
         }
 
     }
