@@ -804,7 +804,10 @@ namespace MqTests
             return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
-                Target = new ReferralTarget { Lpu = SetCoding(ReferralData.referralTarget.Lpu) }
+                Target = new ReferralTarget
+                {
+                    Lpu = new Coding { Code = otheridLpu, System = Dictionary.MO, Version = "1" }
+                }
             };
         }
 
