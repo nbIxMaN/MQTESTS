@@ -398,7 +398,7 @@ namespace MqTests
                 {
                     Date = ReferralData.referralInfo.Date.Value.AddDays(1),
                     ReasonComment = "ReasonComment Cancellation" + new Random().Next(100),
-                    CancellationSource = SetCoding("1", Dictionary.CANCELLATION_REASON, "1"),
+                    CancellationSource = SetCoding("1", Dictionary.CANCELLATION_SOURCE, "1"),
                     CancellationReason = SetCoding("5", Dictionary.CANCELLATION_REASON, "1")
                 }
             };
