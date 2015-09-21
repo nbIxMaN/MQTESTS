@@ -60,14 +60,14 @@ namespace MqTests
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
-                string findPatient = "SELECT id_target_lpu_case_mis, is_referral_review_target_mo, reception_appoint_additional_comment, reception_appoint_time_comment, referral_review_date_target_mo, id_target_lpu, reception_appoint_date FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
+                string findPatient = "SELECT id_target_lpu_case_mis, is_referral_review_target_mo, reception_appoint_additional_comment, reception_appoint_time_comment, referral_review_date_target_mo, id_target_lpu, reception_appoint_date FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY record_created DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
                 {
                     ReferralTarget p = new ReferralTarget();
                     while (personFromDataBase.Read())
                     {
-                        //зачем тут диагнозы и доктора? 
+                        //зачем тут диагнозы и доктора и ReferralReviewDate и IsReferralReviewed? 
                         if (personFromDataBase["id_target_lpu_case_mis"] != DBNull.Value)
                             p.IdCaseMis = Convert.ToString(personFromDataBase["id_target_lpu_case_mis"]);
                         if (personFromDataBase["is_referral_review_target_mo"] != DBNull.Value)

@@ -11,12 +11,12 @@ namespace MqTests
         public Patient patient;
         public TestPerson person;
         public List<TestDocument> documents;
-        public List<TestDocument> docs
+        public Array docs
         {
             get
             {
                 if (documents != null)
-                    return documents;
+                    return documents.ToArray();
                 else
                     return null;
             }

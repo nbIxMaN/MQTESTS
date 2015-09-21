@@ -78,8 +78,8 @@ namespace MqTests
         }
         static public bool IsEqual(object a, object b)
         {
-            errors2.AddRange(errors3);
-            errors3.Clear();
+            //errors2.AddRange(errors3);
+            //errors3.Clear();
             if ((a == null) && (b == null))
             {
                 errors3.Clear();

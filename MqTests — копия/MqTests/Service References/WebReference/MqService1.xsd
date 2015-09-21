@@ -87,4 +87,11 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="MqDocResult" nillable="true" type="tns:MqDocResult" />
+  <xs:complexType name="VersionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DatabaseVersion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceVersion" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VersionResult" nillable="true" type="tns:VersionResult" />
 </xs:schema>

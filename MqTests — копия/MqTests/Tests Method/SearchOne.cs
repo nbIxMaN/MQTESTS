@@ -61,6 +61,7 @@ namespace MqTests.Tests_Method
 
                 //Задаём IdMq, находим его
                 Options opt = new Options();
+                //"78154000000261"
                 opt.IdMq = result.IdMq;
                 var res2 = mq.SearchOne(cr, opt);
             }
@@ -79,7 +80,6 @@ namespace MqTests.Tests_Method
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 //Регистрируем один случай. Статус направления "Зарегистрировано в РЕГИЗ.УО"
                 Referral referral = (new SetData()).SetStatus_RegisterMin();
-                referral.Patient.Person.IdPatientMis = PersonData.patient.Person.IdPatientMis;
                 var result = mq.Register(cr, referral);
 
                 //Задаём Patinet/Person 

@@ -90,7 +90,7 @@ namespace MqTests
                         using (NpgsqlConnection connection2 = Global.GetSqlConnection())
                         {
                             string findIdMq =
-                                "SELECT id_mq_referral_status FROM public.referral, public.referral_status WHERE public.referral.id_referral = '" + idReferral + "' AND public.referral.id_referral = public.referral_status.id_referral ORDER BY public.referral.id_referral DESC LIMIT 1";
+                                "SELECT id_mq_referral_status FROM public.referral, public.referral_status WHERE public.referral.id_referral = '" + idReferral + "' AND public.referral.id_referral = public.referral_status.id_referral ORDER BY public.referral_status.id_referral_status DESC LIMIT 1";
                             NpgsqlCommand com = new NpgsqlCommand(findIdMq, connection2);
                             using (NpgsqlDataReader reader = com.ExecuteReader())
                             {

@@ -260,6 +260,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/MQ.Dto" minOccurs="0" name="credentials" nillable="true" type="q49:Credentials" />
+        <xs:element minOccurs="0" name="sourcelpufilter" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="targetlpufilter" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="page" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -271,11 +273,23 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetVersion">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVersionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/MQ.Dto.Result" minOccurs="0" name="GetVersionResult" nillable="true" type="q51:VersionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="PutPatientMoveInfo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/MQ.Dto" minOccurs="0" name="credentials" nillable="true" type="q51:Credentials" />
-        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/MQ.Dto.Legacy" minOccurs="0" name="info" nillable="true" type="q52:PatientMoveInfo_6_1_1" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/MQ.Dto" minOccurs="0" name="credentials" nillable="true" type="q52:Credentials" />
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/MQ.Dto.Legacy" minOccurs="0" name="info" nillable="true" type="q53:PatientMoveInfo_6_1_1" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
