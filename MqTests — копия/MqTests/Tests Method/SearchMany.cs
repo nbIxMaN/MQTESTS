@@ -40,7 +40,7 @@ namespace MqTests.Tests_Method
 
                 //Задаём Options по зарегистрированному направлению и ищем его
                 Options opt = (new SetData()).GetRefferalReturnOptions_SearchMany(referral, null, result.MqReferralStatus);
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
         }
 
@@ -54,10 +54,10 @@ namespace MqTests.Tests_Method
                 {
                     ReferralInfo = new ReferralInfo
                     {
-                        ProfileMedService = ReferralData.referralInfo.ProfileMedService
+                        ProfileMedService = new Coding { Code = "1", System = Dictionary.PROFILE_MED_SERVICE, Version = "1" }
                     }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")
@@ -76,10 +76,10 @@ namespace MqTests.Tests_Method
                 {
                     ReferralInfo = new ReferralInfo
                     {
-                        ReferralType = ReferralData.referralInfo.ReferralType
+                        ReferralType = new Coding {Code = "2", System = Dictionary.REFERRAL_TYPE,Version =  "1"}
                     }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")
@@ -96,9 +96,9 @@ namespace MqTests.Tests_Method
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Options opt = new Options
                 {
-                    Target = new ReferralTarget { Lpu = ReferralData.referralTarget.Lpu }
+                    Target = new ReferralTarget { Lpu = new Coding { Code = "1.2.643.5.1.13.3.25.78.125", System = Dictionary.MO, Version = "1" } }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")
@@ -115,9 +115,9 @@ namespace MqTests.Tests_Method
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Options opt = new Options
                 {
-                    Source = new ReferralSource { Lpu = ReferralData.referralSource.Lpu }
+                    Source = new ReferralSource { Lpu = new Coding { Code = "1.2.643.5.1.13.3.25.78.125", System= Dictionary.MO, Version = "1" } }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")
@@ -139,7 +139,7 @@ namespace MqTests.Tests_Method
                         MqReferralStatus = new Coding { Code = "1", System = Dictionary.REFERRAL_STATUS, Version = "1" }
                     }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")
@@ -158,11 +158,11 @@ namespace MqTests.Tests_Method
                 {
                     Survey = new Survey
                     {
-                        SurveyOrgan = ReferralData.survey.SurveyOrgan,
-                        SurveyType = ReferralData.survey.SurveyType
+                        SurveyOrgan = new Coding {Code = "1",System =  Dictionary.SURVEY_TYPE,Version =  "1"},
+                        SurveyType = new Coding {Code = "1",System =  Dictionary.SURVEY_ORGAN,Version =  "1"}
                     }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")
@@ -181,13 +181,10 @@ namespace MqTests.Tests_Method
                 {
                     EventsInfo = new EventsInfo
                     {
-                        Source = new EventSource
-                        {
-                            PlannedDate = ReferralData.eventsInfo.Source.PlannedDate
-                        }
+                        Source = new EventSource { PlannedDate = Convert.ToDateTime("03.01.2012") }
                     }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")
@@ -209,7 +206,7 @@ namespace MqTests.Tests_Method
                         Target = new EventTarget { IsReferralReviwed = true }
                     }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")
@@ -224,6 +221,7 @@ namespace MqTests.Tests_Method
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
+                SetUp();
                 Options opt = new Options
                 {
                     Patient = new Patient
@@ -234,7 +232,7 @@ namespace MqTests.Tests_Method
                         }
                     }
                 };
-                var res2 = mq.SearchOne(cr, opt);
+                var res2 = mq.SearchMany(cr, opt);
             }
 
             if (Global.errors == "")

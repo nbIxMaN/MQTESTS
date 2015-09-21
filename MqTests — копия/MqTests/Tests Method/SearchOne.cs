@@ -61,7 +61,7 @@ namespace MqTests.Tests_Method
 
                 //Задаём IdMq, находим его
                 Options opt = new Options();
-                opt.ReferralInfo.IdMq = result.IdMq;
+                opt.IdMq = result.IdMq;
                 var res2 = mq.SearchOne(cr, opt);
             }
 

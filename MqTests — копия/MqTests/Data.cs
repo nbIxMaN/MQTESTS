@@ -330,7 +330,6 @@ namespace MqTests
 
         private static void SetRef()
         {
-
             ReferralData.referralInfo = new ReferralInfo
             {
                 Priority = "Comment Priority" + new Random().Next(100),
