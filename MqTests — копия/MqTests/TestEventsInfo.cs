@@ -40,7 +40,7 @@ namespace MqTests
         internal void UpdateTestEventsInfo(EventsInfo eventsInfo)
         {
             if (eventsInfo.Cancellation != null)
-                cancellation = new TestCancellation(info.Cancellation);
+                cancellation = new TestCancellation(eventsInfo.Cancellation);
             if (eventsInfo.Source != null)
                 source.UpdateTestEventSource(eventsInfo.Source);
             if (eventsInfo.Target != null)
