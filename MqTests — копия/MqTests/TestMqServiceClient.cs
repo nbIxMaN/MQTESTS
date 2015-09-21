@@ -122,7 +122,7 @@ namespace MqTests
             try
             {
                 TestReferral br = TestReferral.BuildReferralFromDataBaseData(r.ReferralInfo.IdMq);
-                MqResult x = client.SetOrChangeTargetMo(cr, r);
+                MqResult x = client.PatientDocumentIssue(cr, r);
                 br.UpdateTestReferral(r, cr.Organization);
                 if (br != TestReferral.BuildReferralFromDataBaseData(x.IdMq))
                 {
