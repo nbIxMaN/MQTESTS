@@ -140,7 +140,7 @@ namespace MqTests
             {
                 DocumentType = SetCoding("226", Dictionary.DOCUMENT_TYPE, "1"),
                 DocN = RandomDocument().DocN,
-                DocS = "AA",
+                DocS = RandomDocument().DocS,
                 ProviderName = "Старый полис",
                 ExpiredDate = Convert.ToDateTime("31.01.2040"),
                 IssuedDate = Convert.ToDateTime("11.11.2000"),

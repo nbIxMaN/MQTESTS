@@ -256,6 +256,9 @@ namespace MqTests
 
         public Referral FullAgreedFromSourcedMo(string idMq)
         {
+            Doctor doc = PersonData.doctor;
+            doc.Role = new Coding { Code = "2", System = Dictionary.DOCTOR_ROLE, Version = "1" };
+
             return new Referral
             {
                 ReferralInfo = new ReferralInfo
@@ -272,7 +275,7 @@ namespace MqTests
                 },
                 Source = new ReferralSource
                 {
-                    Doctors = new Doctor[] { PersonData.doctor }
+                    Doctors = new Doctor[] { doc }
                 }
             };
         }
@@ -466,14 +469,15 @@ namespace MqTests
         {
             Referral referral = new Referral();
             referral.ReferralInfo = ReferralData.referralInfo;
-            referral.ReferralInfo.ReferralType = new Coding
-            {
-                Code = "3", // ??
-                System = Dictionary.REFERRAL_TYPE,
-                Version = "1"
-            };
+            referral.ReferralInfo.ReferralType = ReferralData.referralInfo.ReferralType;
             referral.ReferralInfo.IdMq = idMq;
             referral.ReferralSurvey = ReferralData.survey;
+            referral.ReferralSurvey.SurveyType = new Coding
+            {
+                Code = "3",
+                System = Dictionary.SURVEY_TYPE,
+                Version = "1"
+            };
             referral.Source = ReferralData.referralSource;
             referral.Target = new ReferralTarget
             {
@@ -575,6 +579,12 @@ namespace MqTests
 
         public Referral FullUpdateFromTargetMO(string idMq)
         {
+            Survey s = ReferralData.survey;
+            s.SurveyType = new Coding { Code = "3", System = Dictionary.SURVEY_TYPE, Version = "1" };
+
+            Doctor doc = PersonData.doctor;
+            doc.Role = new Coding { Code = "4", System = Dictionary.DOCTOR_ROLE, Version = "1" };
+
             return new Referral
             {
                 ReferralInfo = new ReferralInfo
@@ -582,12 +592,12 @@ namespace MqTests
                     IdMq = idMq,
                     ProfileMedService = ReferralData.referralInfo.ProfileMedService,
                 },
-                ReferralSurvey = ReferralData.survey,
+                ReferralSurvey = s,
                 Target = new ReferralTarget
                 {
                     IdCaseMis = ReferralData.referralTarget.IdCaseMis,
                     Lpu = ReferralData.referralTarget.Lpu,
-                    Doctors = ReferralData.referralTarget.Doctors,
+                    Doctors = new Doctor[] { doc },
                     MainDiagnosis = ReferralData.referralTarget.MainDiagnosis
                 },
                 Patient = new Patient
@@ -653,7 +663,7 @@ namespace MqTests
                     { 
                         new Doctor
                         {
-                           Role = SetCoding(PersonData.doctor.Role),
+                           Role = new Coding { Code = "3", System = Dictionary.DOCTOR_ROLE, Version = "1" },
                            Lpu =  SetCoding(PersonData.doctor.Lpu),
                            Speciality = SetCoding(PersonData.doctor.Speciality),
                            Position = SetCoding(PersonData.doctor.Position),
@@ -691,6 +701,8 @@ namespace MqTests
 
         public Referral FullHealthCareStart(string idMq)
         {
+            Doctor doc = PersonData.doctor;
+            doc.Role = new Coding { Code = "3", System = Dictionary.DOCTOR_ROLE, Version = "1" };
             return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
@@ -735,7 +747,7 @@ namespace MqTests
                     { 
                         new Doctor
                         {
-                           Role = SetCoding(PersonData.doctor.Role),
+                           Role = new Coding { Code = "4", System = Dictionary.DOCTOR_ROLE, Version = "1" },
                            Lpu =  SetCoding(PersonData.doctor.Lpu),
                            Speciality = SetCoding(PersonData.doctor.Speciality),
                            Position = SetCoding(PersonData.doctor.Position),
@@ -774,6 +786,8 @@ namespace MqTests
 
         public Referral FullHealthCareEnd(string idMq)
         {
+            Doctor doc = PersonData.doctor;
+            doc.Role = new Coding { Code = "4", System = Dictionary.DOCTOR_ROLE, Version = "1" };
             return new Referral
             {
                 ReferralInfo = new ReferralInfo { IdMq = idMq },
@@ -781,7 +795,7 @@ namespace MqTests
                 {
                     IdCaseMis = ReferralData.referralTarget.IdCaseMis,
                     Lpu = ReferralData.referralTarget.Lpu,
-                    Doctors = ReferralData.referralTarget.Doctors,
+                    Doctors = new Doctor[] { doc },
                     MainDiagnosis = ReferralData.referralTarget.MainDiagnosis
                 },
                 Patient = new Patient

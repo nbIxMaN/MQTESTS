@@ -36,7 +36,7 @@ namespace MqTests.Tests_Method
                 var result = mq.Register(cr, referral);
 
                 referral = (new SetData()).FullAgreedFromSourcedMo(result.IdMq);
-                var resultAgreed =   mq.AgreedFromSourcedMo(cr, referral);
+                var resultAgreed = mq.AgreedFromSourcedMo(cr, referral);
             }
             if (Global.errors == "")
                 Assert.Pass();
