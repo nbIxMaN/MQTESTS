@@ -333,7 +333,7 @@ namespace MqTests
             ReferralData.referralInfo = new ReferralInfo
             {
                 Priority = "Comment Priority" + new Random().Next(100),
-                Date = Convert.ToDateTime("01.01.2012"),
+                Date = Convert.ToDateTime("02.01.2012"),
                 Reason = "Reason referral" + new Random().Next(100),
                 Comment = "Additional Comment" + new Random().Next(100),
                 ReferralType = SetCoding("2", Dictionary.REFERRAL_TYPE, "1"),
@@ -376,15 +376,15 @@ namespace MqTests
                 Source = new EventSource
                 {
                     ReferralCreateDate = Convert.ToDateTime("01.01.2012"),
-                    ReferralOutDate = Convert.ToDateTime("02.01.2012"),
+                    ReferralOutDate = Convert.ToDateTime("03.01.2012"),
                     IsReferralReviewed = true,
                     ReferralReviewDate = Convert.ToDateTime("01.01.2012"),
-                    PlannedDate = Convert.ToDateTime("03.01.2012"),
+                    PlannedDate = Convert.ToDateTime("10.01.2012"),
                 },
                 Target = new EventTarget
                 {
                     IsReferralReviwed = true,
-                    ReferralReviewDate = Convert.ToDateTime("02.01.2012"),
+                    ReferralReviewDate = Convert.ToDateTime("04.01.2012"),
                     ReceptionAppointDate = Convert.ToDateTime("04.01.2012"),
                     ReceptionAppointTime = "ReceptionAppointTime" + new Random().Next(100),
                     ReceptionAppointComment = "ReceptionAppointComment" + new Random().Next(100),

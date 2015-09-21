@@ -7,7 +7,7 @@ using System.ServiceModel;
 namespace MqTests.Tests_Method
 {
     [TestFixture]
-    class UpdateFromSourcedMo: Data
+    class UpdateFromSourcedMo : Data
     {
         [Test]
         public void MinUpdateFromSourcedMo()
@@ -17,7 +17,7 @@ namespace MqTests.Tests_Method
                 Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
-                
+
                 //обновляем данные
                 referral = (new SetData()).MinUpdateFromSourcedMo(result.IdMq);
                 var updateResult = mq.UpdateFromSourcedMo(cr, referral);
@@ -39,14 +39,8 @@ namespace MqTests.Tests_Method
 
                 //обновляем данные
                 referral = (new SetData()).FullUpdateFromSourcedMo(result.IdMq);
-                try
-                {
-                    var updateResult = mq.UpdateFromSourcedMo(cr, referral);
-                }
-                catch (FaultException<MqTests.WebReference.MqFault> e)
-                {
-                    string s = e.Detail.MqFaults[0].Message;
-                }
+                var updateResult = mq.UpdateFromSourcedMo(cr, referral);
+
                 if (Global.errors == "")
                     Assert.Pass();
                 else
