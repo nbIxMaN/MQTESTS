@@ -358,7 +358,7 @@ namespace MqTests
             {
                 IdCaseMis = "IdCaseMis SourcedMO" + new Random().Next(1000),
                 IdReferralMis = " IdReferralMis SourcedMO" + new Random().Next(1000),
-                Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "1"),
+                Lpu = SetCoding("1.2.643.5.1.13.3.25.78.6", Dictionary.MO, "22"),
                 Doctors = new Doctor[] { SetDoctor() },
                 MainDiagnosis = new MainDiagnosis[] { SetMainDiagnosis() }
             };
