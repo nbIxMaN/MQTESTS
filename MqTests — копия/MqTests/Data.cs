@@ -239,7 +239,7 @@ namespace MqTests
                     new Privilege
                     {
                         StartDate = Convert.ToDateTime("01.01.2012"),
-                        EndDate = Convert.ToDateTime("01.02.2012"),
+                        EndDate = Convert.ToDateTime("10.01.2016"),
                         PrivilegeType = SetCoding("901", Dictionary.PRIVILEGE_TYPE, "1")
                     }
                 },
@@ -406,7 +406,7 @@ namespace MqTests
             ReferralData.profileMedService = new ProfileMedService
             {
                 IdProfileMedService = SetCoding("1", Dictionary.PROFILE_MED_SERVICE, "1"),
-                StartDate = Convert.ToDateTime("01.12.2011"),
+                StartDate = Convert.ToDateTime("01.01.2012"),
                 EndDate = Convert.ToDateTime("01.06.2012"),
                 Address = RandomAddress(),
                 ContactValue = RandomMobilePhone(),
