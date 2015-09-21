@@ -110,9 +110,9 @@ namespace MqTests
             {
                 if (p.Person != null)
                     if (com == "")
-                        com = "SELECT id_person FROM public.person, public.referral WHERE public.person.id_person = public.referral.id_patient_person AND birthday = '" + p.Person.BirthDate + "' AND id_patient_source_mo_mis = '" + p.Person.IdPatientMis + "'";
+                        com = "SELECT id_person FROM public.person, public.referral WHERE public.person.id_person = public.referral.id_patient_person AND public.person.birthday = '" + p.Person.BirthDate.Value.ToString("o") + "' AND id_patient_source_mo_mis = '" + p.Person.IdPatientMis + "'";
                     else
-                        com +=  " AND birthday = '" + p.Person.BirthDate + "' AND id_patient_source_mo_mis = '" + p.Person.IdPatientMis + "'";
+                        com +=  " AND birthday = '" + p.Person.BirthDate.Value.ToString("o") + "' AND id_patient_source_mo_mis = '" + p.Person.IdPatientMis + "'";
                 if (p.Person.HumanName != null)
                 {
                     com += " AND family_name = '" + p.Person.HumanName.FamilyName + "' AND given_name = '" + p.Person.HumanName.GivenName + "'";

@@ -69,7 +69,7 @@ namespace MqTests
                     {
                         //зачем тут диагнозы и доктора? 
                         if (personFromDataBase["id_target_lpu_case_mis"] != DBNull.Value)
-                            p.IdCaseMis = Convert.ToString(personFromDataBase["id_source_lpu_case_mis"]);
+                            p.IdCaseMis = Convert.ToString(personFromDataBase["id_target_lpu_case_mis"]);
                         if (personFromDataBase["is_referral_review_target_mo"] != DBNull.Value)
                             p.IsReferralReviewed = Convert.ToBoolean(personFromDataBase["is_referral_review_target_mo"]);
                         if (personFromDataBase["reception_appoint_additional_comment"] != DBNull.Value)

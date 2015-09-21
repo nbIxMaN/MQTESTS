@@ -67,20 +67,23 @@ namespace MqTests
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
-                string findPatient = "SELECT id_case_aid_form, id_case_aid_place, id_case_aid_type, case_close_date, case_open_date, reception_appoint_date FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
+                string findPatient = "SELECT referal_review_date_target_mo, id_case_aid_form, id_case_aid_place, id_case_aid_type, case_close_date, case_open_date, reception_appoint_date FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
                 {
                     EventTarget p = new EventTarget();
                     while (personFromDataBase.Read())
                     {
-                        //что делать с IsReferralReviwedSpecified, Lpu, ReceptionAppointComment, ReceptionAppointTime, ReferralReviewDate и RefferalCreatedDate? 
+                        //что делать с IsReferralReviwedSpecified, Lpu, ReceptionAppointComment, ReceptionAppointTime и RefferalCreatedDate? 
                         if (personFromDataBase["case_close_date"] != DBNull.Value)
                             p.CaseCloseDate = Convert.ToDateTime(personFromDataBase["case_close_date"]);
                         if (personFromDataBase["case_open_date"] != DBNull.Value)
                             p.CaseOpenDate = Convert.ToDateTime(personFromDataBase["case_open_date"]);
                         if (personFromDataBase["reception_appoint_date"] != DBNull.Value)
                             p.ReceptionAppointDate = Convert.ToDateTime(personFromDataBase["reception_appoint_date"]);
+                        if (personFromDataBase["referal_review_date_target_mo"] != DBNull.Value)
+                            p.ReferralReviewDate =
+                                Convert.ToDateTime(personFromDataBase["referal_review_date_target_mo"]);
                         TestEventTarget pers = new TestEventTarget(p);
                         if (personFromDataBase["id_case_aid_form"] != DBNull.Value)
                             pers.caseAidForm = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_case_aid_form"]));

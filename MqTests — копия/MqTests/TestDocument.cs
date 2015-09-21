@@ -53,7 +53,7 @@ namespace MqTests
                         if (documentReader["id_provider"] != DBNull.Value)
                             document.provider = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(documentReader["id_provider"]));                            
                         if (documentReader["id_region_code"] != DBNull.Value)
-                            document.regionCode = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(documentReader["RegionCode"]));
+                            document.regionCode = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(documentReader["id_region_code"]));
                         documents.Add(document);
                     }
                 }
