@@ -35,7 +35,7 @@ namespace MqTests.Tests_Method
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 //Регистрируем один случай. Статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 var result = mq.Register(cr, referral);
 
                 //Задаём Options по зарегистрированному направлению и ищем его

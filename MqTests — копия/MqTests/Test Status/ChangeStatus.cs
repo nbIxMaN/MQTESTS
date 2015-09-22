@@ -15,7 +15,7 @@ namespace MqTests
         {
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -31,49 +31,22 @@ namespace MqTests
 
         //Задаём статус "Согласовано в направляющей МО".
         //Текущий статус направления "Зарегистрировано в РЕГИЗ.УО".
-        //Пациент задаётся с полисом единого образца
         [Test]
-        public void StatusAgreedInSourcedMO_SingleOMS()
+        public void StatusAgreedInSourcedMO_CurStat1()
         {
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
                 //Задаём статус "Согласовано в направляющей МО"
-                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq, DocumentData.SingleOMS);
+                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq);
                 var res2 = mq.UpdateFromSourcedMo(cr, referral);
 
                 if (res2.MqReferralStatus.Code != "2")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
-            }
-            if (Global.errors == "")
-                Assert.Pass();
-            else
-                Assert.Fail(Global.errors);
-        }
-
-        //Задаём статус "Согласовано в направляющей МО".
-        //Текущий статус направления "Зарегистрировано в РЕГИЗ.УО".
-        //Пациент задаётся с полисом старого образца
-        [Test]
-        public void StatusAgreedInSourcedMO_OldOMS()
-        {
-            using (TestMqServiceClient mq = new TestMqServiceClient())
-            {
-                //Задаём статус "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
-                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
-                var result = mq.Register(cr, referral);
-
-                //Задаём статус "Согласовано в направляющей МО"
-                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq, DocumentData.OldOMS);
-                var res2 = mq.UpdateFromSourcedMo(cr, referral);
-
-                if (res2.MqReferralStatus.Code != "2")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res2.MqReferralStatus.Code + "");
             }
             if (Global.errors == "")
                 Assert.Pass();
@@ -89,7 +62,7 @@ namespace MqTests
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -115,12 +88,12 @@ namespace MqTests
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
                 //Задаём статус "Согласовано в направляющей МО"
-                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq, DocumentData.SingleOMS);
+                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq);
                 var res2 = mq.UpdateFromSourcedMo(cr, referral);
 
                 //Задаём статус "Выдано пациенту"
@@ -145,7 +118,7 @@ namespace MqTests
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -175,7 +148,7 @@ namespace MqTests
             using (MqServiceClient mq = new MqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -205,7 +178,7 @@ namespace MqTests
             using (MqServiceClient mq = new MqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -233,14 +206,13 @@ namespace MqTests
 
         //Задаём статус "Начато оказание медицинской помощи в целевой МО".
         //Текущий статус направления "Выделена единица ресурса, целевой МО назначена дата приема".
-        //Пациент задаётся с полисом единого образца
         [Test]
-        public void StatusHealthCareStart_SingleOMS()
+        public void StatusHealthCareStart()
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -253,42 +225,7 @@ namespace MqTests
                 var res3 = mq.ChangePlannedResource(cr, referral);
 
                 //Задаём статус "Начато оказание медицинской помощи в целевой МО"
-                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq, DocumentData.SingleOMS);
-                var res4 = mq.UpdateFromTargetMo(cr, referral);
-
-                if (res4.MqReferralStatus.Code != "6")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
-            }
-
-            if (Global.errors == "")
-                Assert.Pass();
-            else
-                Assert.Fail(Global.errors);
-        }
-
-        //Задаём статус "Начато оказание медицинской помощи в целевой МО".
-        //Текущий статус направления "Выделена единица ресурса, целевой МО назначена дата приема".
-        //Пациент задаётся с полисом старого образца
-        [Test]
-        public void StatusHealthCareStart_OldOMS()
-        {
-            using (MqServiceClient mq = new MqServiceClient())
-            {
-                //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
-                Credentials cr = new Credentials { Organization = idLpu, Token = guid };
-                var result = mq.Register(cr, referral);
-
-                //Задаём статус "Выдано пациенту"
-                referral = (new SetData()).SetStatus_PatientDocumentIssue(result.IdMq);
-                var res2 = mq.UpdateFromSourcedMo(cr, referral);
-
-                //Задаём статус "Выделена единица ресурса, целевой МО назначена дата приема"
-                referral = (new SetData()).MinChangePlannedResource(result.IdMq);
-                var res3 = mq.ChangePlannedResource(cr, referral);
-
-                //Задаём статус "Начато оказание медицинской помощи в целевой МО"
-                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq, DocumentData.OldOMS);
+                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq);
                 var res4 = mq.UpdateFromTargetMo(cr, referral);
 
                 if (res4.MqReferralStatus.Code != "6")
@@ -309,7 +246,7 @@ namespace MqTests
             using (MqServiceClient mq = new MqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -322,7 +259,7 @@ namespace MqTests
                 var res3 = mq.ChangePlannedResource(cr, referral);
 
                 //Задаём статус "Начато оказание медицинской помощи в целевой МО"
-                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq, DocumentData.SingleOMS);
+                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq);
                 var res4 = mq.UpdateFromTargetMo(cr, referral);
 
                 //Задаём статус "Завершено оказание медицинской помощи в целевой МО"
@@ -347,7 +284,7 @@ namespace MqTests
             using (MqServiceClient mq = new MqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -377,7 +314,7 @@ namespace MqTests
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -403,12 +340,12 @@ namespace MqTests
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
                 //Задаём статус "Согласовано в направляющей МО"
-                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq, DocumentData.SingleOMS);
+                referral = (new SetData()).SetStatus_AgreedInSourcedMO(result.IdMq);
                 var res2 = mq.UpdateFromSourcedMo(cr, referral);
 
                 //Задаём статус "Аннулировано"
@@ -433,7 +370,7 @@ namespace MqTests
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -463,7 +400,7 @@ namespace MqTests
             using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -497,7 +434,7 @@ namespace MqTests
             using (MqServiceClient mq = new MqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 

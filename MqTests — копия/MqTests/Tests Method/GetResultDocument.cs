@@ -37,7 +37,7 @@ namespace MqTests.Tests_Method
             using (MqServiceClient mq = new MqServiceClient())
             {
                 //Задаём статус направления "Зарегистрировано в РЕГИЗ.УО"
-                Referral referral = (new SetData()).SetStatus_RegisterMin();
+                Referral referral = (new SetData()).MinRegister();
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 var result = mq.Register(cr, referral);
 
@@ -50,7 +50,7 @@ namespace MqTests.Tests_Method
                 var res3 = mq.ChangePlannedResource(cr, referral);
 
                 //Задаём статус "Начато оказание медицинской помощи в целевой МО"
-                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq, DocumentData.SingleOMS);
+                referral = (new SetData()).SetStatus_HealthCareStart(result.IdMq);
                 var res4 = mq.UpdateFromTargetMo(cr, referral);
 
                 //Задаём статус "Завершено оказание медицинской помощи в целевой МО"
