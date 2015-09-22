@@ -131,7 +131,7 @@ namespace MqTests
             if (l.Count != 0)
                 return l;
             else
-                throw new Exception("Не надена запись");
+                throw new Exception("Не найдена запись");
         }
         static public List<string> GetReferralId(Options o)
         {

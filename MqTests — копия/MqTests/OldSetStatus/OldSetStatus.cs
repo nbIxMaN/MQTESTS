@@ -53,7 +53,9 @@ namespace MqTests.OldSetStatus
                 Source = new EventSource
                 {
                     ReferralReviewDate = ReferralData.eventsInfo.Source.ReferralReviewDate,
-                    IsReferralReviewed = true
+                    IsReferralReviewed = true,
+                    // ReferralCreatedate обязательный при указании Source
+                    ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate
                 }
             };
             return referral;
@@ -97,6 +99,8 @@ namespace MqTests.OldSetStatus
                 Source = new EventSource
                 {
                     ReferralOutDate = ReferralData.eventsInfo.Source.ReferralOutDate,
+                    // ReferralCreatedate обязательный при указании Source
+                    ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate
                 }
             };
 

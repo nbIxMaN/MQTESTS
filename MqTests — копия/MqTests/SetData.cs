@@ -371,7 +371,6 @@ namespace MqTests
 
         //Задаём статус "Согласовано в направляющей МО"
         //с использованием минимального метода UpdateFromSourcedMo
-        //document = либо DocumentData.SingleOMS, либо DocumentData.OldOMS
         public Referral SetStatus_AgreedInSourcedMO(string idMq)
         {
             Referral referral = MinUpdateFromSourcedMo(idMq);
@@ -380,7 +379,9 @@ namespace MqTests
                 Source = new EventSource
                 {
                     ReferralReviewDate = ReferralData.eventsInfo.Source.ReferralReviewDate,
-                    IsReferralReviewed = true
+                    IsReferralReviewed = true,
+                    // ReferralCreatedate обязательный при указании Source
+                    ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate
                 }
             };
             return referral;
@@ -397,6 +398,8 @@ namespace MqTests
                 Source = new EventSource
                 {
                     ReferralOutDate = ReferralData.eventsInfo.Source.ReferralOutDate,
+                    // ReferralCreatedate обязательный при указании Source
+                    ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate
                 }
             };
 

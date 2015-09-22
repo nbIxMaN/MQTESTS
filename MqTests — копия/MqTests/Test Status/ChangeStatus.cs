@@ -71,7 +71,7 @@ namespace MqTests
                 var res2 = mq.UpdateFromSourcedMo(cr, referral);
 
                 if (res2.MqReferralStatus.Code != "3")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res2.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -101,7 +101,7 @@ namespace MqTests
                 var res3 = mq.UpdateFromSourcedMo(cr, referral);
 
                 if (res3.MqReferralStatus.Code != "3")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res3.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -131,7 +131,7 @@ namespace MqTests
                 var res3 = mq.UpdateFromTargetMo(cr, referral);
 
                 if (res3.MqReferralStatus.Code != "4")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res3.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -161,7 +161,7 @@ namespace MqTests
                 var res3 = mq.ChangePlannedResource(cr, referral);
 
                 if (res3.MqReferralStatus.Code != "5")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res3.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -195,7 +195,7 @@ namespace MqTests
                 var res4 = mq.ChangePlannedResource(cr, referral);
 
                 if (res4.MqReferralStatus.Code != "5")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res4.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -229,7 +229,7 @@ namespace MqTests
                 var res4 = mq.UpdateFromTargetMo(cr, referral);
 
                 if (res4.MqReferralStatus.Code != "6")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res4.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -267,7 +267,7 @@ namespace MqTests
                 var res5 = mq.UpdateFromTargetMo(cr, referral);
 
                 if (res5.MqReferralStatus.Code != "7")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res5.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -279,7 +279,7 @@ namespace MqTests
         //Задаём статус "Признано не обоснованным в целевой МО".
         //Текущий статус направления "Выдано пациенту".
         [Test]
-        public void StatusNotAgreedInNargedMO()
+        public void StatusNotAgreedInTargedMO()
         {
             using (MqServiceClient mq = new MqServiceClient())
             {
@@ -297,7 +297,7 @@ namespace MqTests
                 var res3 = mq.UpdateFromTargetMo(cr, referral);
 
                 if (res3.MqReferralStatus.Code != "8")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res3.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -323,7 +323,7 @@ namespace MqTests
                 var res2 = mq.Cancellation(cr, referral);
 
                 if (res2.MqReferralStatus.Code != "0")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res2.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -353,7 +353,7 @@ namespace MqTests
                 var res3 = mq.Cancellation(cr, referral);
 
                 if (res3.MqReferralStatus.Code != "0")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res3.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -383,7 +383,7 @@ namespace MqTests
                 var res3 = mq.Cancellation(cr, referral);
 
                 if (res3.MqReferralStatus.Code != "0")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res3.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -417,7 +417,7 @@ namespace MqTests
                 var res4 = mq.Cancellation(cr, referral);
 
                 if (res4.MqReferralStatus.Code != "0")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res4.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -451,7 +451,7 @@ namespace MqTests
                 var res4 = mq.Cancellation(cr, referral);
 
                 if (res4.MqReferralStatus.Code != "0")
-                    Global.errors1.Add("Неверный статус:" + result.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус:" + res4.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
