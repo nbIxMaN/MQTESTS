@@ -10,7 +10,7 @@ namespace MqTests
 {
     class TestCoding
     {
-        private string Code;
+        public string Code;
         private string System;
         private string Version;
         public TestCoding(Coding r)

@@ -11,7 +11,7 @@ namespace MqTests
     {
         ReferralInfo info;
         TestCancellation cancellation;
-        TestCoding mqReferralStatus;
+        public TestCoding mqReferralStatus;
         TestCoding profileMedService;
         TestCoding referralType;
         public TestReferralInfo(ReferralInfo r)

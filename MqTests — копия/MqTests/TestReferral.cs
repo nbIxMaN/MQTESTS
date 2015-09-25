@@ -38,7 +38,39 @@ namespace MqTests
             if (r.Patient != null)
                 this.patient.UpdateTestPatient(r.Patient);
             if (r.ReferralInfo != null)
+            {
                 this.refInfo.UpdateTestReferralInfo(r.ReferralInfo);
+                if ((r.EventsInfo != null) && (r.EventsInfo.Source != null) && (this.refInfo.mqReferralStatus.Code == "1") && (r.EventsInfo.Source.ReferralReviewDate != null) &&
+                    (r.EventsInfo.Source.IsReferralReviewed == true))
+                    this.refInfo.mqReferralStatus.Code = "2";
+                if ((r.EventsInfo != null) && (r.EventsInfo.Source != null) && (r.EventsInfo.Target != null) &&
+                    ((this.refInfo.mqReferralStatus.Code == "1") || (this.refInfo.mqReferralStatus.Code == "2")) &&
+                    (r.EventsInfo.Source.ReferralOutDate != null) && (r.Target.Lpu != null))
+                    this.refInfo.mqReferralStatus.Code = "3";
+                if ((r.EventsInfo != null) && (r.EventsInfo.Target != null) &&
+                    (this.refInfo.mqReferralStatus.Code == "3") && (r.EventsInfo.Target.ReferralReviewDate != null) &&
+                    (r.EventsInfo.Target.IsReferralReviwed == true))
+                    this.refInfo.mqReferralStatus.Code = "4";
+                if ((r.EventsInfo != null) && (r.EventsInfo.Target != null) &&
+                    (r.EventsInfo.Target.ReceptionAppointDate != null))
+                    this.refInfo.mqReferralStatus.Code = "5";
+                if ((r.EventsInfo != null) && (r.EventsInfo.Target != null) &&
+                    (this.refInfo.mqReferralStatus.Code == "5") && (r.EventsInfo.Target.CaseOpenDate != null))
+                    this.refInfo.mqReferralStatus.Code = "6";
+                if ((r.EventsInfo != null) && (r.EventsInfo.Target != null) &&
+                    (this.refInfo.mqReferralStatus.Code == "6") && (r.EventsInfo.Target.CaseCloseDate != null))
+                    this.refInfo.mqReferralStatus.Code = "7";
+                if ((r.EventsInfo != null) && (r.EventsInfo.Target != null) &&
+                    (this.refInfo.mqReferralStatus.Code == "7") && (r.EventsInfo.Target.ReferralReviewDate != null) &&
+                    (r.EventsInfo.Target.IsReferralReviwed == false))
+                    this.refInfo.mqReferralStatus.Code = "8";
+                if ((r.EventsInfo != null) && (r.EventsInfo.Cancellation != null) &&
+                    (r.EventsInfo.Cancellation.Date != null) &&
+                    ((this.refInfo.mqReferralStatus.Code == "1") || (this.refInfo.mqReferralStatus.Code == "2") ||
+                     (this.refInfo.mqReferralStatus.Code == "3") || (this.refInfo.mqReferralStatus.Code == "4") ||
+                     (this.refInfo.mqReferralStatus.Code == "5")))
+                    this.refInfo.mqReferralStatus.Code = "0";
+            }
             if (r.ReferralSurvey != null)
                 this.refSurvey.UpdateTestReferralSurvey(r.ReferralSurvey);
             if (r.Source != null)
