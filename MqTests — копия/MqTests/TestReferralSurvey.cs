@@ -29,7 +29,7 @@ namespace MqTests
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
-                string findPatient = "SELECT id_survey_organ, survey_comment, id_referral, id_survey_type FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
+                string findPatient = "SELECT id_survey_organ, survey_comment, id_survey_type FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
                 {
@@ -40,8 +40,7 @@ namespace MqTests
                         if (personFromDataBase["survey_comment"] != DBNull.Value)
                             p.Comment = Convert.ToString(personFromDataBase["survey_comment"]);
                         TestReferralSurvey pers = new TestReferralSurvey(p);
-                        if (personFromDataBase["id_referral"] != DBNull.Value)
-                            pers.additional = TestAdditional.BuildAdditionalFromDataBaseData(Convert.ToString(personFromDataBase["id_referral"]));
+                        pers.additional = TestAdditional.BuildAdditionalFromDataBaseData(idReferral);
                         if (personFromDataBase["id_survey_organ"] != DBNull.Value)
                             pers.surveyOrgan = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_survey_organ"]));
                         if (personFromDataBase["id_survey_type"] != DBNull.Value)

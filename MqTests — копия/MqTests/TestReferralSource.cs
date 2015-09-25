@@ -86,15 +86,14 @@ namespace MqTests
                     ReferralSource p = new ReferralSource();
                     while (personFromDataBase.Read())
                     {
-                        //DOCTORS!
                         if (personFromDataBase["id_source_lpu_case_mis"] != DBNull.Value)
                             p.IdCaseMis = Convert.ToString(personFromDataBase["id_source_lpu_case_mis"]);
                         if (personFromDataBase["id_referral_source_mo_mis"] != DBNull.Value)
                             p.IdReferralMis = Convert.ToString(personFromDataBase["id_referral_source_mo_mis"]);
                         TestReferralSource pers = new TestReferralSource(p);
-                        if (personFromDataBase["id_source_lpu"] != DBNull.Value)
-                            pers.lpu = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_source_lpu"]));
-                        pers.docs = TestDoctor.BuildDoctorFromDataBaseData(idReferral);
+                        pers.lpu = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_source_lpu"]));
+                        pers.docs = TestDoctor.BuildDoctorFromDataBaseData(idReferral, Convert.ToString(personFromDataBase["id_source_lpu"]));
+                        pers.diag = TestMainDiagnosis.BuildTestMainDiagnosisInfoFromDataBaseData(idReferral, Convert.ToString(personFromDataBase["id_source_lpu"]));
                         return pers;
                     }
                 }

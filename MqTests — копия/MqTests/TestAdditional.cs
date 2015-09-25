@@ -28,7 +28,6 @@ namespace MqTests
                     Additional p = new Additional();
                     while (personFromDataBase.Read())
                     {
-                        //что делать с DateSpecified и Мисами? 
                         if (personFromDataBase["patient_allergy_iodine"] != DBNull.Value)
                             p.AllergyIodine = Convert.ToString(personFromDataBase["patient_allergy_iodine"]);
                         if (personFromDataBase["patient_hight"] != DBNull.Value)

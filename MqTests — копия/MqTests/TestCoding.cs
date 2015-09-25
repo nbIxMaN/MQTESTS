@@ -24,22 +24,26 @@ namespace MqTests
         }
         public static TestCoding BuildCodingFromDataBaseData(string p)
         {
-            using (NpgsqlConnection connection = Global.GetSqlConnection())
+            if (p != "")
             {
-                string findDocument = "SELECT * FROM public.terminology_value WHERE id_terminology_value = '" + p + "'";
-                NpgsqlCommand person = new NpgsqlCommand(findDocument, connection);
-                using (NpgsqlDataReader documentReader = person.ExecuteReader())
+                using (NpgsqlConnection connection = Global.GetSqlConnection())
                 {
-                    while (documentReader.Read())
+                    string findDocument = "SELECT * FROM public.terminology_value WHERE id_terminology_value = '" + p +
+                                          "'";
+                    NpgsqlCommand person = new NpgsqlCommand(findDocument, connection);
+                    using (NpgsqlDataReader documentReader = person.ExecuteReader())
                     {
-                        Coding x = new Coding();
-                        if (documentReader["code"] != DBNull.Value)
-                            x.Code = documentReader["code"].ToString();
-                        if (documentReader["uri"] != DBNull.Value)
-                            x.System = documentReader["uri"].ToString();
-                        if (documentReader["version"] != DBNull.Value)
-                            x.Version = documentReader["version"].ToString();
-                        return new TestCoding(x);
+                        while (documentReader.Read())
+                        {
+                            Coding x = new Coding();
+                            if (documentReader["code"] != DBNull.Value)
+                                x.Code = documentReader["code"].ToString();
+                            if (documentReader["uri"] != DBNull.Value)
+                                x.System = documentReader["uri"].ToString();
+                            if (documentReader["version"] != DBNull.Value)
+                                x.Version = documentReader["version"].ToString();
+                            return new TestCoding(x);
+                        }
                     }
                 }
             }

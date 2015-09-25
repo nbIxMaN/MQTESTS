@@ -67,14 +67,14 @@ namespace MqTests
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
-                string findPatient = "SELECT referral_review_date_target_mo, is_referral_review_target_mo, id_case_aid_form, id_case_aid_place, id_case_aid_type, case_close_date, case_open_date, reception_appoint_date FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
+                string findPatient = "SELECT id_case_aid_type, id_case_aid_form, id_case_aid_place, id_target_lpu, is_referral_review_target_mo, case_open_date, case_close_date, referral_review_date_target_mo, reception_appoint_date, reception_appoint_time_comment, reception_appoint_additional_comment, id_target_lpu_case_mis FROM public.referral WHERE id_referral = '" + idReferral + "' ORDER BY id_referral DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
                 {
                     EventTarget p = new EventTarget();
                     while (personFromDataBase.Read())
                     {
-                        //что делать с IsReferralReviwedSpecified, Lpu, ReceptionAppointComment, ReceptionAppointTime и RefferalCreatedDate? 
+                        //что делать с RefferalCreatedDate? 
                         if (personFromDataBase["case_close_date"] != DBNull.Value)
                             p.CaseCloseDate = Convert.ToDateTime(personFromDataBase["case_close_date"]);
                         if (personFromDataBase["case_open_date"] != DBNull.Value)
@@ -86,6 +86,13 @@ namespace MqTests
                                 Convert.ToDateTime(personFromDataBase["referral_review_date_target_mo"]);
                         if (personFromDataBase["is_referral_review_target_mo"] != DBNull.Value)
                             p.IsReferralReviwed = Convert.ToBoolean(personFromDataBase["is_referral_review_target_mo"]);
+                        if (personFromDataBase["reception_appoint_time_comment"] != DBNull.Value)
+                            p.ReceptionAppointTime = personFromDataBase["reception_appoint_time_comment"].ToString();
+                        if (personFromDataBase["reception_appoint_additional_comment"] != DBNull.Value)
+                            p.ReceptionAppointComment =
+                                personFromDataBase["reception_appoint_additional_comment"].ToString();
+                        //id_target_lpu_case_mis;
+                        //if (personFromDataBase["id_target_lpu_case_mis"] != DBNull.Value)
                         TestEventTarget pers = new TestEventTarget(p);
                         if (personFromDataBase["id_case_aid_form"] != DBNull.Value)
                             pers.caseAidForm = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_case_aid_form"]));
@@ -93,6 +100,8 @@ namespace MqTests
                             pers.caseAidPlace = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_case_aid_place"]));
                         if (personFromDataBase["id_case_aid_type"] != DBNull.Value)
                             pers.caseAidType = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(personFromDataBase["id_case_aid_type"]));
+                        if (personFromDataBase["id_target_lpu"] != DBNull.Value)
+                            pers.lpu = TestCoding.BuildCodingFromDataBaseData(personFromDataBase["id_target_lpu"].ToString());
                         return pers;
                     }
                 }

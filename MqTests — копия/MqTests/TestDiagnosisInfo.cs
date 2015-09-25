@@ -23,54 +23,70 @@ namespace MqTests
             if (diagnosisInfo.MkbCode != null)
                 mkbCode = new TestCoding(diagnosisInfo.MkbCode);
         }
-        static public TestDiagnosisInfo BuildTestMainDiagnosisInfoFromDataBaseData(string idReferral)
+        static public TestDiagnosisInfo BuildTestMainDiagnosisInfoFromDataBaseData(string idReferral, string idLpu)
         {
-            using (NpgsqlConnection connection = Global.GetSqlConnection())
+            if (idLpu != "")
             {
-                //опять DiagnosedDateSpecified, что с этим делать?
-                //ещё есть какой-то idDiagnosisStatus и idLpu, так же idDiagnosisContainer - это не diagnosisType?
-                string finddiagnosis = "SELECT * FROM public.diagnosis WHERE id_referral = '" + idReferral + "' AND id_diagnosis_container = '" + complication + "')";
-                NpgsqlCommand person = new NpgsqlCommand(finddiagnosis, connection);
-                using (NpgsqlDataReader diagnosisReader = person.ExecuteReader())
+                using (NpgsqlConnection connection = Global.GetSqlConnection())
                 {
-                    while (diagnosisReader.Read())
+                    string finddiagnosis = "SELECT * FROM public.diagnosis WHERE id_referral = '" + idReferral +
+                                           "' AND id_diagnosis_container = '" + complication + "' AND id_lpu = '" +
+                                           idLpu + "'";
+                    NpgsqlCommand person = new NpgsqlCommand(finddiagnosis, connection);
+                    using (NpgsqlDataReader diagnosisReader = person.ExecuteReader())
                     {
-                        DiagnosisInfo diag = new DiagnosisInfo();
-                        if (diagnosisReader["comment"] != DBNull.Value)
-                            diag.Comment = Convert.ToString(diagnosisReader["comment"]);
-                        if (diagnosisReader["diagnosis_date"] != DBNull.Value)
-                            diag.DiagnosedDate = Convert.ToDateTime(diagnosisReader["diagnosis_date"]);
-                        TestDiagnosisInfo tDiag = new TestDiagnosisInfo(diag);
-                        if (diagnosisReader["id_mkb_code"] != DBNull.Value)
-                            tDiag.mkbCode = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(diagnosisReader["id_mkb_code"]));
-                        return tDiag;
+                        while (diagnosisReader.Read())
+                        {
+                            DiagnosisInfo diag = new DiagnosisInfo();
+                            if (diagnosisReader["comment"] != DBNull.Value)
+                                diag.Comment = Convert.ToString(diagnosisReader["comment"]);
+                            if (diagnosisReader["diagnosis_date"] != DBNull.Value)
+                                diag.DiagnosedDate = Convert.ToDateTime(diagnosisReader["diagnosis_date"]);
+                            TestDiagnosisInfo tDiag = new TestDiagnosisInfo(diag);
+                            if (diagnosisReader["id_diagnosis_status"] != DBNull.Value)
+                                tDiag.diagnosisType =
+                                    TestCoding.BuildCodingFromDataBaseData(
+                                        diagnosisReader["id_diagnosis_status"].ToString());
+                            if (diagnosisReader["id_mkb_code"] != DBNull.Value)
+                                tDiag.mkbCode =
+                                    TestCoding.BuildCodingFromDataBaseData(
+                                        Convert.ToString(diagnosisReader["id_mkb_code"]));
+                            return tDiag;
+                        }
                     }
                 }
             }
             return null;
         }
-        static public List<TestDiagnosisInfo> BuildTestComplicationDiagnosisInfoFromDataBaseData(string idReferral)
+        static public List<TestDiagnosisInfo> BuildTestComplicationDiagnosisInfoFromDataBaseData(string idReferral, string idLpu)
         {
             List<TestDiagnosisInfo> diagnosis = new List<TestDiagnosisInfo>();
-            using (NpgsqlConnection connection = Global.GetSqlConnection())
+            if (idLpu != "")
             {
-                //опять DiagnosedDateSpecified, что с этим делать?
-                //ещё есть какой-то idDiagnosisStatus и idLpu, так же idDiagnosisContainer - это не diagnosisType?
-                string finddiagnosis = "SELECT * FROM public.diagnosis WHERE id_referral = '" + idReferral + "' AND id_diagnosis_container = '" + complication + "')";
-                NpgsqlCommand person = new NpgsqlCommand(finddiagnosis, connection);
-                using (NpgsqlDataReader diagnosisReader = person.ExecuteReader())
+                using (NpgsqlConnection connection = Global.GetSqlConnection())
                 {
-                    while (diagnosisReader.Read())
+                    //опять DiagnosedDateSpecified, что с этим делать?
+                    //ещё есть какой-то idDiagnosisStatus и idLpu, так же idDiagnosisContainer - это не diagnosisType?
+                    string finddiagnosis = "SELECT * FROM public.diagnosis WHERE id_referral = '" + idReferral +
+                                           "' AND id_diagnosis_container = '" + complication + "' AND id_lpu = '" +
+                                           idLpu + "'";
+                    NpgsqlCommand person = new NpgsqlCommand(finddiagnosis, connection);
+                    using (NpgsqlDataReader diagnosisReader = person.ExecuteReader())
                     {
-                        DiagnosisInfo diag = new DiagnosisInfo();
-                        if (diagnosisReader["comment"].ToString() != "")
-                            diag.Comment = Convert.ToString(diagnosisReader["comment"]);
-                        if (diagnosisReader["diagnosis_date"].ToString() != "")
-                            diag.DiagnosedDate = Convert.ToDateTime(diagnosisReader["diagnosis_date"]);
-                        TestDiagnosisInfo tDiag = new TestDiagnosisInfo(diag);
-                        if (diagnosisReader["id_mkb_code"].ToString() != "")
-                            tDiag.mkbCode = TestCoding.BuildCodingFromDataBaseData(Convert.ToString(diagnosisReader["id_mkb_code"]));
-                        diagnosis.Add(tDiag);
+                        while (diagnosisReader.Read())
+                        {
+                            DiagnosisInfo diag = new DiagnosisInfo();
+                            if (diagnosisReader["comment"].ToString() != "")
+                                diag.Comment = Convert.ToString(diagnosisReader["comment"]);
+                            if (diagnosisReader["diagnosis_date"].ToString() != "")
+                                diag.DiagnosedDate = Convert.ToDateTime(diagnosisReader["diagnosis_date"]);
+                            TestDiagnosisInfo tDiag = new TestDiagnosisInfo(diag);
+                            if (diagnosisReader["id_mkb_code"].ToString() != "")
+                                tDiag.mkbCode =
+                                    TestCoding.BuildCodingFromDataBaseData(
+                                        Convert.ToString(diagnosisReader["id_mkb_code"]));
+                            diagnosis.Add(tDiag);
+                        }
                     }
                 }
             }

@@ -50,56 +50,61 @@ namespace MqTests
         }
 
         private TestDoctor() { }
-        static public List<TestDoctor> BuildDoctorFromDataBaseData(string idReferral)
+        static public List<TestDoctor> BuildDoctorFromDataBaseData(string idReferral, string idLpu)
         {
             List<TestDoctor> docs = new List<TestDoctor>();
-            using (NpgsqlConnection c = Global.GetSqlConnection())
+            if (idLpu != "")
             {
-                string findDoctorsIds = "SELECT * FROM public.referral_doctor WHERE id_referral = '" + idReferral + "'";
-                NpgsqlCommand fd = new NpgsqlCommand(findDoctorsIds, c);
-                using (NpgsqlDataReader idr = fd.ExecuteReader())
+                using (NpgsqlConnection c = Global.GetSqlConnection())
                 {
-                    while (idr.Read())
+                    string findDoctorsIds = "SELECT * FROM public.referral_doctor WHERE id_referral = '" + idReferral +
+                                            "'";
+                    NpgsqlCommand fd = new NpgsqlCommand(findDoctorsIds, c);
+                    using (NpgsqlDataReader idr = fd.ExecuteReader())
                     {
-                        if (idr["id_referral_doctor"] != DBNull.Value)
+                        while (idr.Read())
                         {
-                            string idDoctor = idr["id_referral_doctor"].ToString();
-                            using (NpgsqlConnection connection = Global.GetSqlConnection())
+                            if (idr["id_referral_doctor"] != DBNull.Value)
                             {
-                                string findDoctor = "SELECT * FROM public.doctor WHERE id_doctor = '" + idDoctor +
-                                                    "' ORDER BY id_doctor DESC LIMIT 1";
-                                NpgsqlCommand doc = new NpgsqlCommand(findDoctor, connection);
-                                using (NpgsqlDataReader doctorFromDataBase = doc.ExecuteReader())
+                                string idDoctor = idr["id_referral_doctor"].ToString();
+                                using (NpgsqlConnection connection = Global.GetSqlConnection())
                                 {
-                                    while (doctorFromDataBase.Read())
+                                    string findDoctor = "SELECT * FROM public.doctor WHERE id_doctor = '" + idDoctor +
+                                                        "' AND id_lpu = '" + idLpu +
+                                                        "' ORDER BY id_doctor DESC LIMIT 1";
+                                    NpgsqlCommand doc = new NpgsqlCommand(findDoctor, connection);
+                                    using (NpgsqlDataReader doctorFromDataBase = doc.ExecuteReader())
                                     {
-                                        TestDoctor doctor = new TestDoctor();
-                                        if (doctorFromDataBase["id_doctor_role"] != DBNull.Value)
-                                            doctor.role =
-                                                TestCoding.BuildCodingFromDataBaseData(
-                                                    Convert.ToString(doctorFromDataBase["id_doctor_role"]));
-                                        if (doctorFromDataBase["id_doctor_speciality"] != DBNull.Value)
-                                            doctor.speciality =
-                                                TestCoding.BuildCodingFromDataBaseData(
-                                                    Convert.ToString(doctorFromDataBase["id_doctor_speciality"]));
-                                        if (doctorFromDataBase["id_lpu"] != DBNull.Value)
-                                            doctor.lpu =
-                                                TestCoding.BuildCodingFromDataBaseData(
-                                                    Convert.ToString(doctorFromDataBase["id_lpu"]));
-                                        if (doctorFromDataBase["id_doctor_position"] != DBNull.Value)
-                                            doctor.position =
-                                                TestCoding.BuildCodingFromDataBaseData(
-                                                    Convert.ToString(doctorFromDataBase["id_doctor_position"]));
-                                        if (doctorFromDataBase["id_person"] != DBNull.Value)
-                                            doctor.person =
-                                                TestPerson.BuildPersonFromDataBaseData(
-                                                    Convert.ToString(doctorFromDataBase["id_person"]),
-                                                    Convert.ToString(doctorFromDataBase["id_doctor_mis"]));
-                                        if (doctorFromDataBase["id_person"] != DBNull.Value)
-                                            doctor.cnts =
-                                                TestContact.BuildContactsFromDataBaseData(
-                                                    Convert.ToString(doctorFromDataBase["id_person"]));
-                                        docs.Add(doctor);
+                                        while (doctorFromDataBase.Read())
+                                        {
+                                            TestDoctor doctor = new TestDoctor();
+                                            if (doctorFromDataBase["id_doctor_role"] != DBNull.Value)
+                                                doctor.role =
+                                                    TestCoding.BuildCodingFromDataBaseData(
+                                                        Convert.ToString(doctorFromDataBase["id_doctor_role"]));
+                                            if (doctorFromDataBase["id_doctor_speciality"] != DBNull.Value)
+                                                doctor.speciality =
+                                                    TestCoding.BuildCodingFromDataBaseData(
+                                                        Convert.ToString(doctorFromDataBase["id_doctor_speciality"]));
+                                            if (doctorFromDataBase["id_lpu"] != DBNull.Value)
+                                                doctor.lpu =
+                                                    TestCoding.BuildCodingFromDataBaseData(
+                                                        Convert.ToString(doctorFromDataBase["id_lpu"]));
+                                            if (doctorFromDataBase["id_doctor_position"] != DBNull.Value)
+                                                doctor.position =
+                                                    TestCoding.BuildCodingFromDataBaseData(
+                                                        Convert.ToString(doctorFromDataBase["id_doctor_position"]));
+                                            if (doctorFromDataBase["id_person"] != DBNull.Value)
+                                                doctor.person =
+                                                    TestPerson.BuildPersonFromDataBaseData(
+                                                        Convert.ToString(doctorFromDataBase["id_person"]),
+                                                        Convert.ToString(doctorFromDataBase["id_doctor_mis"]));
+                                            if (doctorFromDataBase["id_person"] != DBNull.Value)
+                                                doctor.cnts =
+                                                    TestContact.BuildContactsFromDataBaseData(
+                                                        Convert.ToString(doctorFromDataBase["id_person"]));
+                                            docs.Add(doctor);
+                                        }
                                     }
                                 }
                             }

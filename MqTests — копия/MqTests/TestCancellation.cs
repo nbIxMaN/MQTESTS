@@ -41,7 +41,6 @@ namespace MqTests
                     CancellationData p = new CancellationData();
                     while (personFromDataBase.Read())
                     {
-                        //что делать с DateSpecified и Мисами? 
                         if (personFromDataBase["cancellation_date"] != DBNull.Value)
                             p.Date = Convert.ToDateTime(personFromDataBase["cancellation_date"]);
                         if (personFromDataBase["cancellation_reason_comment"] != DBNull.Value)

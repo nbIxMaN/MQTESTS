@@ -26,7 +26,6 @@ namespace MqTests
         {
             using (NpgsqlConnection connection = Global.GetSqlConnection())
             {
-                //ReferralCreateDate что с этим делать???
                 string findPatient = "SELECT is_referral_review_source_mo, referral_creation_date, planned_date, referral_out_date, referral_review_date_source_mo FROM public.referral WHERE id_referral = '" + idReferral + "'ORDER BY id_referral DESC LIMIT 1";
                 NpgsqlCommand person = new NpgsqlCommand(findPatient, connection);
                 using (NpgsqlDataReader personFromDataBase = person.ExecuteReader())
