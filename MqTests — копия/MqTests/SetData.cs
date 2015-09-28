@@ -123,7 +123,6 @@ namespace MqTests
             Referral referral = new Referral();
             referral.ReferralInfo = new ReferralInfo
             {
-                // MqReferalStatus заполняется сам?
                 ReferralType = SetCoding(ReferralData.referralInfo.ReferralType),
                 ProfileMedService = SetCoding(ReferralData.referralInfo.ProfileMedService),
             };
@@ -173,6 +172,8 @@ namespace MqTests
         public Referral FullRegister()
         {
             Referral referral = ReferralData.referral;
+            //если передаётся Survey, то ReferralType должен быть 3, согласно правилам валидации
+            referral.ReferralInfo.ReferralType = new Coding { Code = "3", System = Dictionary.REFERRAL_TYPE, Version = "1" };
             referral.Target = new ReferralTarget
             {
                 IdCaseMis = ReferralData.referralTarget.IdCaseMis,
@@ -380,7 +381,7 @@ namespace MqTests
                 {
                     ReferralReviewDate = ReferralData.eventsInfo.Source.ReferralReviewDate,
                     IsReferralReviewed = true,
-                    // ReferralCreatedate обязательный при указании Source
+                    // ReferralCreateDate обязательный при указании Source
                     ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate
                 }
             };
@@ -398,7 +399,7 @@ namespace MqTests
                 Source = new EventSource
                 {
                     ReferralOutDate = ReferralData.eventsInfo.Source.ReferralOutDate,
-                    // ReferralCreatedate обязательный при указании Source
+                    // ReferralCreateDate обязательный при указании Source
                     ReferralCreateDate = ReferralData.eventsInfo.Source.ReferralCreateDate
                 }
             };
@@ -417,27 +418,19 @@ namespace MqTests
             referral.ReferralInfo = ReferralData.referralInfo;
             referral.ReferralInfo.ReferralType = ReferralData.referralInfo.ReferralType;
             referral.ReferralInfo.IdMq = idMq;
+
             referral.ReferralSurvey = ReferralData.survey;
-            referral.ReferralSurvey.SurveyType = new Coding
-            {
-                Code = "3",
-                System = Dictionary.SURVEY_TYPE,
-                Version = "1"
-            };
+            referral.ReferralSurvey.SurveyType = new Coding { Code = "3", System = Dictionary.SURVEY_TYPE, Version = "1" };
+
             referral.Source = ReferralData.referralSource;
-            referral.Target = new ReferralTarget
-            {
-                Lpu = ReferralData.referralTarget.Lpu
-            };
+            referral.Target = new ReferralTarget { Lpu = ReferralData.referralTarget.Lpu };
             referral.Patient = PersonData.patient;
-            referral.EventsInfo = new EventsInfo
-            {
-                Source = ReferralData.eventsInfo.Source
-            };
+            referral.EventsInfo = new EventsInfo { Source = ReferralData.eventsInfo.Source };
+            
             return referral;
         }
 
-        //следить за изменениями в  Data.options!
+        //следить за изменениями в Data.options!
         public Options FullGetQueueInfo()
         {
             return OptionData.options;

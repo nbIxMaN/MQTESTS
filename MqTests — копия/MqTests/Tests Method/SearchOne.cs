@@ -80,6 +80,7 @@ namespace MqTests.Tests_Method
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 //Регистрируем один случай. Статус направления "Зарегистрировано в РЕГИЗ.УО"
                 Referral referral = (new SetData()).MinRegister();
+                referral.Patient.Person.IdPatientMis = PersonData.patient.Person.IdPatientMis;
                 var result = mq.Register(cr, referral);
 
                 //Задаём Patinet/Person 
@@ -94,7 +95,6 @@ namespace MqTests.Tests_Method
                         }
                     }
                 };
-
                 var res2 = mq.SearchOne(cr, opt);
             }
 

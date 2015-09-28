@@ -122,13 +122,13 @@ namespace MqTests
             if (this.info.Reason != r.info.Reason)
                 Global.errors3.Add("Несовпадение Reason TestReferralInfo");
             if (Global.GetLength(this.cancellation) != Global.GetLength(r.cancellation))
-                Global.errors3.Add("Несовпадение длинны cancellation TestReferralInfo");
+                Global.errors3.Add("Несовпадение длины cancellation TestReferralInfo");
             if (Global.GetLength(this.mqReferralStatus) != Global.GetLength(r.mqReferralStatus))
-                Global.errors3.Add("Несовпадение длинны mqReferralStatus TestReferralInfo");
+                Global.errors3.Add("Несовпадение длины mqReferralStatus TestReferralInfo");
             if (Global.GetLength(this.profileMedService) != Global.GetLength(r.profileMedService))
-                Global.errors3.Add("Несовпадение длинны profileMedService TestReferralInfo");
+                Global.errors3.Add("Несовпадение длины profileMedService TestReferralInfo");
             if (Global.GetLength(this.referralType) != Global.GetLength(r.referralType))
-                Global.errors3.Add("Несовпадение длинны referralType TestReferralInfo");
+                Global.errors3.Add("Несовпадение длины referralType TestReferralInfo");
         }
         public override bool Equals(Object obj)
         {

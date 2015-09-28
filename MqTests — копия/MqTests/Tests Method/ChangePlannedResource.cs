@@ -33,7 +33,7 @@ namespace MqTests.Tests_Method
         [Test]
         public void FullChangePlannedResource()
         {
-            using (MqServiceClient mq = new MqServiceClient())
+            using (TestMqServiceClient mq = new TestMqServiceClient())
             {
                 Credentials cr = new Credentials { Organization = idLpu, Token = guid };
                 Referral referral = (new SetData()).MinRegister();
