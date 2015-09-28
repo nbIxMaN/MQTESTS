@@ -127,13 +127,13 @@ namespace MqTests
             if (this.target.RefferalCreatedDate!= r.target.RefferalCreatedDate)
                 Global.errors3.Add("Несовпадение RefferalCreatedDate TestEventTarget");
             if (Global.GetLength(this.caseAidForm) != Global.GetLength(r.caseAidForm))
-                Global.errors3.Add("Несовпадение длинны caseAidForm TestEventTarget");
+                Global.errors3.Add("Несовпадение длины caseAidForm TestEventTarget");
             if (Global.GetLength(this.caseAidPlace) != Global.GetLength(r.caseAidPlace))
-                Global.errors3.Add("Несовпадение длинны caseAidPlace TestEventTarget");
+                Global.errors3.Add("Несовпадение длины caseAidPlace TestEventTarget");
             if (Global.GetLength(this.caseAidType) != Global.GetLength(r.caseAidType))
-                Global.errors3.Add("Несовпадение длинны caseAidType TestEventTarget");
+                Global.errors3.Add("Несовпадение длины caseAidType TestEventTarget");
             if (Global.GetLength(this.lpu) != Global.GetLength(r.lpu))
-                Global.errors3.Add("Несовпадение длинны lpu TestEventTarget");
+                Global.errors3.Add("Несовпадение длины lpu TestEventTarget");
         }
         public override bool Equals(Object obj)
         {

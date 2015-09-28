@@ -161,7 +161,7 @@ namespace MqTests
                 var res3 = mq.ChangePlannedResource(cr, referral);
 
                 if (res3.MqReferralStatus.Code != "5")
-                    Global.errors1.Add("Неверный статус:" + res3.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус: " + res3.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
@@ -195,7 +195,7 @@ namespace MqTests
                 var res4 = mq.ChangePlannedResource(cr, referral);
 
                 if (res4.MqReferralStatus.Code != "5")
-                    Global.errors1.Add("Неверный статус:" + res4.MqReferralStatus.Code + "");
+                    Global.errors1.Add("Неверный статус: " + res4.MqReferralStatus.Code + "");
             }
 
             if (Global.errors == "")
